@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +29,9 @@ namespace FoodService
       services.AddDbContext<ApplicationContext>(build =>
       {
         build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
-      });
+      });
+
+      services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
       services.AddMvc();
     }
 
@@ -40,6 +43,7 @@ namespace FoodService
         app.UseDeveloperExceptionPage();
       }
 
+      app.UseAuthentication();
       app.UseMvc();
     }
   }
