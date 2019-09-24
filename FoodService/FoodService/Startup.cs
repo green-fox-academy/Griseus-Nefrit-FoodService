@@ -28,7 +28,8 @@ namespace FoodService
       services.AddDbContext<ApplicationContext>(build =>
       {
         build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
-      });
+      });
+
       services.AddMvc();
     }
 
