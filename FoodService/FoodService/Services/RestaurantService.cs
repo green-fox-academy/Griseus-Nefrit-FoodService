@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FoodService.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +15,9 @@ namespace FoodService.Services
             this.applicationContext = applicationContext;
         }
 
-        public Restaurant getRestaurantById(long id)
+        public async Task<Restaurant> getRestaurantByIdAsync(long id)
         {
-            var restaurant = applicationContext.Restaurants.Include(t => t.Meals).FirstOrDefault(t => t.RestaurantId == id);
+            var restaurant = await applicationContext.Restaurants.Include(t => t.Meals).FirstOrDefaultAsync(t => t.RestaurantId == id);
             if (restaurant == null)
             {
                 return null;

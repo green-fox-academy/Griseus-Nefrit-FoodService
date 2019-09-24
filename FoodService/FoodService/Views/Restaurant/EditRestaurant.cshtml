@@ -1,9 +1,11 @@
 @model Restaurant
 
+
 <button type="submit" class="btn btn-success">Add meal</button>
 <form>
-    <label for="name">Name: </label>
+    <label for="name"></label>
     <input type="text" id="name">
+    
     <label for="description">Description: </label>
     <input type="text" id="description">
     <label for="price">Price</label>
@@ -26,7 +28,7 @@
             <td>@meal.MealId</td>
             <td>@meal.Name</td>
             <td>@meal.Description</td>
-            <td>@meal.PriceAmount @meal.PriceCurrency</td>
+            <td>@meal.Price.Amount @meal.Price.Currency</td>
             <td>
                 <form>
                     <button type="submit" class="btn btn-success">Edit</button>

@@ -1,9 +1,10 @@
+using System.Threading.Tasks;
 using FoodService.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodService.Controllers
 {
-    [Route("partner/restaurants")]
+    [Route("partner/restaurants/edit/{id}")]
     public class RestaurantController : Controller
     {
         private readonly IMealService mealService;
@@ -15,10 +16,10 @@ namespace FoodService.Controllers
             this.restaurantService = restaurantService;
         }
         
-        [HttpGet("{id}/edit")]
-        public IActionResult EditRestaurant([FromRoute] long id)
+        [HttpGet]
+        public async Task<IActionResult> EditRestaurant([FromRoute] long id)
         {
-            var restaurant = restaurantService.getRestaurantById(id); 
+            var restaurant = await restaurantService.getRestaurantByIdAsync(id); 
             return View(restaurant);
         }
         
