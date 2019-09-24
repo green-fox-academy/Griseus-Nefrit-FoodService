@@ -1,0 +1,42 @@
+@model Restaurant
+
+<button type="submit" class="btn btn-success">Add meal</button>
+<form>
+    <label for="name">Name: </label>
+    <input type="text" id="name">
+    <label for="description">Description: </label>
+    <input type="text" id="description">
+    <label for="price">Price</label>
+    <input type="text" id="price">
+</form>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>DESCRIPTION</th>
+        <th>PRICE</th>
+        <th>EDIT</th>
+        <th>DELETE</th>
+    </tr>
+    </thead>
+    <tr>
+        @foreach (var meal in Model.Meals)
+        {
+            <td>@meal.MealId</td>
+            <td>@meal.Name</td>
+            <td>@meal.Description</td>
+            <td>@meal.PriceAmount @meal.PriceCurrency</td>
+            <td>
+                <form>
+                    <button type="submit" class="btn btn-success">Edit</button>
+                </form>
+            </td>
+            <td>
+                <form>
+                    <button type="submit" class="btn btn-success">Delete</button>
+                </form>
+            </td>
+        }
+    </tr>
+</table>

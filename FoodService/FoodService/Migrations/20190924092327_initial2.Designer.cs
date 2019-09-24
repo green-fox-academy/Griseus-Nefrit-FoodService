@@ -2,14 +2,16 @@
 using FoodService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20190924092327_initial2")]
+    partial class initial2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,27 +35,7 @@ namespace FoodService.Migrations
 
                     b.HasKey("MealId");
 
-                    b.HasIndex("RestaurantId");
-
                     b.ToTable("Meals");
-                });
-
-            modelBuilder.Entity("FoodService.Models.Restaurant", b =>
-                {
-                    b.Property<long>("RestaurantId")
-                        .ValueGeneratedOnAdd();
-
-                    b.HasKey("RestaurantId");
-
-                    b.ToTable("Restaurants");
-                });
-
-            modelBuilder.Entity("FoodService.Models.Meal", b =>
-                {
-                    b.HasOne("FoodService.Models.Restaurant")
-                        .WithMany("Meals")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
