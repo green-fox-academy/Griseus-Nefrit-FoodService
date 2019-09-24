@@ -16,13 +16,12 @@ namespace FoodService.Controllers
             this.restaurantService = restaurantService;
         }
         
-        [HttpGet]
+        [HttpGet("")]
         public async Task<IActionResult> EditRestaurant([FromRoute] long id)
         {
             var restaurant = await restaurantService.getRestaurantByIdAsync(id); 
             return View(restaurant);
         }
-        
-        
+
     }
 }

@@ -12,6 +12,8 @@ namespace FoodService
   {
     public DbSet<Meal> Meals { get; set; }
     public DbSet<Restaurant> Restaurants { get; set; }
+    
+    public DbSet<Price> Prices { get; set; }
     public ApplicationContext(DbContextOptions options) : base(options)
     {
     }
