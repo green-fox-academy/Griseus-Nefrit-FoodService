@@ -19,10 +19,10 @@ namespace FoodService
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.Entity<IdentityRole>().HasData(
-            new IdentityRole { Name = "Admin" },
-            new IdentityRole { Name = "Manager" },
-            new IdentityRole { Name = "Customer" });
+        builder.Entity<IdentityRole<int>>().HasData(
+            new IdentityRole<int> { Name = "Admin" , Id = 1},
+            new IdentityRole<int> { Name = "Manager", Id = 2 },
+            new IdentityRole<int> { Name = "Customer", Id = 3 });
     }
   }
 }

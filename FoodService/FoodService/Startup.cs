@@ -36,7 +36,8 @@ namespace FoodService
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
-            }).AddEntityFrameworkStores<ApplicationDbContext>();
+            }).AddRoles<IdentityRole<int>>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddDbContext<ApplicationDbContext>(build =>
           {
               build.UseMySql(configuration.GetConnectionString("DefaultConnection"));

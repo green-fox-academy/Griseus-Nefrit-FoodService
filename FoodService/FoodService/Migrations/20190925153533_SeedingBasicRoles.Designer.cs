@@ -3,14 +3,16 @@ using System;
 using FoodService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20190925153533_SeedingBasicRoles")]
+    partial class SeedingBasicRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,6 +90,12 @@ namespace FoodService.Migrations
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new { Id = 1, ConcurrencyStamp = "c9952bb1-079b-44c7-8739-f2d8ea4bea0c", Name = "Admin" },
+                        new { Id = 2, ConcurrencyStamp = "acd6f352-a37d-4dcf-bea9-320f3b707ead", Name = "Manager" },
+                        new { Id = 3, ConcurrencyStamp = "07b5ec91-1114-4c8b-a0de-d61cd32fb7d4", Name = "Customer" }
+                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
