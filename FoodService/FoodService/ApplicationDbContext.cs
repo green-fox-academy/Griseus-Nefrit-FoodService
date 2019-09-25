@@ -20,9 +20,9 @@ namespace FoodService
     {
         base.OnModelCreating(builder);
         builder.Entity<IdentityRole>().HasData(
-            new IdentityRole { Name = "Admin" },
-            new IdentityRole { Name = "Manager" },
-            new IdentityRole { Name = "Customer" });
+            new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToUpper() },
+            new IdentityRole { Name = "Manager", NormalizedName = "Manager".ToUpper() },
+            new IdentityRole { Name = "Customer", NormalizedName = "Customer".ToUpper() });
     }
   }
 }
