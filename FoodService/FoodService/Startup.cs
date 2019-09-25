@@ -28,7 +28,7 @@ namespace FoodService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<AppUser, IdentityRole<int>>(options =>
+            services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 // Password settings
                 options.Password.RequireDigit = true;
@@ -36,7 +36,7 @@ namespace FoodService
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
-            }).AddRoles<IdentityRole<int>>()
+            }).AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddDbContext<ApplicationDbContext>(build =>
           {
