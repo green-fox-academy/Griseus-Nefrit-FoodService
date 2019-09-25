@@ -8,6 +8,5 @@ namespace FoodService.Models.Identity
 {
     public class AppUser : IdentityUser<int>
     {
-        // TODO: Add public List<Restaurants> OwnedRestaurants { get; set; }
     }
 }

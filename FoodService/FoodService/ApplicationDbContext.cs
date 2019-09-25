@@ -12,7 +12,6 @@ namespace FoodService
 {
   public class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole<int>, int>
     {
-    //public DbSet<>  {get;set;}
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
     }

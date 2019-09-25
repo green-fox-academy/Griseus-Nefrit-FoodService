@@ -22,7 +22,7 @@ namespace FoodService.Controllers
         public async Task<IActionResult> Logout()
         {
             await userService.Logout();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         [HttpGet]
@@ -39,7 +39,7 @@ namespace FoodService.Controllers
                 var result = await userService.LoginAsync(loginRequest);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid Email or Password");
@@ -62,7 +62,7 @@ namespace FoodService.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
 
                 foreach (var error in result.Errors)
