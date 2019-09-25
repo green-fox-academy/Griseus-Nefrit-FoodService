@@ -10,7 +10,7 @@ namespace FoodService.Controllers
 {
     public class HomeController : Controller
     {
-        IRestaurantService restaurantService;
+        private readonly IRestaurantService restaurantService;
 
         public HomeController(IRestaurantService restaurantService)
         {

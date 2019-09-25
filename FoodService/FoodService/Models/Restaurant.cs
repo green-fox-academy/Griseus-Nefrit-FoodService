@@ -5,13 +5,7 @@ using System.Threading.Tasks;
 
 namespace FoodService.Models
 {
-    public enum Category
-    {
-        ONE = 1,
-        TWO,
-        THREE,
-        FOUR
-    }
+
     public class Restaurant
     {
         public long RestaurantId { get; set; }
@@ -19,6 +13,6 @@ namespace FoodService.Models
         public string Description { get; set; }
         public string City { get; set; }
         public string FoodType { get; set; }
-        public Category PriceCategory { get; set; }
+        public PriceCategory PriceCategory { get; set; }
     }
 }
