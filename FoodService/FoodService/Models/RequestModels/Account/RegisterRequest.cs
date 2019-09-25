@@ -22,5 +22,8 @@ namespace FoodService.Models.RequestModels.Account
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "Password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Sign up as Restaurant Manager")]
+        public bool Manager { get; set; }
     }
 }

@@ -19,9 +19,11 @@ namespace FoodService.Services.User
             this.signInMgr = signInMgr;
         }
 
-        public async Task<List<string>> LoginAsync(LoginRequest loginRequest)
+        public async Task<SignInResult> LoginAsync(LoginRequest loginRequest)
         {
-            throw new NotImplementedException();
+            var result = await signInMgr.PasswordSignInAsync(userName: loginRequest.Email,
+                loginRequest.Password, isPersistent: false, lockoutOnFailure: false);
+            return result;
         }
 
         public async Task Logout()

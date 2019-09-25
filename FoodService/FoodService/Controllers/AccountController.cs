@@ -19,6 +19,35 @@ namespace FoodService.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await userService.Logout();
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginRequest loginRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await userService.LoginAsync(loginRequest);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid Email or Password");
+            }
+            return View(loginRequest);
+        }
+
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -42,13 +71,6 @@ namespace FoodService.Controllers
                 }
             }
             return View(regRequest);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Logout()
-        {
-            await userService.Logout();
-            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -9,7 +9,7 @@ namespace FoodService.Services.User
 {
     public interface IUserService
     {
-        Task<List<string>> LoginAsync(LoginRequest loginRequest);
+        Task<SignInResult> LoginAsync(LoginRequest loginRequest);
         Task Logout();
         Task<IdentityResult> RegisterAsync(RegisterRequest regRequest);
     }
