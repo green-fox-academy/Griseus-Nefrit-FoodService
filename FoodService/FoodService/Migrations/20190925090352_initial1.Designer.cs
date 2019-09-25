@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190924152311_PriceRequired")]
-    partial class PriceRequired
+    [Migration("20190925090352_initial1")]
+    partial class initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,7 +66,7 @@ namespace FoodService.Migrations
 
             modelBuilder.Entity("FoodService.Models.Meal", b =>
                 {
-                    b.HasOne("FoodService.Models.Price", "Price")
+                    b.HasOne("FoodService.Models.Price", "MealPrice")
                         .WithMany()
                         .HasForeignKey("PriceId")
                         .OnDelete(DeleteBehavior.Cascade);

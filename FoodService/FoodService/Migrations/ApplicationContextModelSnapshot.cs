@@ -64,7 +64,7 @@ namespace FoodService.Migrations
 
             modelBuilder.Entity("FoodService.Models.Meal", b =>
                 {
-                    b.HasOne("FoodService.Models.Price", "Price")
+                    b.HasOne("FoodService.Models.Price", "MealPrice")
                         .WithMany()
                         .HasForeignKey("PriceId")
                         .OnDelete(DeleteBehavior.Cascade);
