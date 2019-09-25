@@ -1,4 +1,5 @@
-﻿using FoodService.Models.RequestModels.Account;
+﻿using FoodService.Models.Identity;
+using FoodService.Models.RequestModels.Account;
 using FoodService.Services.User;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,6 +22,33 @@ namespace FoodService.Controllers
         public IActionResult Register()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterRequest regRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await userService.RegisterAsync(regRequest);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            return View(regRequest);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await userService.Logout();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

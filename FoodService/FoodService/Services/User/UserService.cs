@@ -19,7 +19,7 @@ namespace FoodService.Services.User
             this.signInMgr = signInMgr;
         }
 
-        public async Task<List<string>> LoginAsync(LoginRequest model)
+        public async Task<List<string>> LoginAsync(LoginRequest loginRequest)
         {
             throw new NotImplementedException();
         }
@@ -29,9 +29,21 @@ namespace FoodService.Services.User
             await signInMgr.SignOutAsync();
         }
 
-        public async Task<List<string>> RegisterAsync(RegisterRequest model)
+        public async Task<IdentityResult> RegisterAsync(RegisterRequest regRequest)
         {
-            throw new NotImplementedException();
+            var user = new AppUser
+            {
+                UserName = regRequest.Email,
+                Email = regRequest.Email
+            };
+
+            var result = await userMgr.CreateAsync(user, regRequest.Password);
+            if (result.Succeeded)
+            {
+                await signInMgr.SignInAsync(user, isPersistent: false);
+            }
+
+            return result;
         }
     }
 }
