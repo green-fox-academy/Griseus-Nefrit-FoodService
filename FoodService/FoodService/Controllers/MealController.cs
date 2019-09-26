@@ -32,5 +32,20 @@ namespace FoodService.Controllers
             await mealService.DeleteMeal(Id);
             return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = meal.Restaurant.RestaurantId});
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(long Id)
+        {
+            var meal = await mealService.GetMealByIdAsync(Id);
+            return View(meal);
+        }
+
+        /*
+        [HttpPost]
+        public async Task<IActionResult> EditMeal()
+        {
+            
+        }
+        */
     }
 }

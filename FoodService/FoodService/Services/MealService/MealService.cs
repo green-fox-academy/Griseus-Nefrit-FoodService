@@ -17,11 +17,14 @@ namespace FoodService.Services.MealService
         public async Task SaveMealAsync(AddMealRequest model)
         {
             var meal = new Meal();
+            meal.Price = new Price();
+            meal.Restaurant = await applicationContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
+                .FirstOrDefaultAsync(t => t.RestaurantId == model.RestaurantId);
             meal.Description = model.Description;
-         //   meal.Price.Amount = model.Price.Amount;
-         //   meal.Price.Currency = model.Price.Currency;
+            meal.Price.Amount = model.Price.Amount;
+            meal.Price.Currency = model.Price.Currency;
             meal.Name = model.Name;
-         //   meal.Restaurant.RestaurantId = model.RestaurantId;
+            meal.Restaurant.RestaurantId = model.RestaurantId;
             await applicationContext.Meals.AddAsync(meal);
             await applicationContext.SaveChangesAsync();
         }
@@ -38,7 +41,7 @@ namespace FoodService.Services.MealService
         
         public async Task<Meal> GetMealByIdAsync(long MealId)
         {
-            var meal = await applicationContext.Meals.Include(m => m.Restaurant).FirstOrDefaultAsync(m => m.MealId == MealId);
+            var meal = await applicationContext.Meals.Include(m => m.Restaurant).Include(p => p.Price).FirstOrDefaultAsync(m => m.MealId == MealId);
             if (meal == null)
             {
                 return null;

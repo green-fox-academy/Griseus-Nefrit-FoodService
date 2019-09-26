@@ -1,0 +1,35 @@
+@{
+    ViewData["Title"] = "Edit Meal";
+}
+
+@model Meal
+
+<h3>Edit selected meal </h3>
+<p>Meal ID: @Model.MealId</p>
+<p>Name: @Model.Name</p>
+<p>Description: @Model.Description</p>
+<p>Price: @Model.Price.Amount @Model.Price.Currency</p>
+<br />
+<form asp-controller="Meal" method="post">
+    <div class="form-group">
+        <label asp-for="Name">New Name</label>
+        <input asp-for="Name">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description">New Description</label>
+        <input asp-for="Description">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price.Amount">New Price</label>
+        <input asp-for="Price.Amount">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price.Currency">New Currency</label>
+        <input asp-for="Price.Currency">
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+</form>

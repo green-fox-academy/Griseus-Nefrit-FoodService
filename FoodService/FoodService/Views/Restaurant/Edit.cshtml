@@ -7,24 +7,28 @@
 <form asp-controller="Meal" asp-action="Add" method="post" >
     <div class="form-group">
         <label asp-for="@Model.AddMealRequest.Name"></label>
-        <input asp-for="@Model.AddMealRequest.Name" name="Name">
+        <input asp-for="@Model.AddMealRequest.Name">
     </div>
     
     <div class="form-group">
         <label asp-for="AddMealRequest.Description"></label>
-        <input asp-for="AddMealRequest.Description" name="Description">
+        <input asp-for="AddMealRequest.Description">
     </div>
     
     <div class="form-group">
-        <label asp-for="AddMealRequest.Amount">Price</label>
-        <input asp-for="AddMealRequest.Amount">
+        <label asp-for="AddMealRequest.Price.Amount">Price</label>
+        <input asp-for="AddMealRequest.Price.Amount">
     </div>
     
     <div class="form-group">
-        <label asp-for="AddMealRequest.Currency"></label>
-        <input asp-for="AddMealRequest.Currency">
+        <label asp-for="AddMealRequest.Price.Currency"></label>
+        <input asp-for="AddMealRequest.Price.Currency">
     </div>
 
+    <div>
+        <input type="hidden" asp-for="AddMealRequest.RestaurantId" value="@Model.Restaurant.RestaurantId">
+    </div>
+    
     <button type="submit" class="btn btn-success">Add meal</button>
 </form>
 <br />
@@ -48,7 +52,7 @@
             <td>@meal.Description</td>
             <td>@meal.Price.Amount @meal.Price.Currency</td>
             <td>
-                <form asp-controller="Meal" method="post">
+                <form asp-controller="Meal" asp-action="Edit" method="get" asp-route-Id="@meal.MealId">
                     <button type="submit" class="btn btn-success">Edit</button>
                 </form>
             </td>
