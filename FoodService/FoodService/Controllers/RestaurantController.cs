@@ -22,10 +22,8 @@ namespace FoodService.Controllers
         {
             var viewmodel = new EditRestaurantViewModel();
             var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
-        //    var meal = new Meal();
             var mealRequest = new AddMealRequest();
             viewmodel.Restaurant = restaurant;
-          //  viewmodel.Meal = meal;
             viewmodel.AddMealRequest = mealRequest;
             return View(viewmodel);
         }
