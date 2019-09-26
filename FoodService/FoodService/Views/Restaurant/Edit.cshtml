@@ -1,24 +1,31 @@
+@{
+    ViewData["Title"] = "Edit Restaurant";
+}
 @model EditRestaurantViewModel
 
 <h3>Add a new meal here: </h3>
-<form asp-controller="Restaurant" asp-action="AddMeal" method="post" >
+<form asp-controller="Meal" asp-action="Add" method="post" >
     <div class="form-group">
-        <label asp-for="AddMealRequest.Name"></label>
-        <input asp-for="AddMealRequest.Name">
+        <label asp-for="@Model.AddMealRequest.Name"></label>
+        <input asp-for="@Model.AddMealRequest.Name" name="Name">
     </div>
     
     <div class="form-group">
         <label asp-for="AddMealRequest.Description"></label>
-        <input asp-for="AddMealRequest.Description">
+        <input asp-for="@Model.AddMealRequest.Description" name="Description">
     </div>
     
     <div class="form-group">
-        <label asp-for="AddMealRequest.Amount">Price</label>
-        <input asp-for="AddMealRequest.Amount">
+        <label asp-for="AddMealRequest.Price.Amount">Price</label>
+        <input asp-for="@Model.AddMealRequest.Price.Amount">
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="AddMealRequest.Price.Currency"></label>
+        <input asp-for="@Model.AddMealRequest.Price.Currency">
     </div>
     <button type="submit" class="btn btn-success">Add meal</button>
 </form>
-
 <br />
 <h3>List of your current meals</h3>
 <table class="table">
@@ -38,15 +45,15 @@
             <td>@meal.MealId</td>
             <td>@meal.Name</td>
             <td>@meal.Description</td>
-            <td>@meal.MealPrice.Amount @meal.MealPrice.Currency</td>
+            <td>@meal.Price.Amount @meal.Price.Currency</td>
             <td>
-                <form>
+                <form asp-controller="Meal" method="post">
                     <button type="submit" class="btn btn-success">Edit</button>
                 </form>
             </td>
         <td>
-            <form action="partner/restaurants/edit/@Model.Restaurant.RestaurantId/delete?id=@meal.MealId" method="post">
-                <button type="submit" class="btn btn-success">Delete</button>
+            <form asp-controller="Meal" asp-action="Delete" method="post">
+                <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </td>
     </tr>

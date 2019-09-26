@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Services;
+using FoodService.Services.MealService;
+using FoodService.Services.RestaurantService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,8 +32,8 @@ namespace FoodService
       {
         build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
       });
-      services.AddTransient<IMealService, MealService>();
       services.AddTransient<IRestaurantService, RestaurantService>();
+      services.AddTransient<IMealService, MealService>();
       services.AddMvc();
     }
 
@@ -43,7 +45,7 @@ namespace FoodService
         app.UseDeveloperExceptionPage();
       }
 
-      app.UseMvc();
+      app.UseMvcWithDefaultRoute();
     }
   }
 }

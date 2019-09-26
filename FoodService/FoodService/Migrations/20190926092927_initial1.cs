@@ -41,8 +41,8 @@ namespace FoodService.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    PriceId = table.Column<long>(nullable: false),
-                    RestaurantId = table.Column<long>(nullable: false)
+                    PriceId = table.Column<long>(nullable: true),
+                    RestaurantId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,13 +52,13 @@ namespace FoodService.Migrations
                         column: x => x.PriceId,
                         principalTable: "Prices",
                         principalColumn: "PriceId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Meals_Restaurants_RestaurantId",
                         column: x => x.RestaurantId,
                         principalTable: "Restaurants",
                         principalColumn: "RestaurantId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
