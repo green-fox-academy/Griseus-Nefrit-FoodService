@@ -6,30 +6,35 @@
 @{
   ViewData["Title"] = "Restaurants";
 }
-<table>
-  <tr>
-    <th>Name</th>
-    <th>FoodType</th>
-    <th>Price Range</th>
-  </tr>
+
+<h1>Available Restaurants</h1>
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">FoodType</th>
+            <th scope="col">Price Range</th>
+        </tr>
+    </thead>
 
 
-  <tbody>
-    @foreach (var restaurants in Model)
-    {
-      <tr>
-        <td>
-          @Html.DisplayFor(modelRestaurant => restaurants.Name)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => restaurants.FoodType)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => restaurants.PriceCategory)
-        </td>
-      </tr>
-    }
-  </tbody>
+    <tbody>
+        @foreach (var restaurants in Model)
+        {
+            <tr>
+                <th scope="row">
+                    @Html.DisplayFor(modelRestaurant => restaurants.Name)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => restaurants.FoodType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => restaurants.PriceCategory)
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 <nav aria-label="Restaurants">
   <vc:pager paging-list="@Model" />
