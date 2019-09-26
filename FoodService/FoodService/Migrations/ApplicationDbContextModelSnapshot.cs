@@ -110,9 +110,9 @@ namespace FoodService.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "7379e162-480a-4220-85b4-776c421a6946", ConcurrencyStamp = "ef451a84-a658-4df7-b299-50cd45fb0b03", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "92e49094-a928-4cb4-87e2-8876e8f0a445", ConcurrencyStamp = "296f6cb4-1e34-4e06-99fe-01d512355dab", Name = "Manager", NormalizedName = "MANAGER" },
-                        new { Id = "7bb9c4e7-254e-4a9e-9ad6-095a12a80870", ConcurrencyStamp = "63624cc7-6d08-4e44-ae03-d3e01aa910b0", Name = "Customer", NormalizedName = "CUSTOMER" }
+                        new { Id = "da365ae3-50f1-431b-a168-cfdcd92e1744", ConcurrencyStamp = "680e67f4-7db7-4166-9546-083ca5612c77", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "154f6e0c-9065-4aea-8585-401977b80eb2", ConcurrencyStamp = "ae951eeb-b2dd-469c-8aa7-a66b5a01e0fc", Name = "Manager", NormalizedName = "MANAGER" },
+                        new { Id = "75919971-8eac-4fae-86b1-147ecdddd3f3", ConcurrencyStamp = "b34d96d2-17a4-4531-ad84-ce273ff98d1d", Name = "Customer", NormalizedName = "CUSTOMER" }
                     );
                 });
 

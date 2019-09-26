@@ -7,7 +7,6 @@ namespace FoodService.Models
 {
     public enum PriceCategory
     {
-        
         ONE = 1,
         TWO,
         THREE,

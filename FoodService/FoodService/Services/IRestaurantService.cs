@@ -1,13 +1,14 @@
-﻿using FoodService.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+﻿using FoodService.Models;
 
 namespace FoodService.Services
 {
     public interface IRestaurantService
     {
-        Task <List<Restaurant>> findAll();
+        Task<Restaurant> SaveRestaurantAsync(RestaurantRequest restaurantReq, long id);
+        Task<List<Restaurant>> findAll();
     }
 }
