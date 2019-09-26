@@ -1,2 +1,29 @@
-@model TModel
+@model EditRestaurantViewModel
 
+<form asp-controller="Meal" asp-action="@ViewData["Action"]" method="post">
+    <div class="form-group">
+        <label asp-for="AddMealRequest.Name"></label>
+        <input asp-for="AddMealRequest.Name">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AddMealRequest.Description"></label>
+        <input asp-for="AddMealRequest.Description">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AddMealRequest.Price.Amount"></label>
+        <input asp-for="AddMealRequest.Price.Amount">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AddMealRequest.Price.Currency"></label>
+        <input asp-for="AddMealRequest.Price.Currency">
+    </div>
+    
+     <div>
+         <input type="hidden" asp-for="AddMealRequest.RestaurantId" value="@Model.Restaurant.RestaurantId">
+     </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
