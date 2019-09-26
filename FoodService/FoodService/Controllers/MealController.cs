@@ -19,18 +19,18 @@ namespace FoodService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddMealRequest model)
+        public async Task<IActionResult> Add(AddMealRequest addMealRequest)
         {
-            await mealService.SaveMealAsync(model);
-            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant");
+            await mealService.SaveMealAsync(addMealRequest);
+            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = 1});
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(long Id)
         {
-          //  var meal = await mealService.GetMealByIdAsync(Id);
+            var meal = await mealService.GetMealByIdAsync(Id);
             await mealService.DeleteMeal(Id);
-            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant");
+            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = meal.Restaurant.RestaurantId});
         }
     }
 }

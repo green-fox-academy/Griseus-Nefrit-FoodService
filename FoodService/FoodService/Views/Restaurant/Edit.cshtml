@@ -12,18 +12,19 @@
     
     <div class="form-group">
         <label asp-for="AddMealRequest.Description"></label>
-        <input asp-for="@Model.AddMealRequest.Description" name="Description">
+        <input asp-for="AddMealRequest.Description" name="Description">
     </div>
     
     <div class="form-group">
-        <label asp-for="AddMealRequest.Price.Amount">Price</label>
-        <input asp-for="@Model.AddMealRequest.Price.Amount">
+        <label asp-for="AddMealRequest.Amount">Price</label>
+        <input asp-for="AddMealRequest.Amount">
     </div>
     
     <div class="form-group">
-        <label asp-for="AddMealRequest.Price.Currency"></label>
-        <input asp-for="@Model.AddMealRequest.Price.Currency">
+        <label asp-for="AddMealRequest.Currency"></label>
+        <input asp-for="AddMealRequest.Currency">
     </div>
+
     <button type="submit" class="btn btn-success">Add meal</button>
 </form>
 <br />
@@ -52,7 +53,7 @@
                 </form>
             </td>
         <td>
-            <form asp-controller="Meal" asp-action="Delete" method="post">
+            <form asp-controller="Meal" asp-action="Delete" method="post" asp-route-Id="@meal.MealId">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </td>

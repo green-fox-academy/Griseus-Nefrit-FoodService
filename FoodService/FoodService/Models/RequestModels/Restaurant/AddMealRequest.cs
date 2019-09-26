@@ -18,7 +18,9 @@ namespace FoodService.Models.RequestModels.Restaurant
         public string Currency { get; set; } = "Ft";
         */
         
-        public Price Price { get; set; }
+    //    public Price Price { get; set; }
+        public int Amount { get; set; }
+        public string Currency { get; set; }
 
         public long RestaurantId { get; set; }
     }
