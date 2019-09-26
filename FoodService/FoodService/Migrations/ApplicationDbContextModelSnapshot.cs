@@ -67,6 +67,26 @@ namespace FoodService.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("FoodService.Models.Restaurant", b =>
+                {
+                    b.Property<long>("RestaurantId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("FoodType");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("PriceCategory");
+
+                    b.HasKey("RestaurantId");
+
+                    b.ToTable("Restaurants");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -90,9 +110,9 @@ namespace FoodService.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "5a880449-8a1e-4e27-bcc6-6761ef51e5e8", ConcurrencyStamp = "63fb047f-6974-47d8-ab91-36fe309d14ea", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "d944b903-e132-4a60-b70d-a03860221b94", ConcurrencyStamp = "f587aed2-a9af-466c-ae09-ed190c61b80e", Name = "Manager", NormalizedName = "MANAGER" },
-                        new { Id = "7c55c4cf-e0be-452f-90b5-d2070bf7b526", ConcurrencyStamp = "5f58771e-6d5a-4684-aff7-9abcf53f2830", Name = "Customer", NormalizedName = "CUSTOMER" }
+                        new { Id = "7379e162-480a-4220-85b4-776c421a6946", ConcurrencyStamp = "ef451a84-a658-4df7-b299-50cd45fb0b03", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "92e49094-a928-4cb4-87e2-8876e8f0a445", ConcurrencyStamp = "296f6cb4-1e34-4e06-99fe-01d512355dab", Name = "Manager", NormalizedName = "MANAGER" },
+                        new { Id = "7bb9c4e7-254e-4a9e-9ad6-095a12a80870", ConcurrencyStamp = "63624cc7-6d08-4e44-ae03-d3e01aa910b0", Name = "Customer", NormalizedName = "CUSTOMER" }
                     );
                 });
 
