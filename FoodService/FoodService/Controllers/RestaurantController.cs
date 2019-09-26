@@ -4,24 +4,41 @@ using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models;
 using Microsoft.AspNetCore.Mvc;
+using FoodService.Services;
 
 namespace FoodService.Controllers
 {
     public class RestaurantController : Controller
     {
+        private readonly IRestaurantService restaurantService;
+        private readonly UserManager<AppUser> userMgr;
 
-        private readonly IAuthorService authorService;
-
-        [HttpPost("/AddRestaurant")]
-        public IActionResult AddRestaurant(Restaurant newRestaurant)
+        public RestaurantController(IRestaurantService restaurantService)
         {
-            //itt kéne valahogy az adatbázisba egy új ID-vel berakni
+            this.restaurantService = restaurantService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(long id, RestaurantRequest restaurantReq)
+        {
+            var currentUser = await userMgr.GetUserAsync(HttpContext.User);
+            if (!currentUser.IsInRole("Managers"))
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
+            if(ModelState.IsValid)
+            {
+                await restaurantService.SaveRestaurantAsync(restaurantReq, id);
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
             return View();
         }
 
-        [HttpGet("/home")]
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Add()
         {
+
             return View();
         }
     }
