@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using FoodService.Models;
 using Microsoft.AspNetCore.Mvc;
 using FoodService.Services;
+using Microsoft.AspNetCore.Identity;
+using FoodService.Models.Identity;
 
 namespace FoodService.Controllers
 {
     public class RestaurantController : Controller
     {
         private readonly IRestaurantService restaurantService;
-        private readonly UserManager<AppUser> userMgr;
 
         public RestaurantController(IRestaurantService restaurantService)
         {
@@ -21,8 +22,7 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(long id, RestaurantRequest restaurantReq)
         {
-            var currentUser = await userMgr.GetUserAsync(HttpContext.User);
-            if (!currentUser.IsInRole("Managers"))
+            if (!User.IsInRole("Manager"))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
