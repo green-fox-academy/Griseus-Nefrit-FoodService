@@ -28,7 +28,7 @@ namespace FoodService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<AppUser, IdentityRole<int>>(options =>
+            services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 // Password settings
                 options.Password.RequireDigit = true;
@@ -36,7 +36,8 @@ namespace FoodService
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
-            }).AddEntityFrameworkStores<ApplicationDbContext>();
+            }).AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddDbContext<ApplicationDbContext>(build =>
           {
               build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
@@ -48,8 +49,10 @@ namespace FoodService
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<AppUser> userManager)
         {
+            ApplicationDbInitializer.SeedUsers(userManager);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -58,13 +61,7 @@ namespace FoodService
 
             app.UseStaticFiles();
             app.UseAuthentication();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

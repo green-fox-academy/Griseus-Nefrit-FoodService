@@ -42,6 +42,7 @@ namespace FoodService.Services.User
             var result = await userMgr.CreateAsync(user, regRequest.Password);
             if (result.Succeeded)
             {
+                await userMgr.AddToRoleAsync(user, regRequest.Manager ? "Manager" : "Customer");
                 await signInMgr.SignInAsync(user, isPersistent: false);
             }
 
