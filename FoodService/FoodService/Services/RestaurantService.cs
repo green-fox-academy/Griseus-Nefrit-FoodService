@@ -9,16 +9,16 @@ namespace FoodService.Services
 {
     public class RestaurantService : IRestaurantService
     {
-        private readonly ApplicationContext applicationContext;
+        private readonly ApplicationDbContext applicationDbContext;
 
-        public RestaurantService(ApplicationContext applicationContext)
+        public RestaurantService(ApplicationDbContext applicationDbContext)
         {
-            this.applicationContext = applicationContext;
+            this.applicationDbContext = applicationDbContext;
         }
 
         public async Task<List<Restaurant>> findAll()
         {
-            List<Restaurant> restaurantList = await applicationContext.Restaurants.ToListAsync();
+            List<Restaurant> restaurantList = await applicationDbContext.Restaurants.ToListAsync();
             return restaurantList;
         }
     }
