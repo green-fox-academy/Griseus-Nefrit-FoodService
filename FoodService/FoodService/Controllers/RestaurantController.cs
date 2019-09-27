@@ -42,7 +42,7 @@ namespace FoodService.Controllers
             return View();
         }
 
-        [HttpGet("/edit/{id}")]
+        [HttpGet]
         public async Task<IActionResult> Edit(long id)
         {
             var restaurant = await restaurantService.FindByIdAsync(id);
@@ -57,7 +57,7 @@ namespace FoodService.Controllers
             return View(request);
         }
 
-        [HttpPost("/edit/{id}")]
+        [HttpPost]
         public async Task<IActionResult> Edit(RestaurantRequest restaurantReq, long id)
         {
             if (ModelState.IsValid)
