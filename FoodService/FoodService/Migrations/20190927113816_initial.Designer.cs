@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190927082153_InitAndMapRestaurantToUser2")]
-    partial class InitAndMapRestaurantToUser2
+    [Migration("20190927113816_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,8 +51,6 @@ namespace FoodService.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("SecurityStamp");
-
-                    b.Property<string>("Teszt");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -119,9 +117,9 @@ namespace FoodService.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "a3385738-ef48-4b3d-8769-2a0dd5916666", ConcurrencyStamp = "5dcbfac0-8cd8-43d0-b976-9afefb066cd7", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "e08fb599-8d4c-4451-8e9d-8935ccf75eb5", ConcurrencyStamp = "66a3a3ed-8ce8-4be2-aafd-386ec04c5e62", Name = "Manager", NormalizedName = "MANAGER" },
-                        new { Id = "ff475a7c-9795-42fa-b1b0-7b39f831ef55", ConcurrencyStamp = "50e80e92-6222-42d8-869c-24f4612bc989", Name = "Customer", NormalizedName = "CUSTOMER" }
+                        new { Id = "c0bac1f1-5071-432c-be21-9914e44b47f1", ConcurrencyStamp = "a9915b73-6d86-4bbb-b7b1-d29e696c39d2", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "ee0fda56-eba4-494c-8ecb-7aeb3ac789d1", ConcurrencyStamp = "04c8557b-7c2b-424a-8a30-d31424706e2d", Name = "Manager", NormalizedName = "MANAGER" },
+                        new { Id = "aae575ee-fc30-49d1-ab59-e45b2a14f81e", ConcurrencyStamp = "8f825299-c830-4679-a2b7-dcadcb55881b", Name = "Customer", NormalizedName = "CUSTOMER" }
                     );
                 });
 

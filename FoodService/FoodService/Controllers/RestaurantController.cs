@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using FoodService.Services;
 using Microsoft.AspNetCore.Identity;
 using FoodService.Models.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FoodService.Controllers
 {
+    [Authorize]
     public class RestaurantController : Controller
     {
         private readonly IRestaurantService restaurantService;
@@ -19,6 +21,7 @@ namespace FoodService.Controllers
             this.restaurantService = restaurantService;
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         public async Task<IActionResult> Add(RestaurantRequest restaurantReq)
         {
@@ -35,6 +38,7 @@ namespace FoodService.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpGet]
         public IActionResult Add()
         {
@@ -42,6 +46,7 @@ namespace FoodService.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Manager, Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(long id)
         {
@@ -57,6 +62,7 @@ namespace FoodService.Controllers
             return View(request);
         }
 
+        [Authorize(Roles = "Manager, Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(RestaurantRequest restaurantReq, long id)
         {
