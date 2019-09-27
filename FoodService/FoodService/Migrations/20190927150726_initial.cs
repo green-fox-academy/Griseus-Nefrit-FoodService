@@ -48,6 +48,20 @@ namespace FoodService.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Prices",
+                columns: table => new
+                {
+                    PriceId = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Amount = table.Column<int>(nullable: false),
+                    Currency = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Prices", x => x.PriceId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -159,10 +173,10 @@ namespace FoodService.Migrations
                 {
                     RestaurantId = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    FoodType = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    City = table.Column<string>(nullable: false),
+                    FoodType = table.Column<string>(nullable: false),
                     PriceCategory = table.Column<int>(nullable: false),
                     ManagerId = table.Column<string>(nullable: false)
                 },
@@ -177,20 +191,48 @@ namespace FoodService.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c0bac1f1-5071-432c-be21-9914e44b47f1", "a9915b73-6d86-4bbb-b7b1-d29e696c39d2", "Admin", "ADMIN" });
+            migrationBuilder.CreateTable(
+                name: "Meals",
+                columns: table => new
+                {
+                    MealId = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    PriceId = table.Column<long>(nullable: true),
+                    RestaurantId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Meals", x => x.MealId);
+                    table.ForeignKey(
+                        name: "FK_Meals_Prices_PriceId",
+                        column: x => x.PriceId,
+                        principalTable: "Prices",
+                        principalColumn: "PriceId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Meals_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
+                        principalColumn: "RestaurantId",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ee0fda56-eba4-494c-8ecb-7aeb3ac789d1", "04c8557b-7c2b-424a-8a30-d31424706e2d", "Manager", "MANAGER" });
+                values: new object[] { "689e07d2-4cd4-43cc-aade-f4f033450687", "925917a5-dec0-4742-9213-d99e4a569356", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "aae575ee-fc30-49d1-ab59-e45b2a14f81e", "8f825299-c830-4679-a2b7-dcadcb55881b", "Customer", "CUSTOMER" });
+                values: new object[] { "f4e1f6e8-2da2-426b-8cc5-ec1daeac8d5e", "2e7d4730-8df8-4379-9fc0-26daa10c0d00", "Manager", "MANAGER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "141e78f5-da33-4f78-9441-6c147f7d2fe8", "93af352c-f06b-4e8d-bef8-cb73099fe458", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -230,6 +272,16 @@ namespace FoodService.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Meals_PriceId",
+                table: "Meals",
+                column: "PriceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Meals_RestaurantId",
+                table: "Meals",
+                column: "RestaurantId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Restaurants_ManagerId",
                 table: "Restaurants",
                 column: "ManagerId");
@@ -253,10 +305,16 @@ namespace FoodService.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Restaurants");
+                name: "Meals");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Prices");
+
+            migrationBuilder.DropTable(
+                name: "Restaurants");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models;
 using FoodService.Services;
+using FoodService.Services.RestaurantService;
 using Microsoft.AspNetCore.Mvc;
 using ReflectionIT.Mvc.Paging;
 

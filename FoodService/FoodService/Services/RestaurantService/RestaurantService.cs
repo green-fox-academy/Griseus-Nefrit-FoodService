@@ -1,4 +1,3 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,7 +5,7 @@ using FoodService.Models;
 using FoodService.Services.User;
 using Microsoft.EntityFrameworkCore;
 
-namespace FoodService.Services
+namespace FoodService.Services.RestaurantService
 {
     public class RestaurantService : IRestaurantService
     {
@@ -19,6 +18,15 @@ namespace FoodService.Services
             this.userService = userService;
         }
 
+        public async Task<Restaurant> GetRestaurantByIdAsync(long id)
+        {
+            var restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price).FirstOrDefaultAsync(t => t.RestaurantId == id);
+            if (restaurant == null)
+            {
+                return null;
+            }
+            return restaurant;
+        }
         public async Task<Restaurant> SaveRestaurantAsync(RestaurantRequest restaurantReq, string managerName)
         {
             var manager = await userService.FindUserByNameOrEmail(managerName);
@@ -48,16 +56,16 @@ namespace FoodService.Services
             return restaurantList;
         }
 
-        public async Task<Restaurant> EditRestaurantAsync(long id, RestaurantRequest restaurantReq)
+        public async Task<Restaurant> EditRestaurantAsync(long id, Restaurant restaurant)
         {
-            var restaurant = await FindByIdAsync(id);
-            restaurant.Name = restaurantReq.Name;
-            restaurant.Description = restaurantReq.Description;
-            restaurant.City = restaurantReq.City;
-            restaurant.FoodType = restaurantReq.FoodType;
-            restaurant.PriceCategory = restaurantReq.PriceCategory;
+            var editedRestaurant = await GetRestaurantByIdAsync(id);
+            editedRestaurant.Name = restaurant.Name;
+            editedRestaurant.Description = restaurant.Description;
+            editedRestaurant.City = restaurant.City;
+            editedRestaurant.FoodType = restaurant.FoodType;
+            editedRestaurant.PriceCategory = restaurant.PriceCategory;
             await applicationDbContext.SaveChangesAsync();
-            return restaurant;
+            return editedRestaurant;
         }
 
         public async Task<Restaurant> FindByIdAsync(long restaurantId)

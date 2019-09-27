@@ -1,13 +1,17 @@
-﻿using System;
+
+using System.Threading.Tasks;
+using FoodService.Models.RequestModels.Restaurant;
+using FoodService.Services.RestaurantService;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using FoodService.Models;
-using Microsoft.AspNetCore.Mvc;
 using FoodService.Services;
 using Microsoft.AspNetCore.Identity;
 using FoodService.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
+
 
 namespace FoodService.Controllers
 {
@@ -21,7 +25,6 @@ namespace FoodService.Controllers
             this.restaurantService = restaurantService;
         }
 
-        [Authorize(Roles = "Manager")]
         [HttpPost]
         public async Task<IActionResult> Add(RestaurantRequest restaurantReq)
         {
@@ -54,21 +57,21 @@ namespace FoodService.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
-            var restaurant = await restaurantService.FindByIdAsync(id);
-            var request = new RestaurantRequest
+            var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
+            /*/var request = new RestaurantRequest
             {
                 Name = restaurant.Name,
                 Description = restaurant.Description,
                 City = restaurant.City,
                 FoodType = restaurant.FoodType,
                 PriceCategory = restaurant.PriceCategory
-            };
-            return View(request);
+            };*/
+            return View(restaurant);
         }
 
         [Authorize(Roles = "Manager, Admin")]
         [HttpPost]
-        public async Task<IActionResult> Edit(RestaurantRequest restaurantReq, long id)
+        public async Task<IActionResult> Edit(Restaurant restaurant, long id)
         {
             if (!await restaurantService.ValidateAccess(id, User.Identity.Name))
             {
@@ -77,10 +80,10 @@ namespace FoodService.Controllers
 
             if (ModelState.IsValid)
             {
-                await restaurantService.EditRestaurantAsync(id, restaurantReq);
+                await restaurantService.EditRestaurantAsync(id, restaurant);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            return View(restaurantReq);
+            return View(restaurant);
         }
     }
 }

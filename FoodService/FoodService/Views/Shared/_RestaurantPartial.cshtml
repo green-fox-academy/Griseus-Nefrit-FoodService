@@ -1,4 +1,4 @@
-﻿@model RestaurantRequest
+﻿@model Restaurant
 
 <form asp-controller="Restaurant" asp-action="@ViewData["Action"]" method="post">
     <div class="form-group">
@@ -26,6 +26,7 @@
         <input type="text" asp-for="PriceCategory" class="form-control" />
         <span asp-validation-for="PriceCategory" class="text-danger"></span>
     </div>
+    <input type="hidden" asp-for="Manager" />
     <button type="submit" class="btn btn-primary">@ViewData["Action"]</button>
     <a asp-controller="Home" asp-action="Index" class="btn btn-secondary" role="button">Cancel</a>
 </form>
