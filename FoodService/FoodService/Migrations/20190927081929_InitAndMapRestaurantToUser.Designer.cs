@@ -3,14 +3,16 @@ using System;
 using FoodService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190927081929_InitAndMapRestaurantToUser")]
+    partial class InitAndMapRestaurantToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,9 +117,9 @@ namespace FoodService.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "3792ceca-cb2a-4d35-bfda-14267c1615a5", ConcurrencyStamp = "18708b7f-c1ba-406e-a800-0813c4fa1643", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "7b17f047-e5d1-467c-a2aa-57e4f803a566", ConcurrencyStamp = "e9ac0dbd-35ff-47eb-9f91-6efcf0d61349", Name = "Manager", NormalizedName = "MANAGER" },
-                        new { Id = "2d6def54-9942-4971-bb1c-710062751f01", ConcurrencyStamp = "b93576b6-e891-4900-b8e5-645d6b1f4f17", Name = "Customer", NormalizedName = "CUSTOMER" }
+                        new { Id = "227e064a-36dd-41c5-92f0-4320cd1bc13b", ConcurrencyStamp = "081546cb-f1fc-476d-a341-e0d2da19e788", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "fcd6cf29-56fb-4546-b0b3-3bc677353d44", ConcurrencyStamp = "4226118d-de62-4399-9bfd-3a64a852290a", Name = "Manager", NormalizedName = "MANAGER" },
+                        new { Id = "110d96be-7146-4d9d-85d7-4a1a9a7bec72", ConcurrencyStamp = "ff5897ac-f9ad-4d79-b00e-5e0f53d24cf5", Name = "Customer", NormalizedName = "CUSTOMER" }
                     );
                 });
 

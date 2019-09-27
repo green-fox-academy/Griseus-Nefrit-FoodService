@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FoodService.Models.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace FoodService.Models
         public string City { get; set; }
         public string FoodType { get; set; }
         public PriceCategory PriceCategory { get; set; }
+        [Required]
+        public AppUser Manager { get; set; }
     }
 }

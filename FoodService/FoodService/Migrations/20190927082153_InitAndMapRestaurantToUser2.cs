@@ -2,39 +2,44 @@
 
 namespace FoodService.Migrations
 {
-    public partial class check0926 : Migration
+    public partial class InitAndMapRestaurantToUser2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "7379e162-480a-4220-85b4-776c421a6946", "ef451a84-a658-4df7-b299-50cd45fb0b03" });
+                keyValues: new object[] { "110d96be-7146-4d9d-85d7-4a1a9a7bec72", "ff5897ac-f9ad-4d79-b00e-5e0f53d24cf5" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "7bb9c4e7-254e-4a9e-9ad6-095a12a80870", "63624cc7-6d08-4e44-ae03-d3e01aa910b0" });
+                keyValues: new object[] { "227e064a-36dd-41c5-92f0-4320cd1bc13b", "081546cb-f1fc-476d-a341-e0d2da19e788" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "92e49094-a928-4cb4-87e2-8876e8f0a445", "296f6cb4-1e34-4e06-99fe-01d512355dab" });
+                keyValues: new object[] { "fcd6cf29-56fb-4546-b0b3-3bc677353d44", "4226118d-de62-4399-9bfd-3a64a852290a" });
+
+            migrationBuilder.AddColumn<string>(
+                name: "Teszt",
+                table: "AspNetUsers",
+                nullable: true);
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "4eb15690-990f-4253-8c07-5aa8d6fcdcb6", "a1b01dc8-a1f8-4508-88be-e8e92b7d1267", "Admin", "ADMIN" });
+                values: new object[] { "a3385738-ef48-4b3d-8769-2a0dd5916666", "5dcbfac0-8cd8-43d0-b976-9afefb066cd7", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "23f223b1-8f4b-428b-a55b-a69af477b6c9", "7462f32e-d1ac-4f64-9833-869322d578da", "Manager", "MANAGER" });
+                values: new object[] { "e08fb599-8d4c-4451-8e9d-8935ccf75eb5", "66a3a3ed-8ce8-4be2-aafd-386ec04c5e62", "Manager", "MANAGER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "80ae65d0-6bed-481f-acbb-5076a218f8cb", "c20e61cb-0cf9-42bf-ac9d-f96044b6d04e", "Customer", "CUSTOMER" });
+                values: new object[] { "ff475a7c-9795-42fa-b1b0-7b39f831ef55", "50e80e92-6222-42d8-869c-24f4612bc989", "Customer", "CUSTOMER" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -42,32 +47,36 @@ namespace FoodService.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "23f223b1-8f4b-428b-a55b-a69af477b6c9", "7462f32e-d1ac-4f64-9833-869322d578da" });
+                keyValues: new object[] { "a3385738-ef48-4b3d-8769-2a0dd5916666", "5dcbfac0-8cd8-43d0-b976-9afefb066cd7" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "4eb15690-990f-4253-8c07-5aa8d6fcdcb6", "a1b01dc8-a1f8-4508-88be-e8e92b7d1267" });
+                keyValues: new object[] { "e08fb599-8d4c-4451-8e9d-8935ccf75eb5", "66a3a3ed-8ce8-4be2-aafd-386ec04c5e62" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "80ae65d0-6bed-481f-acbb-5076a218f8cb", "c20e61cb-0cf9-42bf-ac9d-f96044b6d04e" });
+                keyValues: new object[] { "ff475a7c-9795-42fa-b1b0-7b39f831ef55", "50e80e92-6222-42d8-869c-24f4612bc989" });
+
+            migrationBuilder.DropColumn(
+                name: "Teszt",
+                table: "AspNetUsers");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "7379e162-480a-4220-85b4-776c421a6946", "ef451a84-a658-4df7-b299-50cd45fb0b03", "Admin", "ADMIN" });
+                values: new object[] { "227e064a-36dd-41c5-92f0-4320cd1bc13b", "081546cb-f1fc-476d-a341-e0d2da19e788", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "92e49094-a928-4cb4-87e2-8876e8f0a445", "296f6cb4-1e34-4e06-99fe-01d512355dab", "Manager", "MANAGER" });
+                values: new object[] { "fcd6cf29-56fb-4546-b0b3-3bc677353d44", "4226118d-de62-4399-9bfd-3a64a852290a", "Manager", "MANAGER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "7bb9c4e7-254e-4a9e-9ad6-095a12a80870", "63624cc7-6d08-4e44-ae03-d3e01aa910b0", "Customer", "CUSTOMER" });
+                values: new object[] { "110d96be-7146-4d9d-85d7-4a1a9a7bec72", "ff5897ac-f9ad-4d79-b00e-5e0f53d24cf5", "Customer", "CUSTOMER" });
         }
     }
 }
