@@ -42,7 +42,6 @@ namespace FoodService.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-
             return View();
         }
 
