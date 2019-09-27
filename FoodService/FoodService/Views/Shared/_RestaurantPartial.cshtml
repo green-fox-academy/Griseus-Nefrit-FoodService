@@ -1,6 +1,6 @@
 ﻿@model RestaurantRequest
 
-<form asp-controller="Restaurant" asp-action="Add" method="post">
+<form asp-controller="Restaurant" asp-action="@ViewData["Action"]" method="post">
     <div class="form-group">
         <label asp-for="Name">Name of the restaurant</label>
         <input type="text" asp-for="Name" class="form-control" />
@@ -26,5 +26,5 @@
         <input type="text" asp-for="PriceCategory" class="form-control" />
         <span asp-validation-for="PriceCategory" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Add restaurant</button>
+    <button type="submit" class="btn btn-primary">@ViewData["Action"]</button>
 </form>

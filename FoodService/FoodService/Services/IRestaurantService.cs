@@ -8,9 +8,10 @@ namespace FoodService.Services
 {
     public interface IRestaurantService
     {
-        Task<Restaurant> SaveRestaurantAsync(RestaurantRequest restaurantReq, long id);
+        Task<Restaurant> SaveRestaurantAsync(RestaurantRequest restaurantReq, string managerName);
         Task<List<Restaurant>> findAll();
         Task<Restaurant> FindByIdAsync(long postId);
-        Task<Restaurant> EditAsync(long id, RestaurantRequest request);
+        Task<Restaurant> EditRestaurantAsync(long id, RestaurantRequest request);
+        Task<List<Restaurant>> findByManagerNameOrEmail(string managerName);
     }
 }

@@ -19,6 +19,11 @@ namespace FoodService.Services.User
             this.signInMgr = signInMgr;
         }
 
+        public async Task<AppUser> FindUserByNameOrEmail(string nameOrEmailAddr)
+        {
+            return await userMgr.FindByEmailAsync(nameOrEmailAddr);
+        }
+
         public async Task<SignInResult> LoginAsync(LoginRequest loginRequest)
         {
             var result = await signInMgr.PasswordSignInAsync(userName: loginRequest.Email,

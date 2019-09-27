@@ -3,14 +3,16 @@ using System;
 using FoodService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190927082514_InitAndMapRestaurantToUser3")]
+    partial class InitAndMapRestaurantToUser3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,6 +52,8 @@ namespace FoodService.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<string>("Teszt");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -72,14 +76,13 @@ namespace FoodService.Migrations
                     b.Property<long>("RestaurantId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("AppUserId");
+
                     b.Property<string>("City");
 
                     b.Property<string>("Description");
 
                     b.Property<string>("FoodType");
-
-                    b.Property<string>("ManagerId")
-                        .IsRequired();
 
                     b.Property<string>("Name");
 
@@ -87,7 +90,7 @@ namespace FoodService.Migrations
 
                     b.HasKey("RestaurantId");
 
-                    b.HasIndex("ManagerId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Restaurants");
                 });
@@ -115,9 +118,9 @@ namespace FoodService.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "3792ceca-cb2a-4d35-bfda-14267c1615a5", ConcurrencyStamp = "18708b7f-c1ba-406e-a800-0813c4fa1643", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "7b17f047-e5d1-467c-a2aa-57e4f803a566", ConcurrencyStamp = "e9ac0dbd-35ff-47eb-9f91-6efcf0d61349", Name = "Manager", NormalizedName = "MANAGER" },
-                        new { Id = "2d6def54-9942-4971-bb1c-710062751f01", ConcurrencyStamp = "b93576b6-e891-4900-b8e5-645d6b1f4f17", Name = "Customer", NormalizedName = "CUSTOMER" }
+                        new { Id = "524910cd-9a53-43ac-b3c6-0340c10384de", ConcurrencyStamp = "b7e9c44b-63d2-49b0-815a-5092642f1e45", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "38de4664-f62d-410e-b918-cec751aa4a1d", ConcurrencyStamp = "adc0ea8d-39e9-43a2-a362-c460e57497d3", Name = "Manager", NormalizedName = "MANAGER" },
+                        new { Id = "b207baae-0696-4fcf-9807-1214981e6b64", ConcurrencyStamp = "76cca271-ea20-4f17-af6c-25706d7b2566", Name = "Customer", NormalizedName = "CUSTOMER" }
                     );
                 });
 
@@ -207,10 +210,9 @@ namespace FoodService.Migrations
 
             modelBuilder.Entity("FoodService.Models.Restaurant", b =>
                 {
-                    b.HasOne("FoodService.Models.Identity.AppUser", "Manager")
+                    b.HasOne("FoodService.Models.Identity.AppUser")
                         .WithMany("OwnedRestaurants")
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
