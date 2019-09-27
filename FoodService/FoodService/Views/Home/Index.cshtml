@@ -1,0 +1,47 @@
+﻿
+@model ReflectionIT.Mvc.Paging.PagingList<FoodService.Models.Restaurant>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+
+@{
+    ViewData["Title"] = "Restaurants";
+}
+
+@if (User.IsInRole("Manager"))
+{
+    <h1>My Restaurants</h1>
+}
+else
+{
+    <h1>Available Restaurants</h1>
+}
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">FoodType</th>
+            <th scope="col">Price Range</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var restaurants in Model)
+        {
+            <tr>
+                <th scope="row">
+                    @Html.DisplayFor(modelRestaurant => restaurants.Name)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => restaurants.FoodType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => restaurants.PriceCategory)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<nav aria-label="Restaurants" class="nav">
+    <vc:pager paging-list="@Model" />
+</nav>

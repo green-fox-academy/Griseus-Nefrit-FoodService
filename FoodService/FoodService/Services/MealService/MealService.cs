@@ -7,9 +7,9 @@ namespace FoodService.Services.MealService
 {
     public class MealService : IMealService
     {
-        private readonly ApplicationDBContext _applicationDbContext;
+        private readonly ApplicationDbContext _applicationDbContext;
 
-        public MealService(ApplicationDBContext applicationDbContext)
+        public MealService(ApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }
