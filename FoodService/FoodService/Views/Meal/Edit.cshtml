@@ -14,3 +14,5 @@
     ViewData["Action"] = "Edit";
     await Html.RenderPartialAsync("_MealPartial");
 }
+
+<a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Restaurant.RestaurantId">Cancel</a>

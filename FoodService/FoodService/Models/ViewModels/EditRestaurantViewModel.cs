@@ -5,7 +5,13 @@ namespace FoodService.ViewModels
 {
     public class EditRestaurantViewModel
     {
-      //  public Meal Meal { get; set; }
+
+        public EditRestaurantViewModel()
+        {
+            AddMealRequest= new AddMealRequest();
+            AddMealRequest.Price = new Price();
+        }
+
         public Restaurant Restaurant { get; set; }
 
         public AddMealRequest AddMealRequest { get; set; }

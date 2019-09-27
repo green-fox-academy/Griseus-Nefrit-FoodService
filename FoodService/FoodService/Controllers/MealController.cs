@@ -6,6 +6,7 @@ using FoodService.Services.MealService;
 using FoodService.Services.MealService;
 using FoodService.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodService.Controllers
 {
@@ -22,7 +23,8 @@ namespace FoodService.Controllers
         public async Task<IActionResult> Add(AddMealRequest addMealRequest)
         {
             await mealService.SaveMealAsync(addMealRequest);
-            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = 1});
+            
+            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = addMealRequest.RestaurantId});
         }
 
         [HttpPost]
@@ -36,26 +38,19 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long Id)
         {
-           // var meal = await mealService.GetMealByIdAsync(Id);
-           var viewmodel = new EditRestaurantViewModel();
-           var meal = await mealService.GetMealByIdAsync(Id);
-           
-           viewmodel.AddMealRequest= new AddMealRequest();
-           viewmodel.AddMealRequest.Price = new Price();
-           viewmodel.Restaurant = meal.Restaurant;
-           viewmodel.AddMealRequest.Name = meal.Name;
-           viewmodel.AddMealRequest.Description = meal.Description;
-           viewmodel.AddMealRequest.Price.Amount = meal.Price.Amount;
-           viewmodel.AddMealRequest.Price.Currency = meal.Price.Currency;
+           var viewmodel = await mealService.CreateViewModel(Id);
            return View(viewmodel);
         }
         
         [HttpPost]
-        public async Task<IActionResult> Edit(AddMealRequest addMealRequest)
+        public async Task<IActionResult> Edit(AddMealRequest addMealRequest, long Id)
         {
-            await mealService.SaveMealAsync(addMealRequest);
-            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = 1});
+           var meal = await mealService.GetMealByIdAsync(Id);
+          if (ModelState.IsValid)
+            {
+                await mealService.EditAsync(Id, addMealRequest);
+            }
+            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = meal.Restaurant.RestaurantId});
         }
-        
     }
 }
