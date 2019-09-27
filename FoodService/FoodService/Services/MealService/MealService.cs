@@ -59,25 +59,10 @@ namespace FoodService.Services.MealService
             viewmodel.AddMealRequest.Description = meal.Description;
             viewmodel.AddMealRequest.Price.Amount = meal.Price.Amount;
             viewmodel.AddMealRequest.Price.Currency = meal.Price.Currency;
+            viewmodel.AddMealRequest.RestaurantId = meal.Restaurant.RestaurantId;
             return viewmodel;
         }
         
-        public async Task UpdateMealAsync(AddMealRequest model)
-        {
-            var meal = new Meal();
-            meal.Price = new Price();
-            meal.Restaurant = await applicationContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
-                .FirstOrDefaultAsync(t => t.RestaurantId == model.RestaurantId);
-            meal.Description = model.Description;
-            meal.Price.Amount = model.Price.Amount;
-            meal.Price.Currency = model.Price.Currency;
-            meal.Name = model.Name;
-            meal.Restaurant.RestaurantId = model.RestaurantId;
-            applicationContext.Meals.Update(meal);
-           // await applicationContext.Meals.AddAsync(meal);
-            await applicationContext.SaveChangesAsync();
-        }
-
         public async Task EditAsync(long Id, AddMealRequest addMealRequest)
         {
             var meal = await GetMealByIdAsync(Id);

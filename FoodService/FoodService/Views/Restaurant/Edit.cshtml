@@ -3,11 +3,7 @@
 }
 @model EditRestaurantViewModel
 
-<h3>Add a new meal here: </h3>
-@{
-    ViewData["Action"] = "Add";
-    await Html.RenderPartialAsync("_MealPartial");
-}
+<a asp-controller="Meal" asp-action="Add">Add</a>
 
 <br />
 <h3>List of your current meals</h3>

@@ -1,7 +1,5 @@
 using System.Threading.Tasks;
-using FoodService.Models;
 using FoodService.Models.RequestModels.Restaurant;
-using FoodService.Services;
 using FoodService.Services.RestaurantService;
 using FoodService.ViewModels;
 using Microsoft.AspNetCore.Mvc;

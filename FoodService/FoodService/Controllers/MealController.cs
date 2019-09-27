@@ -1,12 +1,7 @@
 using System.Threading.Tasks;
-using FoodService.Models;
 using FoodService.Models.RequestModels.Restaurant;
-using FoodService.Services;
 using FoodService.Services.MealService;
-using FoodService.Services.MealService;
-using FoodService.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FoodService.Controllers
 {
@@ -18,7 +13,13 @@ namespace FoodService.Controllers
         {
             this.mealService = mealService;
         }
-
+        
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            return View();
+        }
+        
         [HttpPost]
         public async Task<IActionResult> Add(AddMealRequest addMealRequest)
         {
