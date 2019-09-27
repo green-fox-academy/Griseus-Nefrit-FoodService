@@ -18,7 +18,7 @@ namespace FoodService.Controllers
             this.userService = userService;
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await userService.Logout();
