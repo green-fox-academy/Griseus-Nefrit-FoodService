@@ -41,5 +41,31 @@ namespace FoodService.Controllers
 
             return View();
         }
+
+        [HttpGet("/edit/{id}")]
+        public async Task<IActionResult> Edit(long id)
+        {
+            var restaurant = await restaurantService.FindByIdAsync(id);
+            var request = new RestaurantRequest
+            {
+                Name = restaurant.Name,
+                Description = restaurant.Description,
+                City = restaurant.City,
+                FoodType = restaurant.FoodType,
+                PriceCategory = restaurant.PriceCategory
+            };
+            return View(request);
+        }
+
+        [HttpPost("/edit/{id}")]
+        public async Task<IActionResult> Edit(RestaurantRequest restaurantReq, long id)
+        {
+            if (ModelState.IsValid)
+            {
+                await restaurantService.EditAsync(id, restaurantReq);
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+            return View(restaurantReq);
+        }
     }
 }
