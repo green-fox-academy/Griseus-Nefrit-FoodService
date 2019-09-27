@@ -14,7 +14,6 @@ namespace FoodService
     public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<Restaurant> Restaurants { get; set; }
-
         public DbSet<Meal> Meals { get; set; }
         public DbSet<Price> Prices { get; set; }
         
