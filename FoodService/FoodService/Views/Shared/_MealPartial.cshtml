@@ -1,28 +1,28 @@
-@model EditRestaurantViewModel
+@model AddMealRequest
 
 <form asp-controller="Meal" asp-action="@ViewData["Action"]" method="post">
     <div class="form-group">
-        <label asp-for="AddMealRequest.Name" class="font-weight-bold"></label><br />
-        <input asp-for="AddMealRequest.Name">
+        <label asp-for="Name" class="font-weight-bold"></label><br />
+        <input asp-for="Name">
     </div>
 
     <div class="form-group">
-        <label asp-for="AddMealRequest.Description" class="font-weight-bold"></label><br />
-        <textarea asp-for="AddMealRequest.Description" rows="3"></textarea>
+        <label asp-for="Description" class="font-weight-bold"></label><br />
+        <textarea asp-for="Description" rows="3"></textarea>
     </div>
 
     <div class="form-group">
-        <label asp-for="AddMealRequest.Price.Amount" class="font-weight-bold"></label><br/>
-        <input asp-for="AddMealRequest.Price.Amount">
+        <label asp-for="Price.Amount" class="font-weight-bold"></label><br/>
+        <input asp-for="Price.Amount">
     </div>
 
     <div class="form-group">
-        <label asp-for="AddMealRequest.Price.Currency" class="font-weight-bold"></label><br/>
-        <input asp-for="AddMealRequest.Price.Currency">
+        <label asp-for="Price.Currency" class="font-weight-bold"></label><br/>
+        <input asp-for="Price.Currency">
     </div>
     
     <div>
-        <input type="hidden" asp-for="AddMealRequest.RestaurantId" value="@Model.AddMealRequest.RestaurantId">
+        <input type="hidden" asp-for="RestaurantId" value="@Model.RestaurantId">
     </div>
 
     <button type="submit" class="btn btn-success">Save</button>

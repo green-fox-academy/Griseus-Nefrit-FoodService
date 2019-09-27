@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Models;
-using FoodService.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodService.Services.MealService
@@ -50,6 +49,7 @@ namespace FoodService.Services.MealService
             return meal;
         }
 
+        /*
         public async Task<EditRestaurantViewModel> CreateViewModel(long Id)
         {
             var viewmodel = new EditRestaurantViewModel();
@@ -61,6 +61,24 @@ namespace FoodService.Services.MealService
             viewmodel.AddMealRequest.Price.Currency = meal.Price.Currency;
             viewmodel.AddMealRequest.RestaurantId = meal.Restaurant.RestaurantId;
             return viewmodel;
+        }
+        */
+
+        public async Task<AddMealRequest> CreateRequest(long Id)
+        {
+            var meal = await GetMealByIdAsync(Id);
+            AddMealRequest addMealRequest = new AddMealRequest()
+            {
+                Name = meal.Name,
+                Description = meal.Description,
+                Price = new Price()
+                {
+                    Amount = meal.Price.Amount,
+                    Currency = meal.Price.Currency,
+                },
+                RestaurantId = meal.Restaurant.RestaurantId
+            };
+            return addMealRequest;
         }
         
         public async Task EditAsync(long Id, AddMealRequest addMealRequest)

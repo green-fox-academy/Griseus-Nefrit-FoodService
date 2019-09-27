@@ -1,9 +1,9 @@
 @{
     ViewData["Title"] = "Edit Restaurant";
 }
-@model EditRestaurantViewModel
+@model Restaurant
 
-<a asp-controller="Meal" asp-action="Add">Add</a>
+<a asp-controller="Meal" asp-action="Add" asp-route-id="@Model.RestaurantId">Add</a>
 
 <br />
 <h3>List of your current meals</h3>
@@ -18,7 +18,7 @@
         <th>DELETE</th>
     </tr>
     </thead>
-    @foreach (var meal in Model.Restaurant.Meals)
+    @foreach (var meal in Model.Meals)
         {
             <tr>
             <td>@meal.MealId</td>

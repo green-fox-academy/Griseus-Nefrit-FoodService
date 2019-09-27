@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Services.RestaurantService;
-using FoodService.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodService.Controllers
@@ -18,12 +17,12 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long id)
         {
-            var viewmodel = new EditRestaurantViewModel();
+           // var viewmodel = new EditRestaurantViewModel();
             var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
-            var mealRequest = new AddMealRequest();
-            viewmodel.Restaurant = restaurant;
-            viewmodel.AddMealRequest = mealRequest;
-            return View(viewmodel);
+           // var mealRequest = new AddMealRequest();
+           // viewmodel.Restaurant = restaurant;
+          //  viewmodel.AddMealRequest = mealRequest;
+            return View(restaurant);
         }
     }
 }

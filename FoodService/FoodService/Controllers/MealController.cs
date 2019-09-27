@@ -15,9 +15,13 @@ namespace FoodService.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add(long Id)
         {
-            return View();
+            AddMealRequest addMealRequest = new AddMealRequest()
+            {
+                RestaurantId = Id
+            };
+            return View(addMealRequest);
         }
         
         [HttpPost]
@@ -39,8 +43,8 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long Id)
         {
-           var viewmodel = await mealService.CreateViewModel(Id);
-           return View(viewmodel);
+           var requestModel = await mealService.CreateRequest(Id);
+           return View(requestModel);
         }
         
         [HttpPost]
