@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190927082153_InitAndMapRestaurantToUser2")]
-    partial class InitAndMapRestaurantToUser2
+    [Migration("20190927135019_initial1")]
+    partial class initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("FoodService.Models.Identity.AppUser", b =>
@@ -52,8 +52,6 @@ namespace FoodService.Migrations
 
                     b.Property<string>("SecurityStamp");
 
-                    b.Property<string>("Teszt");
-
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -69,6 +67,43 @@ namespace FoodService.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("FoodService.Models.Meal", b =>
+                {
+                    b.Property<long>("MealId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.Property<long?>("PriceId");
+
+                    b.Property<long?>("RestaurantId");
+
+                    b.HasKey("MealId");
+
+                    b.HasIndex("PriceId");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("Meals");
+                });
+
+            modelBuilder.Entity("FoodService.Models.Price", b =>
+                {
+                    b.Property<long>("PriceId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<string>("Currency")
+                        .IsRequired();
+
+                    b.HasKey("PriceId");
+
+                    b.ToTable("Prices");
                 });
 
             modelBuilder.Entity("FoodService.Models.Restaurant", b =>
@@ -119,10 +154,27 @@ namespace FoodService.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "a3385738-ef48-4b3d-8769-2a0dd5916666", ConcurrencyStamp = "5dcbfac0-8cd8-43d0-b976-9afefb066cd7", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "e08fb599-8d4c-4451-8e9d-8935ccf75eb5", ConcurrencyStamp = "66a3a3ed-8ce8-4be2-aafd-386ec04c5e62", Name = "Manager", NormalizedName = "MANAGER" },
-                        new { Id = "ff475a7c-9795-42fa-b1b0-7b39f831ef55", ConcurrencyStamp = "50e80e92-6222-42d8-869c-24f4612bc989", Name = "Customer", NormalizedName = "CUSTOMER" }
-                    );
+                        new
+                        {
+                            Id = "80479e9d-303a-495d-9567-275befe4241a",
+                            ConcurrencyStamp = "a8f27e02-c787-4cdf-b9ea-8560f608eac7",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "a2c02b19-5902-4722-84b1-abb4723ce0aa",
+                            ConcurrencyStamp = "c54f2463-545c-45d7-ab00-39844b10ddc0",
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
+                        },
+                        new
+                        {
+                            Id = "4cc2ed29-d3ea-41da-ac4e-d61667761e1c",
+                            ConcurrencyStamp = "b4d913d9-3673-4e14-85aa-e3bd579879ad",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -207,6 +259,17 @@ namespace FoodService.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("FoodService.Models.Meal", b =>
+                {
+                    b.HasOne("FoodService.Models.Price", "Price")
+                        .WithMany()
+                        .HasForeignKey("PriceId");
+
+                    b.HasOne("FoodService.Models.Restaurant", "Restaurant")
+                        .WithMany("Meals")
+                        .HasForeignKey("RestaurantId");
                 });
 
             modelBuilder.Entity("FoodService.Models.Restaurant", b =>

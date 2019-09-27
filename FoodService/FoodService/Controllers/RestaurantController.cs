@@ -1,12 +1,16 @@
-﻿using System;
+
+using System.Threading.Tasks;
+using FoodService.Models.RequestModels.Restaurant;
+using FoodService.Services.RestaurantService;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using FoodService.Models;
-using Microsoft.AspNetCore.Mvc;
 using FoodService.Services;
 using Microsoft.AspNetCore.Identity;
 using FoodService.Models.Identity;
+
 
 namespace FoodService.Controllers
 {
@@ -17,6 +21,13 @@ namespace FoodService.Controllers
         public RestaurantController(IRestaurantService restaurantService)
         {
             this.restaurantService = restaurantService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(long id)
+        {
+            var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
+            return View(restaurant);
         }
 
         [HttpPost]
@@ -38,7 +49,6 @@ namespace FoodService.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-
             return View();
         }
     }

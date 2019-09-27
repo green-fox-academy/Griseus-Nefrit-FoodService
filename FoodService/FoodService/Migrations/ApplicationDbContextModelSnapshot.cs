@@ -14,7 +14,7 @@ namespace FoodService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("FoodService.Models.Identity.AppUser", b =>
@@ -67,6 +67,43 @@ namespace FoodService.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("FoodService.Models.Meal", b =>
+                {
+                    b.Property<long>("MealId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.Property<long?>("PriceId");
+
+                    b.Property<long?>("RestaurantId");
+
+                    b.HasKey("MealId");
+
+                    b.HasIndex("PriceId");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("Meals");
+                });
+
+            modelBuilder.Entity("FoodService.Models.Price", b =>
+                {
+                    b.Property<long>("PriceId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<string>("Currency")
+                        .IsRequired();
+
+                    b.HasKey("PriceId");
+
+                    b.ToTable("Prices");
+                });
+
             modelBuilder.Entity("FoodService.Models.Restaurant", b =>
                 {
                     b.Property<long>("RestaurantId")
@@ -115,10 +152,27 @@ namespace FoodService.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "3792ceca-cb2a-4d35-bfda-14267c1615a5", ConcurrencyStamp = "18708b7f-c1ba-406e-a800-0813c4fa1643", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "7b17f047-e5d1-467c-a2aa-57e4f803a566", ConcurrencyStamp = "e9ac0dbd-35ff-47eb-9f91-6efcf0d61349", Name = "Manager", NormalizedName = "MANAGER" },
-                        new { Id = "2d6def54-9942-4971-bb1c-710062751f01", ConcurrencyStamp = "b93576b6-e891-4900-b8e5-645d6b1f4f17", Name = "Customer", NormalizedName = "CUSTOMER" }
-                    );
+                        new
+                        {
+                            Id = "80479e9d-303a-495d-9567-275befe4241a",
+                            ConcurrencyStamp = "a8f27e02-c787-4cdf-b9ea-8560f608eac7",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "a2c02b19-5902-4722-84b1-abb4723ce0aa",
+                            ConcurrencyStamp = "c54f2463-545c-45d7-ab00-39844b10ddc0",
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
+                        },
+                        new
+                        {
+                            Id = "4cc2ed29-d3ea-41da-ac4e-d61667761e1c",
+                            ConcurrencyStamp = "b4d913d9-3673-4e14-85aa-e3bd579879ad",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -203,6 +257,17 @@ namespace FoodService.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("FoodService.Models.Meal", b =>
+                {
+                    b.HasOne("FoodService.Models.Price", "Price")
+                        .WithMany()
+                        .HasForeignKey("PriceId");
+
+                    b.HasOne("FoodService.Models.Restaurant", "Restaurant")
+                        .WithMany("Meals")
+                        .HasForeignKey("RestaurantId");
                 });
 
             modelBuilder.Entity("FoodService.Models.Restaurant", b =>

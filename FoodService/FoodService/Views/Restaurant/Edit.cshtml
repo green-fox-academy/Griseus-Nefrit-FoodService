@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Edit Restaurant";
+}
+@model Restaurant
+
+<form asp-controller="Meal" asp-action="Add" method="get" asp-route-Id="@Model.RestaurantId">
+    <button type="submit" class="btn btn-success">Add</button>
+</form>
+<br />
+<h3>List of your current meals</h3>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>DESCRIPTION</th>
+        <th>PRICE</th>
+        <th>EDIT</th>
+        <th>DELETE</th>
+    </tr>
+    </thead>
+    @foreach (var meal in Model.Meals)
+        {
+            <tr>
+            <td>@meal.MealId</td>
+            <td>@meal.Name</td>
+            <td>@meal.Description</td>
+            <td>@meal.Price.Amount @meal.Price.Currency</td>
+            <td>
+                <form asp-controller="Meal" asp-action="Edit" method="get" asp-route-Id="@meal.MealId">
+                    <button type="submit" class="btn btn-success">Edit</button>
+                </form>
+            </td>
+        <td>
+            <form asp-controller="Meal" asp-action="Delete" method="post" asp-route-Id="@meal.MealId">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </td>
+    </tr>
+        }
+</table>

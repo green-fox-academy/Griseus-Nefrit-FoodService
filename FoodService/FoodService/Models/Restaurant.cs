@@ -1,15 +1,13 @@
-﻿using FoodService.Models.Identity;
-using System;
+using FoodService.Models.Identity;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FoodService.Models
 {
     public class Restaurant
     {
         public long RestaurantId { get; set; }
+        public List<Meal> Meals { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string City { get; set; }
