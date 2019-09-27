@@ -35,5 +35,22 @@ namespace FoodService.Services
             List<Restaurant> restaurantList = await applicationDbContext.Restaurants.ToListAsync();
             return restaurantList;
         }
+
+        public async Task<Restaurant> EditRestaurantAsync(RestaurantRequest restaurantReq, long id)
+        {
+            var restaurant = await FindByIdAsync(id);
+            restaurant.Name = restaurantReq.Name;
+            restaurant.Description = restaurantReq.Description;
+            restaurant.City = restaurantReq.City;
+            restaurant.FoodType = restaurantReq.FoodType;
+            restaurant.PriceCategory = restaurantReq.PriceCategory;
+            await applicationDbContext.SaveChangesAsync();
+            return restaurant;
+        }
+
+        public async Task<Restaurant> FindByIdAsync(long restaurantId)
+        {
+            return await applicationDbContext.Restaurants.FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
+        }
     }
 }
