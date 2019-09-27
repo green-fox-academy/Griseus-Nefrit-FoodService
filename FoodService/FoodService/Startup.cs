@@ -40,9 +40,9 @@ namespace FoodService
             }).AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddDbContext<ApplicationDbContext>(build =>
-          {
-              build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
-          });
+            {
+                build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
+            });
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRestaurantService, RestaurantService>();

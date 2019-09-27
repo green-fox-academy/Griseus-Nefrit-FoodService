@@ -173,17 +173,17 @@ namespace FoodService.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "7379e162-480a-4220-85b4-776c421a6946", "ef451a84-a658-4df7-b299-50cd45fb0b03", "Admin", "ADMIN" });
+                values: new object[] { "da365ae3-50f1-431b-a168-cfdcd92e1744", "680e67f4-7db7-4166-9546-083ca5612c77", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "92e49094-a928-4cb4-87e2-8876e8f0a445", "296f6cb4-1e34-4e06-99fe-01d512355dab", "Manager", "MANAGER" });
+                values: new object[] { "154f6e0c-9065-4aea-8585-401977b80eb2", "ae951eeb-b2dd-469c-8aa7-a66b5a01e0fc", "Manager", "MANAGER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "7bb9c4e7-254e-4a9e-9ad6-095a12a80870", "63624cc7-6d08-4e44-ae03-d3e01aa910b0", "Customer", "CUSTOMER" });
+                values: new object[] { "75919971-8eac-4fae-86b1-147ecdddd3f3", "b34d96d2-17a4-4531-ad84-ce273ff98d1d", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

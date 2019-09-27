@@ -16,11 +16,23 @@ namespace FoodService.Services
             this.applicationDbContext = applicationDbContext;
         }
 
+        public async Task<Restaurant> SaveRestaurantAsync(RestaurantRequest restaurantReq, long id)
+        {
+            var restaurant = new Restaurant();
+            restaurant.Name = restaurantReq.Name;
+            restaurant.Description = restaurantReq.Description;
+            restaurant.City = restaurantReq.City;
+            restaurant.FoodType = restaurantReq.FoodType;
+            restaurant.PriceCategory = restaurantReq.PriceCategory;
+            await applicationDbContext.Restaurants.AddAsync(restaurant);
+            await applicationDbContext.SaveChangesAsync();
+            return restaurant;
+        }
+
         public async Task<List<Restaurant>> findAll()
         {
             List<Restaurant> restaurantList = await applicationDbContext.Restaurants.ToListAsync();
             return restaurantList;
         }
     }
-
 }
