@@ -6,16 +6,16 @@ namespace FoodService.Services.RestaurantService
 {
     public class RestaurantService : IRestaurantService
     {
-        private readonly ApplicationContext applicationContext;
+        private readonly ApplicationDBContext _applicationDbContext;
 
-        public RestaurantService(ApplicationContext applicationContext)
+        public RestaurantService(ApplicationDBContext applicationDbContext)
         {
-            this.applicationContext = applicationContext;
+            this._applicationDbContext = applicationDbContext;
         }
 
         public async Task<Restaurant> GetRestaurantByIdAsync(long id)
         {
-            var restaurant = await applicationContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price).FirstOrDefaultAsync(t => t.RestaurantId == id);
+            var restaurant = await _applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price).FirstOrDefaultAsync(t => t.RestaurantId == id);
             if (restaurant == null)
             {
                 return null;
