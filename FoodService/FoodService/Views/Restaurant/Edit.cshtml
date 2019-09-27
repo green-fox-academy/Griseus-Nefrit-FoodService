@@ -3,8 +3,9 @@
 }
 @model Restaurant
 
-<a asp-controller="Meal" asp-action="Add" asp-route-id="@Model.RestaurantId">Add</a>
-
+<form asp-controller="Meal" asp-action="Add" method="get" asp-route-Id="@Model.RestaurantId">
+    <button type="submit" class="btn btn-success">Add</button>
+</form>
 <br />
 <h3>List of your current meals</h3>
 <table class="table">

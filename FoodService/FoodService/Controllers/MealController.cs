@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using FoodService.Models;
 using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Services.MealService;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,8 @@ namespace FoodService.Controllers
         {
             AddMealRequest addMealRequest = new AddMealRequest()
             {
-                RestaurantId = Id
+                RestaurantId = Id,
+                Price = new Price()
             };
             return View(addMealRequest);
         }
@@ -27,9 +29,12 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddMealRequest addMealRequest)
         {
-            await mealService.SaveMealAsync(addMealRequest);
-            
-            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = addMealRequest.RestaurantId});
+            if (ModelState.IsValid)
+            {
+                await mealService.SaveMealAsync(addMealRequest);
+                return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = addMealRequest.RestaurantId});
+            }
+            return View(addMealRequest);
         }
 
         [HttpPost]
@@ -50,12 +55,13 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(AddMealRequest addMealRequest, long Id)
         {
-           var meal = await mealService.GetMealByIdAsync(Id);
-          if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                var meal = await mealService.GetMealByIdAsync(Id);
                 await mealService.EditAsync(Id, addMealRequest);
+                            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = meal.Restaurant.RestaurantId});
             }
-            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = meal.Restaurant.RestaurantId});
+            return View(addMealRequest);
         }
     }
 }

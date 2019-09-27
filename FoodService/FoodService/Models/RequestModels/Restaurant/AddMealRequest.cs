@@ -4,12 +4,13 @@ namespace FoodService.Models.RequestModels.Restaurant
 {
     public class AddMealRequest
     {
-        [Required(ErrorMessage = "Name required")]
+        [Required]
         public string Name { get; set; }
        
-        [Required(ErrorMessage = "Description required")]
+        [Required]
         public string Description { get; set; }
 
+        [Required]
         public Price Price { get; set; }
 
         public long RestaurantId { get; set; }
