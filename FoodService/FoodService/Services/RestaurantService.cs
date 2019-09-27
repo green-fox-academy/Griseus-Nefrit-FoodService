@@ -11,7 +11,6 @@ namespace FoodService.Services
     {
         private readonly ApplicationDbContext applicationDbContext;
 
-
         public RestaurantService(ApplicationDbContext applicationDbContext)
         {
             this.applicationDbContext = applicationDbContext;

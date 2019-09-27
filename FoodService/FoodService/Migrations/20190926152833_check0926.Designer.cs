@@ -3,14 +3,16 @@ using System;
 using FoodService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190926152833_check0926")]
+    partial class check0926
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,15 +112,9 @@ namespace FoodService.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-<<<<<<< HEAD
                         new { Id = "4eb15690-990f-4253-8c07-5aa8d6fcdcb6", ConcurrencyStamp = "a1b01dc8-a1f8-4508-88be-e8e92b7d1267", Name = "Admin", NormalizedName = "ADMIN" },
                         new { Id = "23f223b1-8f4b-428b-a55b-a69af477b6c9", ConcurrencyStamp = "7462f32e-d1ac-4f64-9833-869322d578da", Name = "Manager", NormalizedName = "MANAGER" },
                         new { Id = "80ae65d0-6bed-481f-acbb-5076a218f8cb", ConcurrencyStamp = "c20e61cb-0cf9-42bf-ac9d-f96044b6d04e", Name = "Customer", NormalizedName = "CUSTOMER" }
-=======
-                        new { Id = "da365ae3-50f1-431b-a168-cfdcd92e1744", ConcurrencyStamp = "680e67f4-7db7-4166-9546-083ca5612c77", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "154f6e0c-9065-4aea-8585-401977b80eb2", ConcurrencyStamp = "ae951eeb-b2dd-469c-8aa7-a66b5a01e0fc", Name = "Manager", NormalizedName = "MANAGER" },
-                        new { Id = "75919971-8eac-4fae-86b1-147ecdddd3f3", ConcurrencyStamp = "b34d96d2-17a4-4531-ad84-ce273ff98d1d", Name = "Customer", NormalizedName = "CUSTOMER" }
->>>>>>> e8702df5ef22f9d712142e5a0bef4102a940d930
                     );
                 });
 
