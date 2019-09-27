@@ -13,5 +13,6 @@ namespace FoodService.Services
         Task<Restaurant> FindByIdAsync(long postId);
         Task<Restaurant> EditRestaurantAsync(long id, RestaurantRequest request);
         Task<List<Restaurant>> findByManagerNameOrEmail(string managerName);
+        Task<bool> ValidateAccess(long restaurantId, string managerName);
     }
 }

@@ -50,6 +50,11 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long id)
         {
+            if (!await restaurantService.ValidateAccess(id, User.Identity.Name))
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
             var restaurant = await restaurantService.FindByIdAsync(id);
             var request = new RestaurantRequest
             {
@@ -66,6 +71,11 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(RestaurantRequest restaurantReq, long id)
         {
+            if (!await restaurantService.ValidateAccess(id, User.Identity.Name))
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
             if (ModelState.IsValid)
             {
                 await restaurantService.EditRestaurantAsync(id, restaurantReq);
