@@ -20,7 +20,7 @@ namespace FoodService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(long id, RestaurantRequest restaurantReq)
+        public async Task<IActionResult> Add(RestaurantRequest restaurantReq)
         {
             if (!User.IsInRole("Manager"))
             {
@@ -29,7 +29,7 @@ namespace FoodService.Controllers
 
             if(ModelState.IsValid)
             {
-                await restaurantService.SaveRestaurantAsync(restaurantReq, id);
+                await restaurantService.SaveRestaurantAsync(restaurantReq, User.Identity.Name);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             return View();
