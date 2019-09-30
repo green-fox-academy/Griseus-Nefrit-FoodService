@@ -11,7 +11,8 @@ using FoodService.Services;
 using Microsoft.AspNetCore.Identity;
 using FoodService.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
-
+using FoodService.Models.ViewModels;
+using FoodService.Models.ViewModels.Restaurant;
 
 namespace FoodService.Controllers
 {
@@ -26,7 +27,7 @@ namespace FoodService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(RestaurantRequest restaurantReq)
+        public async Task<IActionResult> Add(RestaurantRequest restaurantRequest)
         {
             if (!User.IsInRole("Manager"))
             {
@@ -35,10 +36,16 @@ namespace FoodService.Controllers
 
             if(ModelState.IsValid)
             {
-                await restaurantService.SaveRestaurantAsync(restaurantReq, User.Identity.Name);
+                await restaurantService.SaveRestaurantAsync(restaurantRequest, User.Identity.Name);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            return View();
+            EditRestaurantViewModel editRestaurantViewModel = new EditRestaurantViewModel()
+            {
+                RestaurantRequest = restaurantRequest,
+                Meals = null,
+                RestaurantId = 0
+            };
+            return View(editRestaurantViewModel);
         }
 
         [Authorize(Roles = "Manager")]
@@ -57,21 +64,13 @@ namespace FoodService.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
-            var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
-            /*/var request = new RestaurantRequest
-            {
-                Name = restaurant.Name,
-                Description = restaurant.Description,
-                City = restaurant.City,
-                FoodType = restaurant.FoodType,
-                PriceCategory = restaurant.PriceCategory
-            };*/
-            return View(restaurant);
+            EditRestaurantViewModel editRestaurantViewModel = await restaurantService.buildEditRestaurantViewModel(id);
+            return View(editRestaurantViewModel);
         }
 
         [Authorize(Roles = "Manager, Admin")]
         [HttpPost]
-        public async Task<IActionResult> Edit(Restaurant restaurant, long id)
+        public async Task<IActionResult> Edit(EditRestaurantViewModel editRestaurantViewModel, long id)
         {
             if (!await restaurantService.ValidateAccess(id, User.Identity.Name))
             {
@@ -80,10 +79,11 @@ namespace FoodService.Controllers
 
             if (ModelState.IsValid)
             {
-                await restaurantService.EditRestaurantAsync(id, restaurant);
+                await restaurantService.EditRestaurantAsync(id, editRestaurantViewModel.RestaurantRequest);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            return View(restaurant);
+            EditRestaurantViewModel editRestaurantViewModel1 = await restaurantService.buildEditRestaurantViewModel(id, editRestaurantViewModel.RestaurantRequest);
+            return View(editRestaurantViewModel1);
         }
     }
 }

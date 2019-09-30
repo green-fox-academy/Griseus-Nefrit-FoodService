@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models;
+using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Services.User;
 using Microsoft.EntityFrameworkCore;
+using FoodService.Models.ViewModels.Restaurant;
 
 namespace FoodService.Services.RestaurantService
 {
@@ -56,14 +58,14 @@ namespace FoodService.Services.RestaurantService
             return restaurantList;
         }
 
-        public async Task<Restaurant> EditRestaurantAsync(long id, Restaurant restaurant)
+        public async Task<Restaurant> EditRestaurantAsync(long id, RestaurantRequest restaurantRequest)
         {
             var editedRestaurant = await GetRestaurantByIdAsync(id);
-            editedRestaurant.Name = restaurant.Name;
-            editedRestaurant.Description = restaurant.Description;
-            editedRestaurant.City = restaurant.City;
-            editedRestaurant.FoodType = restaurant.FoodType;
-            editedRestaurant.PriceCategory = restaurant.PriceCategory;
+            editedRestaurant.Name = restaurantRequest.Name;
+            editedRestaurant.Description = restaurantRequest.Description;
+            editedRestaurant.City = restaurantRequest.City;
+            editedRestaurant.FoodType = restaurantRequest.FoodType;
+            editedRestaurant.PriceCategory = restaurantRequest.PriceCategory;
             await applicationDbContext.SaveChangesAsync();
             return editedRestaurant;
         }
@@ -82,6 +84,41 @@ namespace FoodService.Services.RestaurantService
                 return true;
             }
             return false;
+        }
+
+        public async Task<EditRestaurantViewModel> buildEditRestaurantViewModel(long restaurantId)
+        {
+            var restaurant = await GetRestaurantByIdAsync(restaurantId);
+            var editRestauratnViewModel = new EditRestaurantViewModel()
+            {
+                RestaurantRequest = new RestaurantRequest()
+                {
+                    Name = restaurant.Name,
+                    Description = restaurant.Description,
+                    City = restaurant.City,
+                    FoodType = restaurant.FoodType,
+                    PriceCategory = restaurant.PriceCategory
+                },
+                Meals = restaurant.Meals,
+                RestaurantId = restaurant.RestaurantId
+            };
+            
+            await applicationDbContext.SaveChangesAsync();
+            return editRestauratnViewModel;
+        }
+
+        public async Task<EditRestaurantViewModel> buildEditRestaurantViewModel(long restaurantId, RestaurantRequest restaurantRequest)
+        {
+            var restaurant = await GetRestaurantByIdAsync(restaurantId);
+            var editRestauratnViewModel = new EditRestaurantViewModel()
+            {
+                RestaurantRequest = restaurantRequest,
+                Meals = restaurant.Meals,
+                RestaurantId = restaurant.RestaurantId
+            };
+
+            await applicationDbContext.SaveChangesAsync();
+            return editRestauratnViewModel;
         }
     }
 }
