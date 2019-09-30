@@ -28,17 +28,23 @@ else
     <tbody>
         @foreach (var restaurants in Model)
         {
-            <tr>
-                <th scope="row">
-                    @Html.DisplayFor(modelRestaurant => restaurants.Name)
-                </th>
+        <tr>
+            <th scope="row">
+                @Html.DisplayFor(modelRestaurant => restaurants.Name)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => restaurants.FoodType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => restaurants.PriceCategory)
+            </td>
+            @if (User.IsInRole("Manager"))
+            {
                 <td>
-                    @Html.DisplayFor(modelItem => restaurants.FoodType)
+                    <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@restaurants.RestaurantId" class="btn btn-warning" role="button">Edit</a>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => restaurants.PriceCategory)
-                </td>
-            </tr>
+            }
+        </tr>
         }
     </tbody>
 </table>

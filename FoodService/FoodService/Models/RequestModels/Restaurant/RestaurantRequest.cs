@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace FoodService.Models
+namespace FoodService.Models.RequestModels.Restaurant
 {
     public class RestaurantRequest
     {

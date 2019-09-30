@@ -14,7 +14,7 @@ namespace FoodService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("FoodService.Models.Identity.AppUser", b =>
@@ -109,16 +109,20 @@ namespace FoodService.Migrations
                     b.Property<long>("RestaurantId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("City");
+                    b.Property<string>("City")
+                        .IsRequired();
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
-                    b.Property<string>("FoodType");
+                    b.Property<string>("FoodType")
+                        .IsRequired();
 
                     b.Property<string>("ManagerId")
                         .IsRequired();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("PriceCategory");
 
@@ -152,27 +156,10 @@ namespace FoodService.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new
-                        {
-                            Id = "80479e9d-303a-495d-9567-275befe4241a",
-                            ConcurrencyStamp = "a8f27e02-c787-4cdf-b9ea-8560f608eac7",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "a2c02b19-5902-4722-84b1-abb4723ce0aa",
-                            ConcurrencyStamp = "c54f2463-545c-45d7-ab00-39844b10ddc0",
-                            Name = "Manager",
-                            NormalizedName = "MANAGER"
-                        },
-                        new
-                        {
-                            Id = "4cc2ed29-d3ea-41da-ac4e-d61667761e1c",
-                            ConcurrencyStamp = "b4d913d9-3673-4e14-85aa-e3bd579879ad",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
-                        });
+                        new { Id = "d3f7335b-350b-4073-a34c-27bcc997470f", ConcurrencyStamp = "ba651eae-90bd-4b3d-8066-ca1eefd462d3", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "153b9792-feec-4db0-b193-eda7371de1da", ConcurrencyStamp = "d214bed0-8585-446f-b13c-746e858c36aa", Name = "Manager", NormalizedName = "MANAGER" },
+                        new { Id = "f3112853-49dc-4629-8b47-ddf8d0e2a15f", ConcurrencyStamp = "55456b91-545b-4545-b916-148e52fce633", Name = "Customer", NormalizedName = "CUSTOMER" }
+                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
