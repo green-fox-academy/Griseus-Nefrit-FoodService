@@ -29,6 +29,9 @@
     <div>
         <input type="hidden" asp-for="RestaurantId" value="@Model.RestaurantId">
     </div>
-
     <button type="submit" class="btn btn-success">Save</button>
+</form>
+<br />
+<form asp-controller="Restaurant" asp-action="Edit" method="get" asp-route-id="@Model.RestaurantId">         
+    <button type="submit" class="btn btn-info">Cancel</button>
 </form>

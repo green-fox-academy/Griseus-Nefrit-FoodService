@@ -85,5 +85,13 @@ namespace FoodService.Controllers
             EditRestaurantViewModel editRestaurantViewModel1 = await restaurantService.buildEditRestaurantViewModel(id, editRestaurantViewModel.RestaurantRequest);
             return View(editRestaurantViewModel1);
         }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Index(long id)
+        {
+            var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
+            return View(restaurant);
+        }
     }
 }

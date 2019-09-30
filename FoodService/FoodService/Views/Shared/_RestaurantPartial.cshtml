@@ -26,6 +26,8 @@
         <input type="text" asp-for="RestaurantRequest.PriceCategory" class="form-control" />
         <span asp-validation-for="RestaurantRequest.PriceCategory" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">@ViewData["Action"]</button>
-    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary" role="button">Cancel</a>
+    <button type="submit" class="btn btn-primary">Submit changes</button>
+    <form asp-controller="Home" asp-action="Index" method="get">
+        <button type="submit" class="btn btn-info">Cancel</button>
+    </form>
 </form>
