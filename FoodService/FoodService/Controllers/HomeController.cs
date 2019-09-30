@@ -25,11 +25,11 @@ namespace FoodService.Controllers
             List<Restaurant> restaurants;
             if (User.IsInRole("Manager"))
             {
-                restaurants = await restaurantService.findByManagerNameOrEmail(User.Identity.Name);
+                restaurants = await restaurantService.FindByManagerNameOrEmail(User.Identity.Name);
             }
             else
             {
-                restaurants = await restaurantService.findAll();
+                restaurants = await restaurantService.FindAll();
             }
             var model = PagingList.Create(restaurants, 10, page);
             return View(model);

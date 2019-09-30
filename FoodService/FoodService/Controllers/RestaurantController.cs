@@ -64,7 +64,7 @@ namespace FoodService.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
-            EditRestaurantViewModel editRestaurantViewModel = await restaurantService.buildEditRestaurantViewModel(id);
+            EditRestaurantViewModel editRestaurantViewModel = await restaurantService.BuildEditRestaurantViewModel(id);
             return View(editRestaurantViewModel);
         }
 
@@ -82,7 +82,7 @@ namespace FoodService.Controllers
                 await restaurantService.EditRestaurantAsync(id, editRestaurantViewModel.RestaurantRequest);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            EditRestaurantViewModel editRestaurantViewModel1 = await restaurantService.buildEditRestaurantViewModel(id, editRestaurantViewModel.RestaurantRequest);
+            EditRestaurantViewModel editRestaurantViewModel1 = await restaurantService.BuildEditRestaurantViewModel(id, editRestaurantViewModel.RestaurantRequest);
             return View(editRestaurantViewModel1);
         }
 

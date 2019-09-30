@@ -7,9 +7,9 @@ namespace FoodService.Services.MealService
     public interface IMealService
     {
         Task SaveMealAsync(AddMealRequest model);
-        Task DeleteMeal(long ID);
+        Task DeleteMealAsync(long id);
         Task<Meal> GetMealByIdAsync(long MealId);
-        Task EditAsync(long Id, AddMealRequest addMealRequest);
-        Task<AddMealRequest> CreateRequest(long Id);
+        Task EditAsync(long id, AddMealRequest addMealRequest);
+        Task<AddMealRequest> CreateRequestAsync(long id);
     }
 }
