@@ -123,7 +123,7 @@ namespace FoodService.Services.RestaurantService
 
         public async Task<List<Restaurant>> findByFoodNameAsync(string foodName)
         {
-            var restaurantList = await applicationDbContext.Restaurants.AsQueryable().Where(r => r.FoodType == foodName).OrderBy(r => r.Name).ToListAsync();
+            var restaurantList = await applicationDbContext.Restaurants.AsQueryable().Where(r => r.FoodType.Contains(foodName)).OrderBy(r => r.Name).ToListAsync();
             return restaurantList;
         }
     }

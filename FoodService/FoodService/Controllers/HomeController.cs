@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models;
+using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Services;
 using FoodService.Services.RestaurantService;
 using Microsoft.AspNetCore.Mvc;
@@ -27,16 +28,22 @@ namespace FoodService.Controllers
             {
                 restaurants = await restaurantService.findByManagerNameOrEmail(User.Identity.Name);
             }
-            else if(foodName == "")
+            /*else if(searchRestaurantRequest.FoodName == "")
             {
-                restaurants = await restaurantService.findByFoodNameAsync(foodName);
-            }
+                restaurants = await restaurantService.findByFoodNameAsync(searchRestaurantRequest.FoodName);
+            }*/
             else
             {
                 restaurants = await restaurantService.findAll();
             }
             var model = PagingList.Create(restaurants, 10, page);
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult SearchRestaurantAsync(SearchRestaurantRequest searchRestaurantRequest)
+        {
+            return RedirectToAction(nameof(HomeController.Index), "Home", searchRestaurantRequest.FoodName);
         }
     }
 }
