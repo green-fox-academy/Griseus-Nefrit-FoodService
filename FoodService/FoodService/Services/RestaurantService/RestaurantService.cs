@@ -120,11 +120,5 @@ namespace FoodService.Services.RestaurantService
             await applicationDbContext.SaveChangesAsync();
             return editRestauratnViewModel;
         }
-
-        public async Task<List<Restaurant>> findBySearchedFoodName(string foodName)
-        {
-            var restaurantList = await applicationDbContext.Restaurants.AsQueryable().Where(r => r.FoodType == foodName).OrderBy(r => r.Name).ToListAsync();
-            return restaurantList;
-        }
     }
 }

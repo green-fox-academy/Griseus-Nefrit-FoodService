@@ -17,6 +17,5 @@ namespace FoodService.Services.RestaurantService
         Task<bool> ValidateAccess(long restaurantId, string managerName);
         Task<EditRestaurantViewModel> buildEditRestaurantViewModel(long restaurantId);
         Task<EditRestaurantViewModel> buildEditRestaurantViewModel(long restaurantId, RestaurantRequest restaurantRequest);
-        Task<List<Restaurant>> findBySearchedFoodName(string managerName);
     }
 }
