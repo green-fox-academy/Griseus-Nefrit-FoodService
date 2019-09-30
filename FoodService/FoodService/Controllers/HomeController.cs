@@ -27,6 +27,10 @@ namespace FoodService.Controllers
             {
                 restaurants = await restaurantService.findByManagerNameOrEmail(User.Identity.Name);
             }
+            else if(foodName == "")
+            {
+                restaurants = await restaurantService.findByFoodNameAsync(foodName);
+            }
             else
             {
                 restaurants = await restaurantService.findAll();
