@@ -1,5 +1,5 @@
 ﻿
-@model ReflectionIT.Mvc.Paging.PagingList<FoodService.Models.Restaurant>
+@model ReflectionIT.Mvc.Paging.PagingList<FoodService.Models.ViewModels.Restaurant.SearchRestaurantViewModel>
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 
@@ -15,7 +15,7 @@ else
 {
     <h1>Available Restaurants</h1>
     <form asp-controller="Home" asp-action="/" method="post">
-        <label asp-for="searchedFoodName">Food name</label>
+        <label asp-for="@Model.SearchRestaurantRequest.FoodName">Food name</label>
         <input type="text" asp-for="SearchRestaurantRequest.Name" class="form-control" />
         <span asp-validation-for="SearchRestaurantRequest.Name" class="text-primary"></span>
         <a asp-controller="Home" asp-action="Index" class="btn btn-primary" role="button">Search</a>
