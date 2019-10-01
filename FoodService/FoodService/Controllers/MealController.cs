@@ -41,14 +41,14 @@ namespace FoodService.Controllers
         public async Task<IActionResult> Delete(long Id)
         {
             var meal = await mealService.GetMealByIdAsync(Id);
-            await mealService.DeleteMeal(Id);
+            await mealService.DeleteMealAsync(Id);
             return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = meal.Restaurant.RestaurantId});
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(long Id)
         {
-           var requestModel = await mealService.CreateRequest(Id);
+           var requestModel = await mealService.CreateRequestAsync(Id);
            return View(requestModel);
         }
         
