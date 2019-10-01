@@ -1,4 +1,3 @@
-
 using System.Threading.Tasks;
 using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Services.RestaurantService;
@@ -39,7 +38,7 @@ namespace FoodService.Controllers
                 await restaurantService.SaveRestaurantAsync(restaurantRequest, User.Identity.Name);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            EditRestaurantViewModel editRestaurantViewModel = new EditRestaurantViewModel()
+            var editRestaurantViewModel = new EditRestaurantViewModel()
             {
                 RestaurantRequest = restaurantRequest,
                 Meals = null,
@@ -64,7 +63,7 @@ namespace FoodService.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
-            EditRestaurantViewModel editRestaurantViewModel = await restaurantService.BuildEditRestaurantViewModel(id);
+            var editRestaurantViewModel = await restaurantService.BuildEditRestaurantViewModel(id);
             return View(editRestaurantViewModel);
         }
 
@@ -82,7 +81,7 @@ namespace FoodService.Controllers
                 await restaurantService.EditRestaurantAsync(id, editRestaurantViewModel.RestaurantRequest);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            EditRestaurantViewModel editRestaurantViewModel1 = await restaurantService.BuildEditRestaurantViewModel(id, editRestaurantViewModel.RestaurantRequest);
+            var editRestaurantViewModel1 = await restaurantService.BuildEditRestaurantViewModel(id, editRestaurantViewModel.RestaurantRequest);
             return View(editRestaurantViewModel1);
         }
 

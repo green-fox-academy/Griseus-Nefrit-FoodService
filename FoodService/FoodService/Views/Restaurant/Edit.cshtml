@@ -1,11 +1,8 @@
 @model EditRestaurantViewModel
-@{
-    ViewData["Title"] = "Edit Restaurant";
-}
 
 <h3>Edit the restaurant</h3>
-
 @{
+    ViewData["Title"] = "Edit Restaurant";
     ViewData["Action"] = "Edit";
     await Html.RenderPartialAsync("_RestaurantPartial");
 }
