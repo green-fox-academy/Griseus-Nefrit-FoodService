@@ -74,6 +74,11 @@ namespace FoodService
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
+            else
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
 
             app.UseStaticFiles();
             app.UseAuthentication();
