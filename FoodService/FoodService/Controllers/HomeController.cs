@@ -47,9 +47,9 @@ namespace FoodService.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchRestaurantAsync(string searchRestaurantRequest.FoodName)
+        public IActionResult SearchRestaurantAsync(SearchRestaurantViewModel searchRestaurantViewModel)
         {
-            return RedirectToAction(nameof(HomeController.Index), "Home", searchedFoodName);
+            return RedirectToAction(nameof(HomeController.Index), "Home", searchRestaurantViewModel.SearchRestaurantRequest.FoodName);
         }
     }
 }
