@@ -1,8 +1,6 @@
-@{
-    ViewData["Title"] = "Edit Meal";
-}
 @model AddMealRequest
 @{
+    ViewData["Title"] = "Edit Meal";
     ViewData["Action"] = "Edit";
     await Html.RenderPartialAsync("_MealPartial");
 }
