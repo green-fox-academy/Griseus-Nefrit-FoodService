@@ -1,17 +1,19 @@
 @model EditRestaurantViewModel
+
+<h3>Edit the restaurant</h3>
 @{
     ViewData["Title"] = "Edit Restaurant";
     ViewData["Action"] = "Edit";
     await Html.RenderPartialAsync("_RestaurantPartial");
 }
 
-    <h3>Edit the restaurant</h3>
-
-<form asp-controller="Meal" asp-action="Add" method="get" asp-route-Id="@Model.RestaurantId">
-    <button type="submit" class="btn btn-success">Add</button>
-</form>
 <br />
 <h3>List of your current meals</h3>
+<br />
+<form asp-controller="Meal" asp-action="Add" method="get" asp-route-Id="@Model.RestaurantId">
+    <button type="submit" class="btn btn-success">Add a new meal</button>
+</form>
+<br />
 <table class="table">
     <thead class="thead-dark">
         <tr>

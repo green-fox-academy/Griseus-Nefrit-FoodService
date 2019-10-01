@@ -1,4 +1,3 @@
-
 using System.Threading.Tasks;
 using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Services.RestaurantService;
@@ -84,6 +83,14 @@ namespace FoodService.Controllers
             }
             var editRestaurantViewModel1 = await restaurantService.BuildEditRestaurantViewModelAsync(id, editRestaurantViewModel.RestaurantRequest);
             return View(editRestaurantViewModel1);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Index(long id)
+        {
+            var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
+            return View(restaurant);
         }
     }
 }
