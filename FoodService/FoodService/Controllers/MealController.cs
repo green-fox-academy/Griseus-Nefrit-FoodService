@@ -16,11 +16,11 @@ namespace FoodService.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> Add(long Id)
+        public async Task<IActionResult> Add(long id)
         {
             AddMealRequest addMealRequest = new AddMealRequest()
             {
-                RestaurantId = Id,
+                RestaurantId = id,
                 Price = new Price()
             };
             return View(addMealRequest);
