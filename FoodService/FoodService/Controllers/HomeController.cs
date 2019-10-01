@@ -26,24 +26,24 @@ namespace FoodService.Controllers
             List<Restaurant> restaurants;
             if (User.IsInRole("Manager"))
             {
-                restaurants = await restaurantService.findByManagerNameOrEmail(User.Identity.Name);
+                restaurants = await restaurantService.FindByManagerNameOrEmailAsync(User.Identity.Name);
             }
-            /*else if(searchRestaurantRequest.FoodName == "")
+            else/* if(searchedFoodName == "" || searchedFoodName == null)*/
             {
-                restaurants = await restaurantService.findByFoodNameAsync(searchRestaurantRequest.FoodName);
+                restaurants = await restaurantService.FindAllAsync();
+            }
+            /*else
+            {
+                restaurants = await restaurantService.FindByFoodNameAsync(searchedFoodName);
             }*/
-            else
-            {
-                restaurants = await restaurantService.findAll();
-            }
             var model = PagingList.Create(restaurants, 10, page);
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult SearchRestaurantAsync(SearchRestaurantRequest searchRestaurantRequest)
-        {
-            return RedirectToAction(nameof(HomeController.Index), "Home", searchRestaurantRequest.FoodName);
+        public IActionResult SearchRestaurantAsync(string searchedFoodName)
+        {          
+            return RedirectToAction(nameof(HomeController.Index), "Home", searchedFoodName);
         }
     }
 }
