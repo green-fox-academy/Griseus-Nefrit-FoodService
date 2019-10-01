@@ -79,11 +79,7 @@ namespace FoodService.Services.RestaurantService
         {
             List<Restaurant> ownedRestaurants = await FindByManagerNameOrEmailAsync(managerName);
             Restaurant currentRestaurant = await FindByIdAsync(restaurantId);
-            if (ownedRestaurants.Contains(currentRestaurant))
-            {
-                return true;
-            }
-            return false;
+            return ownedRestaurants.Contains(currentRestaurant);
         }
 
         public async Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId)
