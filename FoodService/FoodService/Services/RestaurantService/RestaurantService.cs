@@ -75,7 +75,7 @@ namespace FoodService.Services.RestaurantService
             return await applicationDbContext.Restaurants.FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
         }
 
-        public async Task<bool> ValidateAccess(long restaurantId, string managerName)
+        public async Task<bool> ValidateAccessAsync(long restaurantId, string managerName)
         {
             List<Restaurant> ownedRestaurants = await FindByManagerNameOrEmailAsync(managerName);
             Restaurant currentRestaurant = await FindByIdAsync(restaurantId);

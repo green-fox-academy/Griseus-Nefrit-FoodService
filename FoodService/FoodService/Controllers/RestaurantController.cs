@@ -58,7 +58,7 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long id)
         {
-            if (!await restaurantService.ValidateAccess(id, User.Identity.Name))
+            if (!await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
@@ -71,7 +71,7 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditRestaurantViewModel editRestaurantViewModel, long id)
         {
-            if (!await restaurantService.ValidateAccess(id, User.Identity.Name))
+            if (!await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }

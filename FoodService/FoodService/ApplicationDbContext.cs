@@ -1,4 +1,4 @@
-﻿﻿using FoodService.Models;
+﻿using FoodService.Models;
 using FoodService.Models.Identity;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +16,7 @@ namespace FoodService
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Meal> Meals { get; set; }
         public DbSet<Price> Prices { get; set; }
-        
+
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
