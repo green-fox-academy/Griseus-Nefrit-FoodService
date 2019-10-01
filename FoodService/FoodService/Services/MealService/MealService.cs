@@ -7,41 +7,41 @@ namespace FoodService.Services.MealService
 {
     public class MealService : IMealService
     {
-        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly ApplicationDbContext applicationDbContext;
 
         public MealService(ApplicationDbContext applicationDbContext)
         {
-            _applicationDbContext = applicationDbContext;
+            this.applicationDbContext = applicationDbContext;
         }
         
         public async Task SaveMealAsync(AddMealRequest model)
         {
             var meal = new Meal();
             meal.Price = new Price();
-            meal.Restaurant = await _applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
+            meal.Restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
                 .FirstOrDefaultAsync(t => t.RestaurantId == model.RestaurantId);
             meal.Description = model.Description;
             meal.Price.Amount = model.Price.Amount;
             meal.Price.Currency = model.Price.Currency;
             meal.Name = model.Name;
             meal.Restaurant.RestaurantId = model.RestaurantId;
-            await _applicationDbContext.Meals.AddAsync(meal);
-            await _applicationDbContext.SaveChangesAsync();
+            await applicationDbContext.Meals.AddAsync(meal);
+            await applicationDbContext.SaveChangesAsync();
         }
         
-        public async Task DeleteMeal(long ID)
+        public async Task DeleteMealAsync(long id)
         {
-            var meal = await GetMealByIdAsync(ID);
+            var meal = await GetMealByIdAsync(id);
             if (meal != null)
             {
-                _applicationDbContext.Meals.Remove(meal);
-                _applicationDbContext.SaveChanges();
+                applicationDbContext.Meals.Remove(meal);
+                applicationDbContext.SaveChanges();
             }
         }
         
-        public async Task<Meal> GetMealByIdAsync(long MealId)
+        public async Task<Meal> GetMealByIdAsync(long mealId)
         {
-            var meal = await _applicationDbContext.Meals.Include(m => m.Restaurant).Include(p => p.Price).FirstOrDefaultAsync(m => m.MealId == MealId);
+            var meal = await applicationDbContext.Meals.Include(m => m.Restaurant).Include(p => p.Price).FirstOrDefaultAsync(m => m.MealId == mealId);
             if (meal == null)
             {
                 return null;
@@ -49,9 +49,9 @@ namespace FoodService.Services.MealService
             return meal;
         }
 
-        public async Task<AddMealRequest> CreateRequest(long Id)
+        public async Task<AddMealRequest> CreateRequestAsync(long id)
         {
-            var meal = await GetMealByIdAsync(Id);
+            var meal = await GetMealByIdAsync(id);
             AddMealRequest addMealRequest = new AddMealRequest()
             {
                 Name = meal.Name,
@@ -66,18 +66,18 @@ namespace FoodService.Services.MealService
             return addMealRequest;
         }
         
-        public async Task EditAsync(long Id, AddMealRequest addMealRequest)
+        public async Task EditAsync(long id, AddMealRequest addMealRequest)
         {
-            var meal = await GetMealByIdAsync(Id);
+            var meal = await GetMealByIdAsync(id);
             meal.Price = new Price();
-            meal.Restaurant = await _applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
+            meal.Restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
                 .FirstOrDefaultAsync(t => t.RestaurantId == addMealRequest.RestaurantId);
             meal.Description = addMealRequest.Description;
             meal.Price.Amount = addMealRequest.Price.Amount;
             meal.Price.Currency = addMealRequest.Price.Currency;
             meal.Name = addMealRequest.Name;
             meal.Restaurant.RestaurantId = addMealRequest.RestaurantId;
-            await _applicationDbContext.SaveChangesAsync();
+            await applicationDbContext.SaveChangesAsync();
         }
     }
 }
