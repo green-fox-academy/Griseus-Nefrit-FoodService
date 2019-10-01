@@ -59,12 +59,12 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long id)
         {
-            if (!await restaurantService.ValidateAccess(id, User.Identity.Name))
+            if (!await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
-            EditRestaurantViewModel editRestaurantViewModel = await restaurantService.buildEditRestaurantViewModel(id);
+            EditRestaurantViewModel editRestaurantViewModel = await restaurantService.BuildEditRestaurantViewModelAsync(id);
             return View(editRestaurantViewModel);
         }
 
@@ -72,7 +72,7 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditRestaurantViewModel editRestaurantViewModel, long id)
         {
-            if (!await restaurantService.ValidateAccess(id, User.Identity.Name))
+            if (!await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
@@ -82,7 +82,7 @@ namespace FoodService.Controllers
                 await restaurantService.EditRestaurantAsync(id, editRestaurantViewModel.RestaurantRequest);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            EditRestaurantViewModel editRestaurantViewModel1 = await restaurantService.buildEditRestaurantViewModel(id, editRestaurantViewModel.RestaurantRequest);
+            EditRestaurantViewModel editRestaurantViewModel1 = await restaurantService.BuildEditRestaurantViewModelAsync(id, editRestaurantViewModel.RestaurantRequest);
             return View(editRestaurantViewModel1);
         }
     }

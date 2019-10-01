@@ -10,13 +10,13 @@ namespace FoodService.Services.RestaurantService
     {
         Task<Restaurant> GetRestaurantByIdAsync(long id);
         Task<Restaurant> SaveRestaurantAsync(RestaurantRequest restaurantReq, string managerName);
-        Task<List<Restaurant>> findAll();
+        Task<List<Restaurant>> FindAllAsync();
         Task<Restaurant> FindByIdAsync(long postId);
         Task<Restaurant> EditRestaurantAsync(long id, RestaurantRequest restaurantRequest);
-        Task<List<Restaurant>> findByManagerNameOrEmail(string managerName);
-        Task<bool> ValidateAccess(long restaurantId, string managerName);
-        Task<EditRestaurantViewModel> buildEditRestaurantViewModel(long restaurantId);
-        Task<EditRestaurantViewModel> buildEditRestaurantViewModel(long restaurantId, RestaurantRequest restaurantRequest);
-        Task<List<Restaurant>> findByFoodNameAsync(string foodName);
+        Task<List<Restaurant>> FindByManagerNameOrEmailAsync(string managerName);
+        Task<bool> ValidateAccessAsync(long restaurantId, string managerName);
+        Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId);
+        Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId, RestaurantRequest restaurantRequest);
+        Task<List<Restaurant>> FindByFoodNameAsync(string foodName);
     }
 }

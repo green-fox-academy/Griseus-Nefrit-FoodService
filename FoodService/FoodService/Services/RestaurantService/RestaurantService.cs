@@ -46,13 +46,13 @@ namespace FoodService.Services.RestaurantService
             return restaurant;
         }
 
-        public async Task<List<Restaurant>> findAll()
+        public async Task<List<Restaurant>> FindAllAsync()
         {
             List<Restaurant> restaurantList = await applicationDbContext.Restaurants.AsQueryable().OrderBy(r => r.Name).ToListAsync();
             return restaurantList;
         }
 
-        public async Task<List<Restaurant>> findByManagerNameOrEmail(string managerName)
+        public async Task<List<Restaurant>> FindByManagerNameOrEmailAsync(string managerName)
         {
             var restaurantList = await applicationDbContext.Restaurants.AsQueryable().Where(r => r.Manager.UserName == managerName).OrderBy(r => r.Name).ToListAsync();
             return restaurantList;
@@ -75,18 +75,14 @@ namespace FoodService.Services.RestaurantService
             return await applicationDbContext.Restaurants.FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
         }
 
-        public async Task<bool> ValidateAccess(long restaurantId, string managerName)
+        public async Task<bool> ValidateAccessAsync(long restaurantId, string managerName)
         {
-            List<Restaurant> ownedRestaurants = await findByManagerNameOrEmail(managerName);
+            List<Restaurant> ownedRestaurants = await FindByManagerNameOrEmailAsync(managerName);
             Restaurant currentRestaurant = await FindByIdAsync(restaurantId);
-            if (ownedRestaurants.Contains(currentRestaurant))
-            {
-                return true;
-            }
-            return false;
+            return ownedRestaurants.Contains(currentRestaurant);
         }
 
-        public async Task<EditRestaurantViewModel> buildEditRestaurantViewModel(long restaurantId)
+        public async Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId)
         {
             var restaurant = await GetRestaurantByIdAsync(restaurantId);
             var editRestauratnViewModel = new EditRestaurantViewModel()
@@ -107,7 +103,7 @@ namespace FoodService.Services.RestaurantService
             return editRestauratnViewModel;
         }
 
-        public async Task<EditRestaurantViewModel> buildEditRestaurantViewModel(long restaurantId, RestaurantRequest restaurantRequest)
+        public async Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId, RestaurantRequest restaurantRequest)
         {
             var restaurant = await GetRestaurantByIdAsync(restaurantId);
             var editRestauratnViewModel = new EditRestaurantViewModel()
@@ -121,7 +117,7 @@ namespace FoodService.Services.RestaurantService
             return editRestauratnViewModel;
         }
 
-        public async Task<List<Restaurant>> findByFoodNameAsync(string foodName)
+        public async Task<List<Restaurant>> FindByFoodNameAsync(string foodName)
         {
             var restaurantList = await applicationDbContext.Restaurants.AsQueryable().Where(r => r.FoodType.Contains(foodName)).OrderBy(r => r.Name).ToListAsync();
             return restaurantList;
