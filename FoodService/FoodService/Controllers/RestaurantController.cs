@@ -25,14 +25,10 @@ namespace FoodService.Controllers
             this.restaurantService = restaurantService;
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         public async Task<IActionResult> Add(RestaurantRequest restaurantRequest)
         {
-            if (!User.IsInRole("Manager"))
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
-
             if(ModelState.IsValid)
             {
                 await restaurantService.SaveRestaurantAsync(restaurantRequest, User.Identity.Name);
@@ -81,8 +77,8 @@ namespace FoodService.Controllers
                 await restaurantService.EditRestaurantAsync(id, editRestaurantViewModel.RestaurantRequest);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            var editRestaurantViewModel1 = await restaurantService.BuildEditRestaurantViewModelAsync(id, editRestaurantViewModel.RestaurantRequest);
-            return View(editRestaurantViewModel1);
+            editRestaurantViewModel = await restaurantService.BuildEditRestaurantViewModelAsync(id, editRestaurantViewModel.RestaurantRequest);
+            return View(editRestaurantViewModel);
         }
 
         [AllowAnonymous]
