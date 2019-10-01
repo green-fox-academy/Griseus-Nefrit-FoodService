@@ -8,6 +8,7 @@ using FoodService.Services;
 using FoodService.Services.RestaurantService;
 using Microsoft.AspNetCore.Mvc;
 using ReflectionIT.Mvc.Paging;
+using FoodService.Models.ViewModels.Restaurant;
 
 namespace FoodService.Controllers
 {
@@ -21,7 +22,7 @@ namespace FoodService.Controllers
         }
 
         [HttpGet("/")]
-        public async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index(SearchRestaurantRequest searchRestaurantRequest, int page = 1)
         {
             List<Restaurant> restaurants;
             if (User.IsInRole("Manager"))
@@ -36,13 +37,18 @@ namespace FoodService.Controllers
             {
                 restaurants = await restaurantService.FindByFoodNameAsync(searchedFoodName);
             }*/
-            var model = PagingList.Create(restaurants, 10, page);
-            return View(model);
+
+            SearchRestaurantViewModel searchRestaurantViewModel = new SearchRestaurantViewModel()
+            {
+                PagingList = PagingList.Create(restaurants, 10, page),
+                SearchRestaurantRequest = searchRestaurantRequest
+            };
+            return View(searchRestaurantViewModel);
         }
 
         [HttpPost]
         public IActionResult SearchRestaurantAsync(string searchedFoodName)
-        {          
+        {
             return RedirectToAction(nameof(HomeController.Index), "Home", searchedFoodName);
         }
     }

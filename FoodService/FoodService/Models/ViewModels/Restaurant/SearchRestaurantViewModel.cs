@@ -9,7 +9,7 @@ namespace FoodService.Models.ViewModels.Restaurant
 {
     public class SearchRestaurantViewModel
     {
-        public PagingList PagingList { get; set; }
+        public PagingList<FoodService.Models.Restaurant> PagingList { get; set; }
         public SearchRestaurantRequest SearchRestaurantRequest { get; set; }
     }
 }
