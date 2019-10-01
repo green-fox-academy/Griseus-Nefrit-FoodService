@@ -15,6 +15,7 @@ using FoodService.Models.Identity;
 using FoodService.Services.User;
 using Microsoft.AspNetCore.Identity;
 using ReflectionIT.Mvc.Paging;
+using FoodService.Services.Profiles;
 
 namespace FoodService
 {
@@ -48,6 +49,8 @@ namespace FoodService
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IMealService, MealService>();
+
+            services.SetUpAutoMapper();
 
             services.AddMvc();
             services.AddPaging();
