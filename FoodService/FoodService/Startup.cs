@@ -38,12 +38,23 @@ namespace FoodService
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
-            }).AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddDbContext<ApplicationDbContext>(build =>
-            {
-                build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
-            });
+            })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+                services.AddDbContext<ApplicationDbContext>(build =>
+                {
+                    build.UseMySql(configuration.GetConnectionString("AzureConnection"));
+                });
+            else
+                services.AddDbContext<ApplicationDbContext>(build =>
+                {
+                    build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
+                });
+
+            // Automatically perform database migration
+            services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRestaurantService, RestaurantService>();
