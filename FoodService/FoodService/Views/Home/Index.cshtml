@@ -1,12 +1,9 @@
-﻿
-@model ReflectionIT.Mvc.Paging.PagingList<FoodService.Models.Restaurant>
-@using ReflectionIT.Mvc.Paging
+﻿@model ReflectionIT.Mvc.Paging.PagingList<FoodService.Models.Restaurant>
 @addTagHelper *, ReflectionIT.Mvc.Paging
-
+@using ReflectionIT.Mvc.Paging
 @{
     ViewData["Title"] = "Restaurants";
 }
-
 @if (User.IsInRole("Manager"))
 {
     <h1>My Restaurants</h1>
@@ -20,11 +17,11 @@ else
     <thead class="thead-light">
         <tr>
             <th scope="col">Name</th>
-            <th scope="col">FoodType</th>
+            <th scope="col">Food Type</th>
             <th scope="col">Price Range</th>
+            <th scope="col"></th>
         </tr>
     </thead>
-
     <tbody>
         @foreach (var restaurants in Model)
         {
@@ -38,6 +35,17 @@ else
                 <td>
                     @Html.DisplayFor(modelItem => restaurants.PriceCategory)
                 </td>
+                <td>
+                    <form asp-controller="Restaurant" asp-action="Index" method="get" asp-route-Id="@restaurants.RestaurantId">
+                        <button type="submit" class="btn btn-success">Details</button>
+                    </form>
+                </td>
+                @if (User.IsInRole("Manager"))
+                {
+                    <td>
+                        <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@restaurants.RestaurantId" class="btn btn-warning" role="button">Edit</a>
+                    </td>
+                }
             </tr>
         }
     </tbody>

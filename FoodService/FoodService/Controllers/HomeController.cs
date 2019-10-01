@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models;
 using FoodService.Services;
+using FoodService.Services.RestaurantService;
 using Microsoft.AspNetCore.Mvc;
 using ReflectionIT.Mvc.Paging;
 
@@ -24,11 +25,11 @@ namespace FoodService.Controllers
             List<Restaurant> restaurants;
             if (User.IsInRole("Manager"))
             {
-                restaurants = await restaurantService.findByManagerNameOrEmail(User.Identity.Name);
+                restaurants = await restaurantService.FindByManagerNameOrEmailAsync(User.Identity.Name);
             }
             else
             {
-                restaurants = await restaurantService.findAll();
+                restaurants = await restaurantService.FindAllAsync();
             }
             var model = PagingList.Create(restaurants, 10, page);
             return View(model);

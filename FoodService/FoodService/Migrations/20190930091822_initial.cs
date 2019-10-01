@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoodService.Migrations
 {
-    public partial class InitAndMapRestaurantToUser : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,6 +45,20 @@ namespace FoodService.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Prices",
+                columns: table => new
+                {
+                    PriceId = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Amount = table.Column<int>(nullable: false),
+                    Currency = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Prices", x => x.PriceId);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,10 +173,10 @@ namespace FoodService.Migrations
                 {
                     RestaurantId = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    FoodType = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    City = table.Column<string>(nullable: false),
+                    FoodType = table.Column<string>(nullable: false),
                     PriceCategory = table.Column<int>(nullable: false),
                     ManagerId = table.Column<string>(nullable: false)
                 },
@@ -177,20 +191,48 @@ namespace FoodService.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "227e064a-36dd-41c5-92f0-4320cd1bc13b", "081546cb-f1fc-476d-a341-e0d2da19e788", "Admin", "ADMIN" });
+            migrationBuilder.CreateTable(
+                name: "Meals",
+                columns: table => new
+                {
+                    MealId = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    PriceId = table.Column<long>(nullable: true),
+                    RestaurantId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Meals", x => x.MealId);
+                    table.ForeignKey(
+                        name: "FK_Meals_Prices_PriceId",
+                        column: x => x.PriceId,
+                        principalTable: "Prices",
+                        principalColumn: "PriceId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Meals_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
+                        principalColumn: "RestaurantId",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "fcd6cf29-56fb-4546-b0b3-3bc677353d44", "4226118d-de62-4399-9bfd-3a64a852290a", "Manager", "MANAGER" });
+                values: new object[] { "d3f7335b-350b-4073-a34c-27bcc997470f", "ba651eae-90bd-4b3d-8066-ca1eefd462d3", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "110d96be-7146-4d9d-85d7-4a1a9a7bec72", "ff5897ac-f9ad-4d79-b00e-5e0f53d24cf5", "Customer", "CUSTOMER" });
+                values: new object[] { "153b9792-feec-4db0-b193-eda7371de1da", "d214bed0-8585-446f-b13c-746e858c36aa", "Manager", "MANAGER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "f3112853-49dc-4629-8b47-ddf8d0e2a15f", "55456b91-545b-4545-b916-148e52fce633", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -230,6 +272,16 @@ namespace FoodService.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Meals_PriceId",
+                table: "Meals",
+                column: "PriceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Meals_RestaurantId",
+                table: "Meals",
+                column: "RestaurantId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Restaurants_ManagerId",
                 table: "Restaurants",
                 column: "ManagerId");
@@ -253,10 +305,16 @@ namespace FoodService.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Restaurants");
+                name: "Meals");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Prices");
+
+            migrationBuilder.DropTable(
+                name: "Restaurants");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

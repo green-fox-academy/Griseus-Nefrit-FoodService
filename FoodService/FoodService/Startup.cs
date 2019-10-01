@@ -1,19 +1,20 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Services;
-using FoodService.Models.Identity;
-using FoodService.Services.User;
+using FoodService.Services.MealService;
+using FoodService.Services.RestaurantService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using FoodService.Models.Identity;
+using FoodService.Services.User;
+using Microsoft.AspNetCore.Identity;
 using ReflectionIT.Mvc.Paging;
-
 
 namespace FoodService
 {
@@ -46,6 +47,7 @@ namespace FoodService
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRestaurantService, RestaurantService>();
+            services.AddTransient<IMealService, MealService>();
 
             services.AddMvc();
             services.AddPaging();

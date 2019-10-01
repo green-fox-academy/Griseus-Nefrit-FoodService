@@ -1,0 +1,6 @@
+@model AddMealRequest
+@{
+    ViewData["Title"] = "Add Meal";
+    ViewData["Action"] = "Add";
+    await Html.RenderPartialAsync("_MealPartial");
+}
