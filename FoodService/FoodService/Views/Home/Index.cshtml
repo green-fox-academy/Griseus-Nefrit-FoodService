@@ -1,4 +1,4 @@
-﻿@model ReflectionIT.Mvc.Paging.PagingList<FoodService.Models.Restaurant>
+﻿@model SearchRestaurantViewModel
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @using ReflectionIT.Mvc.Paging
 @{
@@ -11,8 +11,22 @@
 else
 {
     <h1>Available Restaurants</h1>
+    <br />
+    <h4>Get restaurants in your city</h4>
+    <form asp-controller="Home" asp-action="Index" method="get">
+        <select asp-for="SearchRestaurantRequest.City">
+            <option selected>Choose a city</option>
+            @foreach (var restaurants in Model.PagingList)
+            {
+                <option value="@restaurants.City">@restaurants.City</option>
+            }
+        </select>
+        <button type="submit" class="btn btn-success">Filter</button>
+        <a asp-action="Index">Clear filters</a>
+    </form>
 }
 
+<br/>
 <table class="table">
     <thead class="thead-light">
         <tr>
@@ -23,7 +37,7 @@ else
         </tr>
     </thead>
     <tbody>
-        @foreach (var restaurants in Model)
+        @foreach (var restaurants in Model.PagingList)
         {
             <tr>
                 <th scope="row">
@@ -51,5 +65,5 @@ else
     </tbody>
 </table>
 <nav aria-label="Restaurants" class="nav">
-    <vc:pager paging-list="@Model" />
+    <vc:pager paging-list="@Model.PagingList" />
 </nav>

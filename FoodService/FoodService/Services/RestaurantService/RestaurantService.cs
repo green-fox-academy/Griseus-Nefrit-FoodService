@@ -116,5 +116,10 @@ namespace FoodService.Services.RestaurantService
             await applicationDbContext.SaveChangesAsync();
             return editRestauratnViewModel;
         }
+        public async Task<List<Restaurant>> FindRestaurantsByCity(string city)
+        {
+            var filteredRestaurantsList = await applicationDbContext.Restaurants.Where(r => r.City == city).ToListAsync();
+            return filteredRestaurantsList;
+        }
     }
 }
