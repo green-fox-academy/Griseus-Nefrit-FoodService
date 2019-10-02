@@ -38,27 +38,21 @@ namespace FoodService.Services.MealService
         
         public async Task<Meal> GetMealByIdAsync(long mealId)
         {
-            var meal = await applicationDbContext.Meals.Include(m => m.Restaurant).Include(p => p.Price).FirstOrDefaultAsync(m => m.MealId == mealId);
-            //return meal ?? null;
-            if (meal == null)
-            {
-                System.Console.WriteLine("null");
-                return null;
-            }
-            System.Console.WriteLine("nem null");
+            var meal = await applicationDbContext.Meals.Include(m => m.Restaurant).Include(p => p.Price)
+                .FirstOrDefaultAsync(m => m.MealId == mealId);
             return meal;
         }
 
         public async Task<AddMealRequest> CreateRequestAsync(long id)
         {
             var meal = await GetMealByIdAsync(id);
-            if(meal == null)
+            if(meal != null)
             {
-                return null;
+                var addMealRequest = iMapper.Map<Meal, AddMealRequest>(meal);
+                addMealRequest.RestaurantId = meal.Restaurant.RestaurantId;
+                return addMealRequest;
             }
-            var addMealRequest = iMapper.Map<Meal, AddMealRequest>(meal);
-            addMealRequest.RestaurantId = meal.Restaurant.RestaurantId;
-            return addMealRequest;
+            return null;
         }
         
         public async Task EditAsync(long id, AddMealRequest addMealRequest)

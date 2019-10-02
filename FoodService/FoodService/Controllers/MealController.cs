@@ -62,8 +62,11 @@ namespace FoodService.Controllers
             if (ModelState.IsValid)
             {
                 var meal = await mealService.GetMealByIdAsync(id);
-                await mealService.EditAsync(id, addMealRequest);
-                            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = meal.Restaurant.RestaurantId});
+                if(meal != null)
+                {
+                    await mealService.EditAsync(id, addMealRequest);
+                }
+                return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new { id = meal.Restaurant.RestaurantId });
             }
             return View(addMealRequest);
         }
