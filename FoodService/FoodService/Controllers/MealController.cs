@@ -49,6 +49,10 @@ namespace FoodService.Controllers
         public async Task<IActionResult> Edit(long id)
         {
            var requestModel = await mealService.CreateRequestAsync(id);
+            if(requestModel == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home", new { page = 1 });
+            }
            return View(requestModel);
         }
         

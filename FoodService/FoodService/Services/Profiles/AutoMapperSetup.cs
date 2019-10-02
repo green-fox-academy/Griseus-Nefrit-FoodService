@@ -14,6 +14,7 @@ namespace FoodService.Services.Profiles
             var config = new MapperConfiguration(cfg => {
                 cfg.AddProfile(new RestaurantProfile());
                 cfg.AddProfile(new AccountProfile());
+                cfg.AddProfile(new MealProfile());
             });
             IMapper iMapper = config.CreateMapper();
             services.AddSingleton(iMapper);

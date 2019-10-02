@@ -16,6 +16,5 @@ namespace FoodService.Services.Profiles
                 .ForMember(destination => destination.UserName,
                 opts => opts.MapFrom(source => source.Email));
         }
-        
     }
 }
