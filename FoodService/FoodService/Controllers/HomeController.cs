@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models;
+using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Services;
 using FoodService.Services.RestaurantService;
 using Microsoft.AspNetCore.Mvc;
 using ReflectionIT.Mvc.Paging;
+using FoodService.Models.ViewModels.Restaurant;
 
 namespace FoodService.Controllers
 {
@@ -20,19 +22,34 @@ namespace FoodService.Controllers
         }
 
         [HttpGet("/")]
-        public async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index(SearchRestaurantRequest searchRestaurantRequest, int page = 1)
         {
             List<Restaurant> restaurants;
             if (User.IsInRole("Manager"))
             {
                 restaurants = await restaurantService.FindByManagerNameOrEmailAsync(User.Identity.Name);
             }
-            else
+            else if(searchRestaurantRequest.FoodName == "" || searchRestaurantRequest.FoodName == null)
             {
                 restaurants = await restaurantService.FindAllAsync();
             }
-            var model = PagingList.Create(restaurants, 10, page);
-            return View(model);
+            else
+            {
+                restaurants = await restaurantService.FindByFoodNameAsync(searchRestaurantRequest.FoodName);
+            }
+
+            SearchRestaurantViewModel searchRestaurantViewModel = new SearchRestaurantViewModel()
+            {
+                PagingList = PagingList.Create(restaurants, 10, page),
+                SearchRestaurantRequest = searchRestaurantRequest
+            };
+            return View(searchRestaurantViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult SearchRestaurantAsync(SearchRestaurantViewModel searchRestaurantViewModel)
+        {
+            return RedirectToAction(nameof(HomeController.Index), "Home", searchRestaurantViewModel.SearchRestaurantRequest.FoodName);
         }
     }
 }

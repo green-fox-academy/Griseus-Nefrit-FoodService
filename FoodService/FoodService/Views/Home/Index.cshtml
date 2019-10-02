@@ -14,10 +14,10 @@
 else
 {
     <h1>Available Restaurants</h1>
-    <form asp-controller="Home" asp-action="SearchRestaurantAsync" method="post">
-        <label asp-for="SearchRestaurantRequest.FoodName">Food name</label>
-        <input type="text" asp-for="SearchRestaurantRequest.FoodName" class="form-control" />
-        <span asp-validation-for="SearchRestaurantRequest.FoodName" class="text-primary"></span>
+    <form asp-controller="Home" asp-action="@Model.SearchRestaurantRequest.FoodName" method="post">
+        <label asp-for="@Model.SearchRestaurantRequest.FoodName">Food name</label>
+        <input type="text" asp-for="@Model.SearchRestaurantRequest.FoodName" class="form-control" />
+        <span asp-validation-for="@Model.SearchRestaurantRequest.FoodName" class="text-primary"></span>
         <button type="submit" class="btn btn-success">Search</button>
     </form>
 }
