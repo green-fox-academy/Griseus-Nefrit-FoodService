@@ -29,7 +29,7 @@ namespace FoodService.Controllers
             {
                 restaurants = await restaurantService.FindByManagerNameOrEmailAsync(User.Identity.Name);
             }
-            else if(searchRestaurantRequest.FoodName == "" || searchRestaurantRequest.FoodName == null)
+            else if(String.IsNullOrEmpty(searchRestaurantRequest.FoodName))
             {
                 restaurants = await restaurantService.FindAllAsync();
             }
@@ -44,12 +44,6 @@ namespace FoodService.Controllers
                 SearchRestaurantRequest = searchRestaurantRequest
             };
             return View(searchRestaurantViewModel);
-        }
-
-        [HttpPost]
-        public IActionResult SearchRestaurantAsync(SearchRestaurantViewModel searchRestaurantViewModel)
-        {
-            return RedirectToAction(nameof(HomeController.Index), "Home", searchRestaurantViewModel.SearchRestaurantRequest.FoodName);
         }
     }
 }
