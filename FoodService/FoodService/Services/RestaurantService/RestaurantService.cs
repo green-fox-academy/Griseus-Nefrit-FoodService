@@ -119,8 +119,19 @@ namespace FoodService.Services.RestaurantService
 
         public async Task<List<Restaurant>> FindByFoodNameAsync(string foodName)
         {
-            var restaurantList = await applicationDbContext.Restaurants.AsQueryable().Where(r => r.FoodType.Contains(foodName)).OrderBy(r => r.Name).ToListAsync();
-            return restaurantList;
+            var restaurantList = await applicationDbContext.Restaurants.Include(r => r.Meals).ToListAsync();
+            List<Restaurant> searchedRestaurants = new List<Restaurant>();
+            foreach (Restaurant restaurant in restaurantList)
+            {
+                foreach (Meal meal in restaurant.Meals)
+                {
+                    if(meal.Name.Contains(foodName))
+                    {
+                        searchedRestaurants.Add(restaurant);
+                    }
+                }
+            }
+            return searchedRestaurants;
         }
     }
 }
