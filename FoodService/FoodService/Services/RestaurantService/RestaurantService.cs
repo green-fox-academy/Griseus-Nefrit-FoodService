@@ -58,11 +58,6 @@ namespace FoodService.Services.RestaurantService
         {
             var editedRestaurant = await GetRestaurantByIdAsync(id);
             editedRestaurant = iMapper.Map<RestaurantRequest, Restaurant>(restaurantRequest, editedRestaurant);
-            //editedRestaurant.Name = restaurantRequest.Name;
-            //editedRestaurant.Description = restaurantRequest.Description;
-            //editedRestaurant.City = restaurantRequest.City;
-            //editedRestaurant.FoodType = restaurantRequest.FoodType;
-            //editedRestaurant.PriceCategory = restaurantRequest.PriceCategory;
             await applicationDbContext.SaveChangesAsync();
             return editedRestaurant;
         }
@@ -84,14 +79,7 @@ namespace FoodService.Services.RestaurantService
             var restaurant = await GetRestaurantByIdAsync(restaurantId);
             var editRestauratnViewModel = new EditRestaurantViewModel()
             {
-                RestaurantRequest = new RestaurantRequest()
-                {
-                    Name = restaurant.Name,
-                    Description = restaurant.Description,
-                    City = restaurant.City,
-                    FoodType = restaurant.FoodType,
-                    PriceCategory = restaurant.PriceCategory
-                },
+                RestaurantRequest = iMapper.Map<Restaurant, RestaurantRequest>(restaurant),
                 Meals = restaurant.Meals,
                 RestaurantId = restaurant.RestaurantId
             };
