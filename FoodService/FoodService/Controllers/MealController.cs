@@ -59,7 +59,7 @@ namespace FoodService.Controllers
             {
                 var meal = await mealService.GetMealByIdAsync(id);
                 await mealService.EditAsync(id, addMealRequest);
-                            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = meal.Restaurant.RestaurantId});
+                return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = meal.Restaurant.RestaurantId});
             }
             return View(addMealRequest);
         }
