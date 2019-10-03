@@ -1,4 +1,3 @@
-
 using System.Threading.Tasks;
 using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Services.RestaurantService;
@@ -26,20 +25,16 @@ namespace FoodService.Controllers
             this.restaurantService = restaurantService;
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         public async Task<IActionResult> Add(RestaurantRequest restaurantRequest)
         {
-            if (!User.IsInRole("Manager"))
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
-
             if(ModelState.IsValid)
             {
                 await restaurantService.SaveRestaurantAsync(restaurantRequest, User.Identity.Name);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            EditRestaurantViewModel editRestaurantViewModel = new EditRestaurantViewModel()
+            var editRestaurantViewModel = new EditRestaurantViewModel()
             {
                 RestaurantRequest = restaurantRequest,
                 Meals = null,
@@ -63,8 +58,7 @@ namespace FoodService.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-
-            EditRestaurantViewModel editRestaurantViewModel = await restaurantService.BuildEditRestaurantViewModelAsync(id);
+            var editRestaurantViewModel = await restaurantService.BuildEditRestaurantViewModelAsync(id);
             return View(editRestaurantViewModel);
         }
 
@@ -82,8 +76,16 @@ namespace FoodService.Controllers
                 await restaurantService.EditRestaurantAsync(id, editRestaurantViewModel.RestaurantRequest);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            EditRestaurantViewModel editRestaurantViewModel1 = await restaurantService.BuildEditRestaurantViewModelAsync(id, editRestaurantViewModel.RestaurantRequest);
-            return View(editRestaurantViewModel1);
+            editRestaurantViewModel = await restaurantService.BuildEditRestaurantViewModelAsync(id, editRestaurantViewModel.RestaurantRequest);
+            return View(editRestaurantViewModel);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Index(long id)
+        {
+            var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
+            return View(restaurant);
         }
     }
 }

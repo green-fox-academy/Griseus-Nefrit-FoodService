@@ -1,12 +1,9 @@
-﻿
 @model SearchRestaurantViewModel
-@using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
-
+@using ReflectionIT.Mvc.Paging
 @{
     ViewData["Title"] = "Restaurants";
 }
-
 @if (User.IsInRole("Manager"))
 {
     <h1>My Restaurants</h1>
@@ -14,12 +11,14 @@
 else
 {
     <h1>Available Restaurants</h1>
+    <br />
+    <h4>Get restaurants in your city</h4>
     <form asp-controller="Home" asp-action="Index" method="get">
         <select asp-for="SearchRestaurantRequest.City">
             <option selected>Choose a city</option>
-            @foreach (var cities in Model.UniqueCities)
+            @foreach (var city in Model.UniqueCities)
             {
-                <option value="@cities">@cities</option>
+                <option value="@city">@city</option>
             }
         </select>
         <label asp-for="SearchRestaurantRequest.MealName">Food name:</label>
@@ -30,15 +29,16 @@ else
     </form>
 }
 
+<br/>
 <table class="table">
     <thead class="thead-light">
         <tr>
             <th scope="col">Name</th>
-            <th scope="col">FoodType</th>
+            <th scope="col">Food Type</th>
             <th scope="col">Price Range</th>
+            <th scope="col"></th>
         </tr>
     </thead>
-
     <tbody>
         @foreach (var restaurants in Model.PagingList)
         {
@@ -52,6 +52,11 @@ else
                 <td>
                     @Html.DisplayFor(modelItem => restaurants.PriceCategory)
                 </td>
+                <td>
+                    <form asp-controller="Restaurant" asp-action="Index" method="get" asp-route-Id="@restaurants.RestaurantId">
+                        <button type="submit" class="btn btn-success">Details</button>
+                    </form>
+                </td>
                 @if (User.IsInRole("Manager"))
                 {
                     <td>
@@ -62,6 +67,30 @@ else
         }
     </tbody>
 </table>
-<nav aria-label="Restaurants" class="nav">
-    <vc:pager paging-list="@Model.PagingList" />
-</nav>
+
+@{
+   var prev = Model.PagingList.PageIndex == 1 ? 1 : Model.PagingList.PageIndex - 1;
+   var next = Model.PagingList.PageIndex == Model.PagingList.PageCount ? Model.PagingList.PageCount : Model.PagingList.PageIndex + 1;
+}
+<ul class="pagination">
+     <li class="page-item">
+         <a class="page-link" aria-label="Previous" role="button" asp-route-city="@Model.SearchRestaurantRequest.City" asp-route-page="@prev">
+             <span aria-hidden="true">&laquo;</span>
+             <span class="sr-only">Next</span>
+         </a>
+     </li>
+    @for (int i = 1; i <= Model.PagingList.PageCount; i++)
+    {
+        <li>
+            <a role="button" class="btn btn-primary"
+               asp-route-city="@Model.SearchRestaurantRequest.City"
+               asp-route-page="@i">@i</a>
+        </li>
+    }
+      <li class="page-item">
+          <a class="page-link" aria-label="Next" role="button" asp-route-city="@Model.SearchRestaurantRequest.City" asp-route-page="@next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+          </a>
+      </li>
+</ul>

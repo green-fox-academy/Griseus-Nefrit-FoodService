@@ -1,0 +1,51 @@
+@{
+    ViewData["Title"] = "Restaurant details";
+}
+@model Restaurant
+
+<h2>Restaurant details</h2>
+<br />
+<table class="table">
+    <tr>
+        <th>NAME</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>DESCRIPTION</th>
+        <td>@Model.Description</td>
+    </tr>
+    <tr>
+        <th>CITY</th>
+        <td>@Model.City</td>
+    </tr>
+    <tr>
+        <th>FOODTYPE</th>
+        <td>@Model.FoodType</td>
+    </tr>
+    <tr>
+        <th>PRICE CATEGORY</th>
+        <td>@Model.PriceCategory</td>
+    </tr>
+</table>
+<br />
+<h2>List of available meals</h2>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th>NAME</th>
+        <th>DESCRIPTION</th>
+        <th>PRICE</th>
+    </tr>
+    </thead>
+    @foreach (var meal in Model.Meals)
+    {
+        <tr>
+            <td>@meal.Name</td>
+            <td>@meal.Description</td>
+            <td>@meal.Price.Amount @meal.Price.Currency</td>
+        </tr>
+    }
+</table>
+<form asp-controller="Home" asp-action="Index" method="get">
+    <button type="submit" class="btn btn-info">Back to restaurants</button>
+</form>

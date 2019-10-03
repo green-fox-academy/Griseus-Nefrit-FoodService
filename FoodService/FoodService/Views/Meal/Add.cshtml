@@ -1,10 +1,6 @@
-@{
-    ViewData["Title"] = "Add Meal";
-}
 @model AddMealRequest
 @{
+    ViewData["Title"] = "Add Meal";
     ViewData["Action"] = "Add";
     await Html.RenderPartialAsync("_MealPartial");
 }
-
-<a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.RestaurantId">Cancel</a>

@@ -16,11 +16,11 @@ namespace FoodService.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> Add(long Id)
+        public IActionResult Add(long id)
         {
             AddMealRequest addMealRequest = new AddMealRequest()
             {
-                RestaurantId = Id,
+                RestaurantId = id,
                 Price = new Price()
             };
             return View(addMealRequest);
@@ -38,28 +38,35 @@ namespace FoodService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(long Id)
+        public async Task<IActionResult> Delete(long id)
         {
-            var meal = await mealService.GetMealByIdAsync(Id);
-            await mealService.DeleteMeal(Id);
+            var meal = await mealService.GetMealByIdAsync(id);
+            await mealService.DeleteMealAsync(id);
             return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = meal.Restaurant.RestaurantId});
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(long Id)
+        public async Task<IActionResult> Edit(long id)
         {
-           var requestModel = await mealService.CreateRequest(Id);
+           var requestModel = await mealService.CreateRequestAsync(id);
+            if(requestModel == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home", new { page = 1 });
+            }
            return View(requestModel);
         }
         
         [HttpPost]
-        public async Task<IActionResult> Edit(AddMealRequest addMealRequest, long Id)
+        public async Task<IActionResult> Edit(AddMealRequest addMealRequest, long id)
         {
             if (ModelState.IsValid)
             {
-                var meal = await mealService.GetMealByIdAsync(Id);
-                await mealService.EditAsync(Id, addMealRequest);
-                            return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = meal.Restaurant.RestaurantId});
+                var meal = await mealService.GetMealByIdAsync(id);
+                if(meal != null)
+                {
+                    await mealService.EditAsync(id, addMealRequest);
+                }
+                return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new { id = meal.Restaurant.RestaurantId });
             }
             return View(addMealRequest);
         }

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models;
 using FoodService.Models.RequestModels.Restaurant;
+using FoodService.Models.ViewModels.Restaurant;
 using FoodService.Services;
 using FoodService.Services.RestaurantService;
 using Microsoft.AspNetCore.Mvc;
 using ReflectionIT.Mvc.Paging;
-using FoodService.Models.ViewModels.Restaurant;
 
 namespace FoodService.Controllers
 {
@@ -26,10 +26,9 @@ namespace FoodService.Controllers
         {
             var user = User;
             var restaurants = await restaurantService.GetRestaurantsByRequestAsync(page, user, searchRestaurantRequest);
-
             return View(new SearchRestaurantViewModel
             {
-                UniqueCities = await restaurantService.GetUniqueCities(),
+                UniqueCities = await restaurantService.GetUniqueCitiesAsync(),
                 PagingList = restaurants,
                 SearchRestaurantRequest = searchRestaurantRequest
             });
