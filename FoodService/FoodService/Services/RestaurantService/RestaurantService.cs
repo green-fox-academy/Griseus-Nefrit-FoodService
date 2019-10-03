@@ -125,8 +125,13 @@ namespace FoodService.Services.RestaurantService
                 var restaurantsOfManager = await FindRestaurantByManagerNameOrEmailAsync(user.Identity.Name);
                 return PagingList.Create(restaurantsOfManager, 4, page);
             }
-            
-            var restaurants = await applicationDbContext.Restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).ToListAsync();
+            if (String.Equals("Choose a city", searchRestaurantRequest.City))
+            {
+                searchRestaurantRequest.City = null;
+            }
+
+            var restaurants = await applicationDbContext.Restaurants.Where(r =>
+                r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).ToListAsync();
             return PagingList.Create(restaurants, 4, page);
         }
     }
