@@ -2,29 +2,26 @@ using System.Threading.Tasks;
 using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Models;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace FoodService.Services.MealService
 {
     public class MealService : IMealService
     {
         private readonly ApplicationDbContext applicationDbContext;
+        private readonly IMapper iMapper;
 
-        public MealService(ApplicationDbContext applicationDbContext)
+        public MealService(ApplicationDbContext applicationDbContext, IMapper iMapper)
         {
             this.applicationDbContext = applicationDbContext;
-        }
+            this.iMapper = iMapper;
+    }
         
-        public async Task SaveMealAsync(AddMealRequest model)
+        public async Task SaveMealAsync(AddMealRequest addMealRequest)
         {
-            var meal = new Meal();
-            meal.Price = new Price();
+            var meal = iMapper.Map<AddMealRequest, Meal>(addMealRequest);
             meal.Restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
-                .FirstOrDefaultAsync(t => t.RestaurantId == model.RestaurantId);
-            meal.Description = model.Description;
-            meal.Price.Amount = model.Price.Amount;
-            meal.Price.Currency = model.Price.Currency;
-            meal.Name = model.Name;
-            meal.Restaurant.RestaurantId = model.RestaurantId;
+                .FirstOrDefaultAsync(t => t.RestaurantId == addMealRequest.RestaurantId);
             await applicationDbContext.Meals.AddAsync(meal);
             await applicationDbContext.SaveChangesAsync();
         }
@@ -41,42 +38,29 @@ namespace FoodService.Services.MealService
         
         public async Task<Meal> GetMealByIdAsync(long mealId)
         {
-            var meal = await applicationDbContext.Meals.Include(m => m.Restaurant).Include(p => p.Price).FirstOrDefaultAsync(m => m.MealId == mealId);
-            if (meal == null)
-            {
-                return null;
-            }
+            var meal = await applicationDbContext.Meals.Include(m => m.Restaurant).Include(p => p.Price)
+                .FirstOrDefaultAsync(m => m.MealId == mealId);
             return meal;
         }
 
         public async Task<AddMealRequest> CreateRequestAsync(long id)
         {
             var meal = await GetMealByIdAsync(id);
-            AddMealRequest addMealRequest = new AddMealRequest()
+            if(meal != null)
             {
-                Name = meal.Name,
-                Description = meal.Description,
-                Price = new Price()
-                {
-                    Amount = meal.Price.Amount,
-                    Currency = meal.Price.Currency,
-                },
-                RestaurantId = meal.Restaurant.RestaurantId
-            };
-            return addMealRequest;
+                var addMealRequest = iMapper.Map<Meal, AddMealRequest>(meal);
+                addMealRequest.RestaurantId = meal.Restaurant.RestaurantId;
+                return addMealRequest;
+            }
+            return null;
         }
         
         public async Task EditAsync(long id, AddMealRequest addMealRequest)
         {
             var meal = await GetMealByIdAsync(id);
-            meal.Price = new Price();
+            meal = iMapper.Map<AddMealRequest, Meal>(addMealRequest, meal);
             meal.Restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
                 .FirstOrDefaultAsync(t => t.RestaurantId == addMealRequest.RestaurantId);
-            meal.Description = addMealRequest.Description;
-            meal.Price.Amount = addMealRequest.Price.Amount;
-            meal.Price.Currency = addMealRequest.Price.Currency;
-            meal.Name = addMealRequest.Name;
-            meal.Restaurant.RestaurantId = addMealRequest.RestaurantId;
             await applicationDbContext.SaveChangesAsync();
         }
     }
