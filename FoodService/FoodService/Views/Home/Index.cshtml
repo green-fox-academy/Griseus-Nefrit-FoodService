@@ -16,9 +16,9 @@ else
     <form asp-controller="Home" asp-action="Index" method="get">
         <select asp-for="SearchRestaurantRequest.City">
             <option selected>Choose a city</option>
-            @foreach (var restaurants in Model.PagingList)
+            @foreach (var cities in Model.UniqueCities)
             {
-                <option value="@restaurants.City">@restaurants.City</option>
+                <option value="@cities">@cities</option>
             }
         </select>
         <button type="submit" class="btn btn-success">Filter</button>

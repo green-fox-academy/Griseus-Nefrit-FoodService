@@ -1,11 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using FoodService.Models;
 using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Services.User;
 using Microsoft.EntityFrameworkCore;
 using FoodService.Models.ViewModels.Restaurant;
+using ReflectionIT.Mvc.Paging;
 
 namespace FoodService.Services.RestaurantService
 {
@@ -116,10 +119,42 @@ namespace FoodService.Services.RestaurantService
             await applicationDbContext.SaveChangesAsync();
             return editRestauratnViewModel;
         }
-        public async Task<List<Restaurant>> FindRestaurantsByCity(string city)
+        
+        public async Task<List<String>> GetUniqueCities()
         {
-            var filteredRestaurantsList = await applicationDbContext.Restaurants.Where(r => r.City == city).ToListAsync();
-            return filteredRestaurantsList;
+            var restaurants = await FindAllAsync();
+            var listCities = new List<String>();
+            for (var i = 0; i < restaurants.Count; i++)
+            {
+                listCities.Add(restaurants[i].City);
+            }
+            
+            var uniqueCities = listCities.Distinct().ToList();
+            return uniqueCities;
+        }
+
+        public async Task<List<Restaurant>> FindRestaurantsByCity(SearchRestaurantRequest searchRestaurantRequest)
+        {
+            var restaurants = await applicationDbContext.Restaurants.Where(r => r.City == searchRestaurantRequest.City).ToListAsync();
+            return restaurants;
+        }
+
+        public async Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync( int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest)
+        {
+            List<Restaurant> restaurants;
+            if (user.IsInRole("Manager"))
+            {
+                restaurants = await FindByManagerNameOrEmailAsync(user.Identity.Name);
+            } else if (String.IsNullOrEmpty(searchRestaurantRequest.City))
+            {
+                restaurants = await FindAllAsync();
+            }
+            else
+            {
+                restaurants = await FindRestaurantsByCity(searchRestaurantRequest);
+            }
+  
+            return PagingList.Create(restaurants, 10, page);
         }
     }
 }
