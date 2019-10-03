@@ -10,6 +10,6 @@ namespace FoodService.Services.MealService
         Task DeleteMealAsync(long id);
         Task<Meal> GetMealByIdAsync(long mealId);
         Task EditAsync(long id, AddMealRequest addMealRequest);
-        Task<AddMealRequest> CreateRequestAsync(long id);
+        Task<AddMealRequest> CreateMealRequestAsync(long id);
     }
 }

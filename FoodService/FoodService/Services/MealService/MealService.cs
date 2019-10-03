@@ -43,7 +43,7 @@ namespace FoodService.Services.MealService
             return meal;
         }
 
-        public async Task<AddMealRequest> CreateRequestAsync(long id)
+        public async Task<AddMealRequest> CreateMealRequestAsync(long id)
         {
             var meal = await GetMealByIdAsync(id);
             if(meal != null)
