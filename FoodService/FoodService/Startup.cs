@@ -46,16 +46,15 @@ namespace FoodService
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
                 services.AddDbContext<ApplicationDbContext>(build =>
                 {
+                    // Automatically perform database migration
                     build.UseMySql(configuration.GetConnectionString("AzureConnection"));
+                    services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
                 });
             else
                 services.AddDbContext<ApplicationDbContext>(build =>
                 {
                     build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
                 });
-
-            // Automatically perform database migration
-            services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRestaurantService, RestaurantService>();
