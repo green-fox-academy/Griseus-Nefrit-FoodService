@@ -55,7 +55,7 @@ namespace FoodService
                 });
 
             // Automatically perform database migration
-            services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
+            //services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRestaurantService, RestaurantService>();

@@ -2,10 +2,12 @@ using System.Threading.Tasks;
 using FoodService.Models;
 using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Services.MealService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodService.Controllers
 {
+    [Authorize]
     public class MealController : Controller
     {
         private readonly IMealService mealService;
@@ -14,7 +16,8 @@ namespace FoodService.Controllers
         {
             this.mealService = mealService;
         }
-        
+
+        [Authorize(Roles = "Manager, Admin")]
         [HttpGet]
         public IActionResult Add(long id)
         {
@@ -25,7 +28,8 @@ namespace FoodService.Controllers
             };
             return View(addMealRequest);
         }
-        
+
+        [Authorize(Roles = "Manager, Admin")]
         [HttpPost]
         public async Task<IActionResult> Add(AddMealRequest addMealRequest)
         {
@@ -37,6 +41,7 @@ namespace FoodService.Controllers
             return View(addMealRequest);
         }
 
+        [Authorize(Roles = "Manager, Admin")]
         [HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
@@ -45,6 +50,7 @@ namespace FoodService.Controllers
             return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new {id = meal.Restaurant.RestaurantId});
         }
 
+        [Authorize(Roles = "Manager, Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(long id)
         {
@@ -55,7 +61,8 @@ namespace FoodService.Controllers
             }
            return View(requestModel);
         }
-        
+
+        [Authorize(Roles = "Manager, Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(AddMealRequest addMealRequest, long id)
         {
