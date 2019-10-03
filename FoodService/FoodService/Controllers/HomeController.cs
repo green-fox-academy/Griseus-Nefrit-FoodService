@@ -24,26 +24,15 @@ namespace FoodService.Controllers
         [HttpGet("/")]
         public async Task<IActionResult> Index(SearchRestaurantRequest searchRestaurantRequest, int page = 1)
         {
-            List<Restaurant> restaurants;
-            if (User.IsInRole("Manager"))
-            {
-                restaurants = await restaurantService.FindByManagerNameOrEmailAsync(User.Identity.Name);
-            }
-            else if(String.IsNullOrEmpty(searchRestaurantRequest.FoodName))
-            {
-                restaurants = await restaurantService.FindAllAsync();
-            }
-            else
-            {
-                restaurants = await restaurantService.FindByFoodNameAsync(searchRestaurantRequest.FoodName);
-            }
+            var user = User;
+            var restaurants = await restaurantService.GetRestaurantsByRequestAsync(page, user, searchRestaurantRequest);
 
-            SearchRestaurantViewModel searchRestaurantViewModel = new SearchRestaurantViewModel()
+            return View(new SearchRestaurantViewModel
             {
-                PagingList = PagingList.Create(restaurants, 10, page),
+                UniqueCities = await restaurantService.GetUniqueCities(),
+                PagingList = restaurants,
                 SearchRestaurantRequest = searchRestaurantRequest
-            };
-            return View(searchRestaurantViewModel);
+            });
         }
     }
 }

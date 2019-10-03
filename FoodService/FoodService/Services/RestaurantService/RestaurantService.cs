@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models;
@@ -6,6 +8,8 @@ using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Services.User;
 using Microsoft.EntityFrameworkCore;
 using FoodService.Models.ViewModels.Restaurant;
+using ReflectionIT.Mvc.Paging;
+
 
 namespace FoodService.Services.RestaurantService
 {
@@ -103,6 +107,52 @@ namespace FoodService.Services.RestaurantService
             return editRestauratnViewModel;
         }
 
+        public async Task<List<String>> GetUniqueCities()
+        {
+            var restaurants = await FindAllAsync();
+            var listCities = new List<String>();
+            for (var i = 0; i < restaurants.Count; i++)
+            {
+                listCities.Add(restaurants[i].City);
+            }
+
+            var uniqueCities = listCities.Distinct().ToList();
+            return uniqueCities;
+        }
+
+        public async Task<List<Restaurant>> FindRestaurantsByCity(SearchRestaurantRequest searchRestaurantRequest)
+        {
+            var restaurants = await applicationDbContext.Restaurants.Where(r => r.City == searchRestaurantRequest.City).ToListAsync();
+            return restaurants;
+        }
+
+        public async Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync(int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest)
+        {
+            if (user.IsInRole("Manager"))
+            {
+                var restaurantManager = await FindByManagerNameOrEmailAsync(user.Identity.Name);
+                return PagingList.Create(restaurantManager, 10, page);
+            }
+            var restaurants = await applicationDbContext.Restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).ToListAsync();
+            /*restaurants = await applicationDbContext.Restaurants.Include(r => r.Meals).OrderBy(r => r.Name).ToListAsync();
+            if (!String.IsNullOrEmpty(searchRestaurantRequest.MealName) || !String.IsNullOrEmpty(searchRestaurantRequest.City))
+            {               
+                restaurants = new List<Restaurant>();
+                foreach (Restaurant restaurant in restaurants)
+                {
+                    foreach (Meal meal in restaurant.Meals)
+                    {
+                        if(meal.Name.Contains(searchRestaurantRequest.MealName))
+                        {
+                            restaurants.Add(restaurant);
+                            break;
+                        }
+                    }
+                }
+            }*/
+            return PagingList.Create(restaurants, 10, page);
+        }
+
         public async Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId, RestaurantRequest restaurantRequest)
         {
             var restaurant = await GetRestaurantByIdAsync(restaurantId);
@@ -115,23 +165,6 @@ namespace FoodService.Services.RestaurantService
 
             await applicationDbContext.SaveChangesAsync();
             return editRestauratnViewModel;
-        }
-
-        public async Task<List<Restaurant>> FindByFoodNameAsync(string foodName)
-        {
-            var restaurantList = await applicationDbContext.Restaurants.Include(r => r.Meals).ToListAsync();
-            List<Restaurant> searchedRestaurants = new List<Restaurant>();
-            foreach (Restaurant restaurant in restaurantList)
-            {
-                foreach (Meal meal in restaurant.Meals)
-                {
-                    if(meal.Name.Contains(foodName))
-                    {
-                        searchedRestaurants.Add(restaurant);
-                    }
-                }
-            }
-            return searchedRestaurants;
         }
     }
 }
