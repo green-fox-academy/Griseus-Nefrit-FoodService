@@ -24,18 +24,20 @@
     </tr>
     <tr>
         <th>PRICE CATEGORY</th>
-        <td>@Model.PriceCategory</td>
+        <td>
+            <input value="@((byte)Model.PriceCategory)" class="rating rating-loading green" data-theme="krajee-fa" data-display-only="true" data-size="1" data-stars="4" data-max="4" data-step="1" data-show-clear="false" data-show-caption="false" data-show-caption-as-title="false">
+        </td>
     </tr>
 </table>
 <br />
 <h2>List of available meals</h2>
 <table class="table">
     <thead class="thead-dark">
-    <tr>
-        <th>NAME</th>
-        <th>DESCRIPTION</th>
-        <th>PRICE</th>
-    </tr>
+        <tr>
+            <th>NAME</th>
+            <th>DESCRIPTION</th>
+            <th>PRICE</th>
+        </tr>
     </thead>
     @foreach (var meal in Model.Meals)
     {

@@ -33,7 +33,7 @@ else
                     @Html.DisplayFor(modelItem => restaurants.FoodType)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => restaurants.PriceCategory)
+                    <input value="@((byte)restaurants.PriceCategory)" class="rating rating-loading green" data-theme="krajee-fa" data-display-only="true" data-size="1" data-stars="4" data-max="4" data-step="1" data-show-clear="false" data-show-caption="false" data-show-caption-as-title="false">
                 </td>
                 <td>
                     <form asp-controller="Restaurant" asp-action="Index" method="get" asp-route-Id="@restaurants.RestaurantId">
