@@ -141,19 +141,13 @@ namespace FoodService.Services.RestaurantService
 
         public async Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync( int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest)
         {
-            List<Restaurant> restaurants;
             if (user.IsInRole("Manager"))
             {
-                restaurants = await FindByManagerNameOrEmailAsync(user.Identity.Name);
-            } else if (String.IsNullOrEmpty(searchRestaurantRequest.City))
-            {
-                restaurants = await FindAllAsync();
+                var restaurantsManager = await FindByManagerNameOrEmailAsync(user.Identity.Name);
+                return PagingList.Create(restaurantsManager, 10, page);
             }
-            else
-            {
-                restaurants = await FindRestaurantsByCity(searchRestaurantRequest);
-            }
-  
+            
+            var restaurants = await applicationDbContext.Restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).ToListAsync();
             return PagingList.Create(restaurants, 10, page);
         }
     }
