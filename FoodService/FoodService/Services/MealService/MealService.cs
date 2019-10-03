@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Azure.Storage.Blob;
 
 namespace FoodService.Services.MealService
 {
@@ -13,8 +14,8 @@ namespace FoodService.Services.MealService
         {
             this.applicationDbContext = applicationDbContext;
         }
-        
-        public async Task SaveMealAsync(AddMealRequest model)
+
+        public async Task<long> SaveMealAsync(AddMealRequest model)
         {
             var meal = new Meal();
             meal.Price = new Price();
@@ -27,8 +28,11 @@ namespace FoodService.Services.MealService
             meal.Restaurant.RestaurantId = model.RestaurantId;
             await applicationDbContext.Meals.AddAsync(meal);
             await applicationDbContext.SaveChangesAsync();
+            long mealidback = meal.MealId;
+
+            return mealidback;
         }
-        
+
         public async Task DeleteMealAsync(long id)
         {
             var meal = await GetMealByIdAsync(id);
@@ -38,7 +42,7 @@ namespace FoodService.Services.MealService
                 applicationDbContext.SaveChanges();
             }
         }
-        
+
         public async Task<Meal> GetMealByIdAsync(long mealId)
         {
             var meal = await applicationDbContext.Meals.Include(m => m.Restaurant).Include(p => p.Price).FirstOrDefaultAsync(m => m.MealId == mealId);
@@ -65,7 +69,7 @@ namespace FoodService.Services.MealService
             };
             return addMealRequest;
         }
-        
+
         public async Task EditAsync(long id, AddMealRequest addMealRequest)
         {
             var meal = await GetMealByIdAsync(id);
@@ -77,6 +81,13 @@ namespace FoodService.Services.MealService
             meal.Price.Currency = addMealRequest.Price.Currency;
             meal.Name = addMealRequest.Name;
             meal.Restaurant.RestaurantId = addMealRequest.RestaurantId;
+            await applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task addURIToAMealAsync(long mealID, CloudBlockBlob blob)
+        {
+            var meal = await GetMealByIdAsync(mealID);
+            meal.ImageURI = blob.SnapshotQualifiedStorageUri.PrimaryUri.ToString();
             await applicationDbContext.SaveChangesAsync();
         }
     }

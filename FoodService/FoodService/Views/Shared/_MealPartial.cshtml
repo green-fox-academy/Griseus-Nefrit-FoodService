@@ -1,36 +1,43 @@
 @model AddMealRequest
 
-<form asp-controller="Meal" asp-action="@ViewData["Action"]" method="post">
+  <form asp-controller="Meal" asp-action="@ViewData["Action"]" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Name" class="font-weight-bold"></label><br/>
-        <input asp-for="Name">
-        <span asp-validation-for="Name" class="text-danger"></span>
+      <label asp-for="Name" class="font-weight-bold"></label><br />
+      <input asp-for="Name">
+      <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Description" class="font-weight-bold"></label><br/>
-        <textarea asp-for="Description" rows="3"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
+      <label asp-for="Description" class="font-weight-bold"></label><br />
+      <textarea asp-for="Description" rows="3"></textarea>
+      <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Price.Amount" class="font-weight-bold"></label><br/>
-        <input asp-for="Price.Amount">
-        <span asp-validation-for="Price.Amount" class="text-danger"></span>
+      <label asp-for="Price.Amount" class="font-weight-bold"></label><br />
+      <input asp-for="Price.Amount">
+      <span asp-validation-for="Price.Amount" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Price.Currency" class="font-weight-bold"></label><br/>
-        <input asp-for="Price.Currency">
-        <span asp-validation-for="Price.Currency" class="text-danger"></span>
+      <label asp-for="Price.Currency" class="font-weight-bold"></label><br />
+      <input asp-for="Price.Currency">
+      <span asp-validation-for="Price.Currency" class="text-danger"></span>
     </div>
+
+
+    <div class="form-group">
+      <label name="uploadFile" class="font-weight-bold">Select image to upload:</label><br />
+      <input type="file" name="image" lang="en" accept=".jpg, .png, .jpeg|image/*">
+    </div>
+
 
     <div>
-        <input type="hidden" asp-for="RestaurantId" value="@Model.RestaurantId">
+      <input type="hidden" asp-for="RestaurantId" value="@Model.RestaurantId">
     </div>
     <button type="submit" class="btn btn-success">Save</button>
-</form>
+  </form>
 <br />
 <form asp-controller="Restaurant" asp-action="Edit" method="get" asp-route-id="@Model.RestaurantId">         
     <button type="submit" class="btn btn-info">Cancel</button>
