@@ -11,6 +11,6 @@ namespace FoodService.Models.RequestModels.Restaurant
         [Required]
         public string City { get; set; }
 
-        public string FoodName { get; set; }
+        public string MealName { get; set; }
     }
 }
