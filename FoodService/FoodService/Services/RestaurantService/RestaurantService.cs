@@ -51,7 +51,7 @@ namespace FoodService.Services.RestaurantService
             return restaurantList;
         }
 
-        public async Task<List<Restaurant>> FindByManagerNameOrEmailAsync(string managerName)
+        public async Task<List<Restaurant>> FindRestaurantByManagerNameOrEmailAsync(string managerName)
         {
             var restaurantList = await applicationDbContext.Restaurants.AsQueryable().Where(r => r.Manager.UserName == managerName).OrderBy(r => r.Name).ToListAsync();
             return restaurantList;
@@ -72,7 +72,7 @@ namespace FoodService.Services.RestaurantService
 
         public async Task<bool> ValidateAccessAsync(long restaurantId, string managerName)
         {
-            List<Restaurant> ownedRestaurants = await FindByManagerNameOrEmailAsync(managerName);
+            List<Restaurant> ownedRestaurants = await FindRestaurantByManagerNameOrEmailAsync(managerName);
             Restaurant currentRestaurant = await FindByIdAsync(restaurantId);
             return ownedRestaurants.Contains(currentRestaurant);
         }
@@ -118,22 +118,16 @@ namespace FoodService.Services.RestaurantService
             return uniqueCities;
         }
 
-        public async Task<List<Restaurant>> FindRestaurantsByCity(SearchRestaurantRequest searchRestaurantRequest)
-        {
-            var restaurants = await applicationDbContext.Restaurants.Where(r => r.City == searchRestaurantRequest.City).ToListAsync();
-            return restaurants;
-        }
-
         public async Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync( int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest)
         {
             if (user.IsInRole("Manager"))
             {
-                var restaurantsManager = await FindByManagerNameOrEmailAsync(user.Identity.Name);
-                return PagingList.Create(restaurantsManager, 10, page);
+                var restaurantsOfManager = await FindRestaurantByManagerNameOrEmailAsync(user.Identity.Name);
+                return PagingList.Create(restaurantsOfManager, 4, page);
             }
             
             var restaurants = await applicationDbContext.Restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).ToListAsync();
-            return PagingList.Create(restaurants, 10, page);
+            return PagingList.Create(restaurants, 4, page);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace FoodService.Services.RestaurantService
         Task<List<Restaurant>> FindAllAsync();
         Task<Restaurant> FindByIdAsync(long postId);
         Task<Restaurant> EditRestaurantAsync(long id, RestaurantRequest restaurantRequest);
-        Task<List<Restaurant>> FindByManagerNameOrEmailAsync(string managerName);
+        Task<List<Restaurant>> FindRestaurantByManagerNameOrEmailAsync(string managerName);
         Task<bool> ValidateAccessAsync(long restaurantId, string managerName);
         Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId);
         Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId, RestaurantRequest restaurantRequest);
