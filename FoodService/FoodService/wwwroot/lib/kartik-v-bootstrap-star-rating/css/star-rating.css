@@ -114,9 +114,9 @@
     cursor: pointer !important;
 }
 
-.clear-rating-active:hover {
-    color: #843534;
-}
+    .clear-rating-active:hover {
+        color: #843534;
+    }
 
 .rating-container .clear-rating {
     padding-right: 5px;
@@ -165,34 +165,42 @@
 /**
  * Sizes
  */
-.rating-xl  {
+.rating-xl {
     font-size: 48px;
 }
-.rating-lg  {
+
+.rating-lg {
     font-size: 40px;
 }
-.rating-md  {
+
+.rating-md {
     font-size: 32px;
 }
-.rating-sm  {
+
+.rating-sm {
     font-size: 24px;
 }
-.rating-xs  {
+
+.rating-xs {
     font-size: 16px;
 }
 
 .rating-xl .caption {
     font-size: 20px;
 }
+
 .rating-lg .caption {
     font-size: 18px;
 }
+
 .rating-md .caption {
     font-size: 16px;
 }
+
 .rating-sm .caption {
     font-size: 14px;
 }
+
 .rating-xs .caption {
     font-size: 12px;
 }

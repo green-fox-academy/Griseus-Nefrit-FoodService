@@ -23,7 +23,7 @@
     </div>
     <div class="form-group">
         <label asp-for="RestaurantRequest.PriceCategory" class="control-label">Price range</label>
-        <input asp-for="RestaurantRequest.PriceCategory" value="@((byte)Model.RestaurantRequest.PriceCategory)" class="rating rating-loading form-control" data-theme="krajee-fa" data-stars="4" data-min="0" data-max="4" data-step="1" data-show-clear="false" data-show-caption="false">
+        <input asp-for="RestaurantRequest.PriceCategory" value="@if (Model != null) { @((byte)Model.RestaurantRequest.PriceCategory) } " class="rating green rating-loading form-control" data-theme="krajee-fa" data-stars="4" data-min="0" data-max="4" data-step="1" data-show-clear="false" data-show-caption="false">
         <span asp-validation-for="RestaurantRequest.PriceCategory" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Submit changes</button>
