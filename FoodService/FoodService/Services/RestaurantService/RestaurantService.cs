@@ -133,24 +133,32 @@ namespace FoodService.Services.RestaurantService
                 var restaurantManager = await FindByManagerNameOrEmailAsync(user.Identity.Name);
                 return PagingList.Create(restaurantManager, 10, page);
             }
-            var restaurants = await applicationDbContext.Restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).ToListAsync();
-            /*restaurants = await applicationDbContext.Restaurants.Include(r => r.Meals).OrderBy(r => r.Name).ToListAsync();
-            if (!String.IsNullOrEmpty(searchRestaurantRequest.MealName) || !String.IsNullOrEmpty(searchRestaurantRequest.City))
-            {               
-                restaurants = new List<Restaurant>();
+            if (String.Equals("Choose a city", searchRestaurantRequest.City))
+            {
+                searchRestaurantRequest.City = null;
+            }
+            var restaurants = await applicationDbContext.Restaurants.Include(r => r.Meals).Where(r => r.City.Equals(searchRestaurantRequest.City)
+                            || String.IsNullOrEmpty(searchRestaurantRequest.City)).OrderBy(r => r.Name).ToListAsync();
+            var restaurantQuery = new List<Restaurant>();
+            if (String.IsNullOrEmpty(searchRestaurantRequest.MealName) || String.IsNullOrEmpty(searchRestaurantRequest.City))
+            {
+                restaurantQuery = restaurants;
+            }
+            else
+            {
                 foreach (Restaurant restaurant in restaurants)
                 {
                     foreach (Meal meal in restaurant.Meals)
                     {
                         if(meal.Name.Contains(searchRestaurantRequest.MealName))
                         {
-                            restaurants.Add(restaurant);
+                            restaurantQuery.Add(restaurant);
                             break;
                         }
                     }
                 }
-            }*/
-            return PagingList.Create(restaurants, 10, page);
+            }
+            return PagingList.Create(restaurantQuery, 10, page);
         }
 
         public async Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId, RestaurantRequest restaurantRequest)
