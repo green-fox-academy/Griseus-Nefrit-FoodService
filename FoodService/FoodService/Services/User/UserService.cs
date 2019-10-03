@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.Account;
 using Microsoft.AspNetCore.Identity;
@@ -12,11 +13,13 @@ namespace FoodService.Services.User
     {
         private readonly UserManager<AppUser> userMgr;
         private readonly SignInManager<AppUser> signInMgr;
+        private readonly IMapper iMapper;
 
-        public UserService(UserManager<AppUser> userMgr, SignInManager<AppUser> signInMgr)
+        public UserService(UserManager<AppUser> userMgr, SignInManager<AppUser> signInMgr, IMapper iMapper)
         {
             this.userMgr = userMgr;
             this.signInMgr = signInMgr;
+            this.iMapper = iMapper;
         }
 
         public async Task<AppUser> FindUserByNameOrEmail(string nameOrEmailAddr)
@@ -26,8 +29,7 @@ namespace FoodService.Services.User
 
         public async Task<SignInResult> LoginAsync(LoginRequest loginRequest)
         {
-            var result = await signInMgr.PasswordSignInAsync(userName: loginRequest.Email,
-                loginRequest.Password, isPersistent: false, lockoutOnFailure: false);
+            var result = await signInMgr.PasswordSignInAsync(userName: loginRequest.Email, password: loginRequest.Password, isPersistent: false, lockoutOnFailure: false);
             return result;
         }
 
@@ -38,12 +40,7 @@ namespace FoodService.Services.User
 
         public async Task<IdentityResult> RegisterAsync(RegisterRequest regRequest)
         {
-            var user = new AppUser
-            {
-                UserName = regRequest.Email,
-                Email = regRequest.Email
-            };
-
+            var user = iMapper.Map<RegisterRequest, AppUser>(regRequest);
             var result = await userMgr.CreateAsync(user, regRequest.Password);
             if (result.Succeeded)
             {
