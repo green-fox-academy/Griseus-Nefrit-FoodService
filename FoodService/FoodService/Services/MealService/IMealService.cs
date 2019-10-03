@@ -11,5 +11,6 @@ namespace FoodService.Services.MealService
         Task<Meal> GetMealByIdAsync(long mealId);
         Task EditAsync(long id, AddMealRequest addMealRequest);
         Task<AddMealRequest> CreateMealRequestAsync(long id);
+        Task<bool> ValidateAccessAsync(long mealId, string managerName);
     }
 }

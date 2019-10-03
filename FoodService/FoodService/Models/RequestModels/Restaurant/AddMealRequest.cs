@@ -13,6 +13,7 @@ namespace FoodService.Models.RequestModels.Restaurant
         [Required]
         public Price Price { get; set; }
 
+        [Required]
         public long RestaurantId { get; set; }
     }
 }

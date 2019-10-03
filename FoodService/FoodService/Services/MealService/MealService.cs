@@ -3,20 +3,24 @@ using FoodService.Models.RequestModels.Restaurant;
 using FoodService.Models;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using FoodService.Services.RestaurantService;
+using System.Collections.Generic;
 
 namespace FoodService.Services.MealService
 {
     public class MealService : IMealService
     {
         private readonly ApplicationDbContext applicationDbContext;
+        private readonly IRestaurantService restaurantService;
         private readonly IMapper iMapper;
 
-        public MealService(ApplicationDbContext applicationDbContext, IMapper iMapper)
+        public MealService(ApplicationDbContext applicationDbContext, IRestaurantService restaurantService, IMapper iMapper)
         {
             this.applicationDbContext = applicationDbContext;
+            this.restaurantService = restaurantService;
             this.iMapper = iMapper;
-    }
-        
+        }
+
         public async Task SaveMealAsync(AddMealRequest addMealRequest)
         {
             var meal = iMapper.Map<AddMealRequest, Meal>(addMealRequest);
@@ -62,6 +66,14 @@ namespace FoodService.Services.MealService
             meal.Restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
                 .FirstOrDefaultAsync(t => t.RestaurantId == addMealRequest.RestaurantId);
             await applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> ValidateAccessAsync(long mealId, string managerName)
+        {
+            List<Restaurant> ownedRestaurants = await restaurantService.FindByManagerNameOrEmailAsync(managerName);
+            Meal currentMeal = await GetMealByIdAsync(mealId);
+            Restaurant restaurantForCurrentMeal = currentMeal.Restaurant;
+            return ownedRestaurants.Contains(restaurantForCurrentMeal);
         }
     }
 }
