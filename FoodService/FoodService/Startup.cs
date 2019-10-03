@@ -16,6 +16,8 @@ using FoodService.Services.User;
 using Microsoft.AspNetCore.Identity;
 using ReflectionIT.Mvc.Paging;
 using FoodService.Services.BlobService;
+using FoodService.Services.Profiles;
+
 
 namespace FoodService
 {
@@ -39,17 +41,30 @@ namespace FoodService
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
-            }).AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddDbContext<ApplicationDbContext>(build =>
-            {
-                build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
-            });
+            })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+                services.AddDbContext<ApplicationDbContext>(build =>
+                {
+                    build.UseMySql(configuration.GetConnectionString("AzureConnection"));
+                });
+            else
+                services.AddDbContext<ApplicationDbContext>(build =>
+                {
+                    build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
+                });
+
+            // Automatically perform database migration
+            //  services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IMealService, MealService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
+
+            services.SetUpAutoMapper();
 
             services.AddMvc();
             services.AddPaging();
@@ -61,6 +76,11 @@ namespace FoodService
             ApplicationDbInitializer.SeedUsers(userManager);
 
             if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
+            else
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();

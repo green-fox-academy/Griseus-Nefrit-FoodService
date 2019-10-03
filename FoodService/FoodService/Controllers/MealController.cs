@@ -61,8 +61,13 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long id)
         {
-            var requestModel = await mealService.CreateRequestAsync(id);
-            return View(requestModel);
+
+           var requestModel = await mealService.CreateRequestAsync(id);
+            if(requestModel == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home", new { page = 1 });
+            }
+           return View(requestModel);
         }
 
         [HttpPost]
@@ -71,14 +76,17 @@ namespace FoodService.Controllers
             if (ModelState.IsValid)
             {
                 var meal = await mealService.GetMealByIdAsync(id);
-
                 if (image != null)
                 {
                     CloudBlockBlob blob = await blobStorageService.makeBlobFolderAndSaveImageAsync(id, image);
                     await mealService.addURIToAMealAsync(id, blob);
                 }
 
-                await mealService.EditAsync(id, addMealRequest);
+                if(meal != null)
+                {
+                    await mealService.EditAsync(id, addMealRequest);
+                }
+
                 return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new { id = meal.Restaurant.RestaurantId });
             }
             return View(addMealRequest);
