@@ -15,10 +15,18 @@ else
 {
     <h1>Available Restaurants</h1>
     <form asp-controller="Home" asp-action="Index" method="get">
-        <label asp-for="SearchRestaurantRequest.FoodName">Food name</label>
-        <input type="text" asp-for="SearchRestaurantRequest.FoodName" class="form-control" />
-        <span asp-validation-for="SearchRestaurantRequest.FoodName" class="text-primary"></span>
-        <button type="submit" class="btn btn-success">Search</button>
+        <select asp-for="SearchRestaurantRequest.City">
+            <option selected>Choose a city</option>
+            @foreach (var cities in Model.UniqueCities)
+            {
+                <option value="@cities">@cities</option>
+            }
+        </select>
+        <label asp-for="SearchRestaurantRequest.MealName">Food name:</label>
+        <input type="text" asp-for="SearchRestaurantRequest.MealName" class="form-control" />
+        <span asp-validation-for="SearchRestaurantRequest.MealName" class="text-primary"></span>
+        <button type="submit" class="btn btn-success">Filter</button>
+        <a asp-action="Index">Clear filters</a>
     </form>
 }
 
