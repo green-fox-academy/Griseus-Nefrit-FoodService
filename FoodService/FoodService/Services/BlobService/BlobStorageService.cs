@@ -12,16 +12,13 @@ namespace FoodService.Services.BlobService
     public class BlobStorageService : IBlobStorageService
     {
         IConfiguration configuration;
-
-        public BlobStorageService(IConfiguration configuration
-            )
+        public BlobStorageService(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
-
-        public void deleteBlobFolder(long id)
+        public void DeleteBlobFolder(long id)
         {
-            CloudBlobContainer blobContainer = GetCloudBlobContainerAsync();
+            CloudBlobContainer blobContainer = GetCloudBlobContainer();
             foreach (IListBlobItem blob in blobContainer.GetDirectoryReference(id.ToString()).ListBlobs(true))
             {
                 if (blob.GetType() == typeof(CloudBlob) || blob.GetType().BaseType == typeof(CloudBlob))
@@ -31,13 +28,12 @@ namespace FoodService.Services.BlobService
             }
         }
 
-        public CloudBlobContainer GetCloudBlobContainerAsync()
+        public CloudBlobContainer GetCloudBlobContainer()
         {
             string storageConnectionString = configuration["storageconnectionstring"];
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
             CloudBlobContainer blobContainer = blobClient.GetContainerReference("mealimages");
-
             if (blobContainer.CreateIfNotExists())
             {
                 blobContainer.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
@@ -45,15 +41,14 @@ namespace FoodService.Services.BlobService
             return blobContainer;
         }
 
-        public async Task<CloudBlockBlob> makeBlobFolderAndSaveImageAsync(long id, IFormFile image)
+        public async Task<CloudBlockBlob> MakeBlobFolderAndSaveImageAsync(long id, IFormFile image)
         {
-            CloudBlobContainer blobContainer = GetCloudBlobContainerAsync();
+            CloudBlobContainer blobContainer = GetCloudBlobContainer();
             CloudBlockBlob blob = blobContainer.GetBlockBlobReference(id + "/" + image.Name + ".jpg");
             using (var stream = image.OpenReadStream())
             {
                 await blob.UploadFromStreamAsync(stream);
             }
-
             return blob;
         }
     }

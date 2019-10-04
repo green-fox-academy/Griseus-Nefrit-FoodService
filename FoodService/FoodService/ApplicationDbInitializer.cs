@@ -18,7 +18,6 @@ namespace FoodService
                     UserName = "nefrit@gmail.com",
                     Email = "nefrit@gmail.com"
                 };
-
                 IdentityResult result = userManager.CreateAsync(user, "Alma12").Result;
                 if (result.Succeeded)
                 {

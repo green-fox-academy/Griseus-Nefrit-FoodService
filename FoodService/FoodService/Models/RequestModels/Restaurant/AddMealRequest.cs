@@ -18,5 +18,6 @@ namespace FoodService.Models.RequestModels.Restaurant
 
         public long RestaurantId { get; set; }
 
+        public IFormFile Image { get; set; }
     }
 }

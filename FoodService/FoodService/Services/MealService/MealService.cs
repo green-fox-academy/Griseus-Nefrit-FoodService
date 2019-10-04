@@ -4,7 +4,8 @@ using FoodService.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Azure.Storage.Blob;
 using AutoMapper;
-
+using FoodService.Services.BlobService;
+using Microsoft.AspNetCore.Http;
 
 namespace FoodService.Services.MealService
 {
@@ -12,31 +13,40 @@ namespace FoodService.Services.MealService
     {
         private readonly ApplicationDbContext applicationDbContext;
         private readonly IMapper iMapper;
-    
+        IBlobStorageService blobStorageService;
 
-        public MealService(ApplicationDbContext applicationDbContext, IMapper iMapper)
+        public MealService(ApplicationDbContext applicationDbContext, IMapper iMapper, IBlobStorageService blobStorageService)
         {
             this.applicationDbContext = applicationDbContext;
             this.iMapper = iMapper;
-    }
-        
-        public async Task<long> SaveMealAsync(AddMealRequest addMealRequest)
+            this.blobStorageService = blobStorageService;
+        }
+
+        public async Task SaveMealAsync(AddMealRequest addMealRequest)
         {
             var meal = iMapper.Map<AddMealRequest, Meal>(addMealRequest);
             meal.Restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
                 .FirstOrDefaultAsync(t => t.RestaurantId == addMealRequest.RestaurantId);
             await applicationDbContext.Meals.AddAsync(meal);
+            if (addMealRequest.Image == null)
+            {
+                meal.ImageUri = "https://dotnetpincerstorage.blob.core.windows.net/mealimages/default/default.png";
+            }
+            else
+            {
+                CloudBlockBlob blob = await blobStorageService.MakeBlobFolderAndSaveImageAsync(meal.MealId, addMealRequest.Image);
+                await AddImageUriToMealAsync(meal.MealId, blob);
+            }
             await applicationDbContext.SaveChangesAsync();
-            long mealidback = meal.MealId;
-
-            return mealidback;
         }
 
         public async Task DeleteMealAsync(long id)
         {
+
             var meal = await GetMealByIdAsync(id);
             if (meal != null)
             {
+                blobStorageService.DeleteBlobFolder(id);
                 applicationDbContext.Meals.Remove(meal);
                 applicationDbContext.SaveChanges();
             }
@@ -67,14 +77,18 @@ namespace FoodService.Services.MealService
             meal = iMapper.Map<AddMealRequest, Meal>(addMealRequest, meal);
             meal.Restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
                 .FirstOrDefaultAsync(t => t.RestaurantId == addMealRequest.RestaurantId);
+            if (addMealRequest.Image != null)
+            {
+                CloudBlockBlob blob = await blobStorageService.MakeBlobFolderAndSaveImageAsync(id, addMealRequest.Image);
+                await AddImageUriToMealAsync(id, blob);
+            }
             await applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task addURIToAMealAsync(long mealID, CloudBlockBlob blob)
+        public async Task AddImageUriToMealAsync(long mealID, CloudBlockBlob blob)
         {
             var meal = await GetMealByIdAsync(mealID);
-            meal.ImageURI = blob.SnapshotQualifiedStorageUri.PrimaryUri.ToString();
-            await applicationDbContext.SaveChangesAsync();
+            meal.ImageUri = blob.SnapshotQualifiedStorageUri.PrimaryUri.ToString();
         }
     }
 }

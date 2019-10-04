@@ -26,12 +26,10 @@
       <span asp-validation-for="Price.Currency" class="text-danger"></span>
     </div>
 
-
     <div class="form-group">
-      <label name="uploadFile" class="font-weight-bold">Select image to upload:</label><br />
-      <input type="file" name="image" lang="en" accept=".jpg, .png, .jpeg|image/*">
+      <label asp-for="Image" class="font-weight-bold">Select image to upload:</label><br />
+      <input type="file" asp-for="Image" lang="en" accept=".jpg, .png, .jpeg|image/*">
     </div>
-
 
     <div>
       <input type="hidden" asp-for="RestaurantId" value="@Model.RestaurantId">

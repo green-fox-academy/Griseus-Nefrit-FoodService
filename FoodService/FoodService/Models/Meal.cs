@@ -11,7 +11,6 @@ namespace FoodService.Models
         public string Description { get; set; }
         public Price Price { get; set; }
         public Restaurant Restaurant { get; set; }
-
-        public string ImageURI { get; set; }
+        public string ImageUri { get; set; }
     }
 }

@@ -1,4 +1,3 @@
-
 using System.Threading.Tasks;
 using FoodService.Models;
 using FoodService.Models.RequestModels.Restaurant;
@@ -14,12 +13,9 @@ namespace FoodService.Controllers
     public class MealController : Controller
     {
         private readonly IMealService mealService;
-        IBlobStorageService blobStorageService;
-
-        public MealController(IMealService mealService, IBlobStorageService blobStorageService)
+        public MealController(IMealService mealService)
         {
             this.mealService = mealService;
-            this.blobStorageService = blobStorageService;
         }
 
         [HttpGet]
@@ -34,15 +30,11 @@ namespace FoodService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddMealRequest addMealRequest, IFormFile image)
+        public async Task<IActionResult> Add(AddMealRequest addMealRequest)
         {
             if (ModelState.IsValid)
             {
-                long mealID = await mealService.SaveMealAsync(addMealRequest);
-                CloudBlockBlob blob = await blobStorageService.makeBlobFolderAndSaveImageAsync(mealID, image);
-                await mealService.addURIToAMealAsync(mealID, blob);
-
-
+                await mealService.SaveMealAsync(addMealRequest);
                 return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new { id = addMealRequest.RestaurantId });
             }
             return View(addMealRequest);
@@ -52,8 +44,6 @@ namespace FoodService.Controllers
         public async Task<IActionResult> Delete(long id)
         {
             var meal = await mealService.GetMealByIdAsync(id);
-            blobStorageService.deleteBlobFolder(id);
-
             await mealService.DeleteMealAsync(id);
             return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new { id = meal.Restaurant.RestaurantId });
         }
@@ -61,32 +51,24 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long id)
         {
-
-           var requestModel = await mealService.CreateRequestAsync(id);
-            if(requestModel == null)
+            var requestModel = await mealService.CreateRequestAsync(id);
+            if (requestModel == null)
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home", new { page = 1 });
             }
-           return View(requestModel);
+            return View(requestModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(AddMealRequest addMealRequest, long id, IFormFile image)
+        public async Task<IActionResult> Edit(AddMealRequest addMealRequest, long id)
         {
             if (ModelState.IsValid)
             {
                 var meal = await mealService.GetMealByIdAsync(id);
-                if (image != null)
-                {
-                    CloudBlockBlob blob = await blobStorageService.makeBlobFolderAndSaveImageAsync(id, image);
-                    await mealService.addURIToAMealAsync(id, blob);
-                }
-
-                if(meal != null)
+                if (meal != null)
                 {
                     await mealService.EditAsync(id, addMealRequest);
                 }
-
                 return RedirectToAction(nameof(RestaurantController.Edit), "Restaurant", new { id = meal.Restaurant.RestaurantId });
             }
             return View(addMealRequest);

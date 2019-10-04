@@ -9,8 +9,8 @@ namespace FoodService.Services.BlobService
 {
     public interface IBlobStorageService
     {
-        CloudBlobContainer GetCloudBlobContainerAsync();
-        Task<CloudBlockBlob> makeBlobFolderAndSaveImageAsync(long id, IFormFile image);
-        void deleteBlobFolder(long id);
+        CloudBlobContainer GetCloudBlobContainer();
+        Task<CloudBlockBlob> MakeBlobFolderAndSaveImageAsync(long id, IFormFile image);
+        void DeleteBlobFolder(long id);
     }
 }
