@@ -20,7 +20,7 @@ namespace FoodService.Controllers
             this.restaurantService = restaurantService;
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager, Admin")]
         [HttpPost]
         public async Task<IActionResult> Add(RestaurantRequest restaurantRequest)
         {
@@ -38,7 +38,7 @@ namespace FoodService.Controllers
             return View(editRestaurantViewModel);
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager, Admin")]
         [HttpGet]
         public IActionResult Add()
         {

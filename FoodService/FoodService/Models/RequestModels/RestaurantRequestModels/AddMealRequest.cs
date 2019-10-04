@@ -6,7 +6,6 @@ namespace FoodService.Models.RequestModels.RestaurantRequestModels
 {
     public class AddMealRequest
     {
-
         [Required]
         public string Name { get; set; }
        
@@ -16,6 +15,7 @@ namespace FoodService.Models.RequestModels.RestaurantRequestModels
         [Required]
         public Price Price { get; set; }
 
+        [Required]
         public long RestaurantId { get; set; }
 
         public IFormFile Image { get; set; }
