@@ -44,7 +44,6 @@ namespace FoodService.Services.MealService
 
         public async Task DeleteMealAsync(long id)
         {
-
             var meal = await GetMealByIdAsync(id);
             if (meal != null)
             {
