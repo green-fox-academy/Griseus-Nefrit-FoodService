@@ -51,7 +51,6 @@ namespace FoodService.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-
             var editRestaurantViewModel = await restaurantService.BuildEditRestaurantViewModelAsync(id);
             return View(editRestaurantViewModel);
         }

@@ -28,7 +28,7 @@ namespace FoodService.Controllers
             var restaurants = await restaurantService.GetRestaurantsByRequestAsync(page, user, searchRestaurantRequest);
             return View(new SearchRestaurantViewModel
             {
-                UniqueCities = await restaurantService.GetUniqueCities(),
+                UniqueCities = await restaurantService.GetUniqueCitiesAsync(),
                 PagingList = restaurants,
                 SearchRestaurantRequest = searchRestaurantRequest
             });
