@@ -11,23 +11,33 @@
 else
 {
     <h1>Available Restaurants</h1>
-}
-<br />
-<h4>Get restaurants in your city</h4>
-<form asp-controller="Home" asp-action="Index" method="get">
-    <select asp-for="SearchRestaurantRequest.City">
-        <option selected>Choose a city</option>
-        @foreach (var city in Model.UniqueCities)
-        {
-            <option value="@city">@city</option>
-        }
-    </select>
-    <label asp-for="SearchRestaurantRequest.MealName">Food name:</label>
-    <input type="text" asp-for="SearchRestaurantRequest.MealName" class="form-control" />
-    <span asp-validation-for="SearchRestaurantRequest.MealName" class="text-primary"></span>
-    <button type="submit" class="btn btn-success">Filter</button>
-    <a asp-action="Index">Clear filters</a>
+    <form asp-controller="Home" asp-action="Index" method="get">
+    <table width="100%">
+        <tr>
+            <td><label asp-for="SearchRestaurantRequest.MealName">Search for food:</label></td>
+            <td>
+                <input type="text" asp-for="SearchRestaurantRequest.MealName" class="form-control" />
+            </td>
+            <td>
+                <select asp-for="SearchRestaurantRequest.City">
+                    <option selected>Choose a city</option>
+                    @foreach (var city in Model.UniqueCities)
+                    {
+                        <option value="@city">@city</option>
+                    }
+                </select>
+            </td>
+            <td>
+                <button type="submit" class="btn btn-success">Search</button>
+            </td>
+            <td><a asp-action="Index">Clear filters</a></td>
+        </tr>
+        <tr>
+            <span asp-validation-for="SearchRestaurantRequest.MealName" class="text-primary"></span>
+        </tr>
+    </table>
 </form>
+}
 <br />
 <table class="table">
     <thead class="thead-light">
@@ -68,16 +78,16 @@ else
 </table>
 
 @{
-   var prev = Model.PagingList.PageIndex == 1 ? 1 : Model.PagingList.PageIndex - 1;
-   var next = Model.PagingList.PageIndex == Model.PagingList.PageCount ? Model.PagingList.PageCount : Model.PagingList.PageIndex + 1;
+    var prev = Model.PagingList.PageIndex == 1 ? 1 : Model.PagingList.PageIndex - 1;
+    var next = Model.PagingList.PageIndex == Model.PagingList.PageCount ? Model.PagingList.PageCount : Model.PagingList.PageIndex + 1;
 }
 <ul class="pagination">
-     <li class="page-item">
-         <a class="page-link" aria-label="Previous" role="button" asp-route-city="@Model.SearchRestaurantRequest.City" asp-route-page="@prev">
-             <span aria-hidden="true">&laquo;</span>
-             <span class="sr-only">Next</span>
-         </a>
-     </li>
+    <li class="page-item">
+        <a class="page-link" aria-label="Previous" role="button" asp-route-city="@Model.SearchRestaurantRequest.City" asp-route-page="@prev">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Next</span>
+        </a>
+    </li>
     @for (int i = 1; i <= Model.PagingList.PageCount; i++)
     {
         <li>
@@ -86,10 +96,10 @@ else
                asp-route-page="@i">@i</a>
         </li>
     }
-      <li class="page-item">
-          <a class="page-link" aria-label="Next" role="button" asp-route-city="@Model.SearchRestaurantRequest.City" asp-route-page="@next">
-              <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Next</span>
-          </a>
-      </li>
+    <li class="page-item">
+        <a class="page-link" aria-label="Next" role="button" asp-route-city="@Model.SearchRestaurantRequest.City" asp-route-page="@next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+        </a>
+    </li>
 </ul>

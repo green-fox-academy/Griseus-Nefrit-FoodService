@@ -137,7 +137,7 @@ namespace FoodService.Services.RestaurantService
             var filteredRestaurantsList = restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).OrderBy(r => r.Name).ToList();
            
             var restaurantQuery = new List<Restaurant>();
-            if (String.IsNullOrEmpty(searchRestaurantRequest.MealName) || String.IsNullOrEmpty(searchRestaurantRequest.City))
+            if (String.IsNullOrEmpty(searchRestaurantRequest.MealName))
             {
                 restaurantQuery = filteredRestaurantsList;
             }
