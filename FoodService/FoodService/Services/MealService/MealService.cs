@@ -6,6 +6,7 @@ using Microsoft.Azure.Storage.Blob;
 using AutoMapper;
 using FoodService.Services.BlobService;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace FoodService.Services.MealService
 {
@@ -28,6 +29,7 @@ namespace FoodService.Services.MealService
             meal.Restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
                 .FirstOrDefaultAsync(t => t.RestaurantId == addMealRequest.RestaurantId);
             await applicationDbContext.Meals.AddAsync(meal);
+            await applicationDbContext.SaveChangesAsync();
             if (addMealRequest.Image == null)
             {
                 meal.ImageUri = "https://dotnetpincerstorage.blob.core.windows.net/mealimages/default/default.png";
@@ -62,7 +64,7 @@ namespace FoodService.Services.MealService
         public async Task<AddMealRequest> CreateRequestAsync(long id)
         {
             var meal = await GetMealByIdAsync(id);
-            if(meal != null)
+            if (meal != null)
             {
                 var addMealRequest = iMapper.Map<Meal, AddMealRequest>(meal);
                 addMealRequest.RestaurantId = meal.Restaurant.RestaurantId;
@@ -85,9 +87,9 @@ namespace FoodService.Services.MealService
             await applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task AddImageUriToMealAsync(long mealID, CloudBlockBlob blob)
+        public async Task AddImageUriToMealAsync(long mealId, CloudBlockBlob blob)
         {
-            var meal = await GetMealByIdAsync(mealID);
+            var meal = await GetMealByIdAsync(mealId);
             meal.ImageUri = blob.SnapshotQualifiedStorageUri.PrimaryUri.ToString();
         }
     }

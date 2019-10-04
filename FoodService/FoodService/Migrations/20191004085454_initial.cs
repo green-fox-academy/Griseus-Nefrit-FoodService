@@ -201,7 +201,7 @@ namespace FoodService.Migrations
                     Description = table.Column<string>(nullable: true),
                     PriceId = table.Column<long>(nullable: true),
                     RestaurantId = table.Column<long>(nullable: true),
-                    ImageURI = table.Column<string>(nullable: true)
+                    ImageUri = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -223,17 +223,17 @@ namespace FoodService.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "57870d08-a085-4818-88a5-6185deaa6dbe", "08c88e45-4c5c-451b-b265-574a65049160", "Admin", "ADMIN" });
+                values: new object[] { "cc13999e-58c4-487f-9fca-df3c3ce1eda5", "ea7ee3a0-2f94-48be-ac0e-059544133e01", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e9663a6a-d859-415c-9f16-ca839e5585d6", "7b577047-2f3a-4395-a46c-b921d36ff3eb", "Manager", "MANAGER" });
+                values: new object[] { "345a962a-8075-4b68-bdf4-a4a0c5d166c7", "6e4843ee-f5e7-4227-828c-b26fe4f2c687", "Manager", "MANAGER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "90bbb82f-b20d-4c15-bb30-e0b76d1bf074", "dce18363-cb11-4ac4-a17c-2e905e368494", "Customer", "CUSTOMER" });
+                values: new object[] { "379e9e04-70f8-4b9d-bf6a-13624d7dbd0f", "3154665c-4ee0-4d8d-ab6f-96a9759e3f9e", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
