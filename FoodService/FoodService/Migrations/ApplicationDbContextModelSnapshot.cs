@@ -160,22 +160,22 @@ namespace FoodService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d42e6b1c-d98b-49aa-aa2d-9d2a6fc6d45c",
-                            ConcurrencyStamp = "5a2314c5-ac2b-4d28-8daa-44b6630d39ec",
+                            Id = "a2215e38-8aa9-460b-aa5a-95ef22f1e7c0",
+                            ConcurrencyStamp = "ebe4133f-3fa4-4c2d-8f10-9303dee8c2f2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "b4bf3abf-05d5-4e81-b075-7d53d11cafa9",
-                            ConcurrencyStamp = "55ae77fd-3cff-4845-aa03-bf1fa9ec8d7a",
+                            Id = "635adc41-92a2-4709-bed0-d1877766cfbe",
+                            ConcurrencyStamp = "ed4186b1-31ef-482e-9263-b3351f5de4ba",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "2c39efca-8290-4ba0-9bad-f3dddbf0d5cb",
-                            ConcurrencyStamp = "39c7e8c1-2efe-4cf0-804f-875c93d13e7a",
+                            Id = "921c387c-90be-4741-9efe-d3c2ac258797",
+                            ConcurrencyStamp = "39d9db3b-a281-49ff-b57f-f456a6242135",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
