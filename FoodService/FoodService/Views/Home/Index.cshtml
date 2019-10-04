@@ -11,21 +11,20 @@
 else
 {
     <h1>Available Restaurants</h1>
-    <br />
-    <h4>Get restaurants in your city</h4>
-    <form asp-controller="Home" asp-action="Index" method="get">
-        <select asp-for="SearchRestaurantRequest.City">
-            <option selected>Choose a city</option>
-            @foreach (var city in Model.UniqueCities)
-            {
-                <option value="@city">@city</option>
-            }
-        </select>
-        <button type="submit" class="btn btn-success">Filter</button>
-        <a asp-action="Index">Clear filters</a>
-    </form>
 }
-
+<br />
+<h4>Get restaurants in your city</h4>
+<form asp-controller="Home" asp-action="Index" method="get">
+    <select asp-for="SearchRestaurantRequest.City">
+        <option selected>Choose a city</option>
+        @foreach (var city in Model.UniqueCities)
+        {
+            <option value="@city">@city</option>
+        }
+    </select>
+    <button type="submit" class="btn btn-success">Filter</button>
+    <a asp-action="Index">Clear filters</a>
+</form>
 <br/>
 <table class="table">
     <thead class="thead-light">

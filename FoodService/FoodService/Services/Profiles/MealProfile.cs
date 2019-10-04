@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FoodService.Models;
-using FoodService.Models.RequestModels.Restaurant;
+using FoodService.Models.RequestModels.RestaurantRequestModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

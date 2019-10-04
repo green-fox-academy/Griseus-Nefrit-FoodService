@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FoodService.Models;
-using FoodService.Models.RequestModels.Restaurant;
-using FoodService.Models.ViewModels.Restaurant;
+using FoodService.Models.RequestModels.RestaurantRequestModels;
+using FoodService.Models.ViewModels.RestaurantViewModels;
 using ReflectionIT.Mvc.Paging;
 
 namespace FoodService.Services.RestaurantService
