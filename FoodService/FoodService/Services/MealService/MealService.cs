@@ -92,10 +92,9 @@ namespace FoodService.Services.MealService
 
         public async Task<bool> ValidateAccessAsync(long mealId, string managerName)
         {
-            List<Restaurant> ownedRestaurants = await restaurantService.FindByManagerNameOrEmailAsync(managerName);
+            List<Restaurant> ownedRestaurants = await restaurantService.FindRestaurantByManagerNameOrEmailAsync(managerName);
             Meal currentMeal = await GetMealByIdAsync(mealId);
-            Restaurant restaurantForCurrentMeal = currentMeal.Restaurant;
-            return ownedRestaurants.Contains(restaurantForCurrentMeal);
+            return ownedRestaurants.Contains(currentMeal.Restaurant);
         }
         public async Task AddImageUriToMealAsync(long mealId, CloudBlockBlob blob)
         {
