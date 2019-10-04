@@ -33,7 +33,8 @@ namespace FoodService.Services.BlobService
             string storageConnectionString = configuration["storageconnectionstring"];
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer blobContainer = blobClient.GetContainerReference("mealimages");
+            string containerName = Environment.GetEnvironmentVariable("BLOBCONTAINER_NAME");
+            CloudBlobContainer blobContainer = blobClient.GetContainerReference(containerName);
             if (blobContainer.CreateIfNotExists())
             {
                 blobContainer.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
