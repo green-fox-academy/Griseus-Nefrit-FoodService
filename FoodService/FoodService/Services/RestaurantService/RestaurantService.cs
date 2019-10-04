@@ -155,7 +155,7 @@ namespace FoodService.Services.RestaurantService
                     }
                 }
             }
-            return PagingList.Create(restaurantQuery, 4, page);
+            return PagingList.Create(restaurantQuery, 10, page);
         }
     }
 }
