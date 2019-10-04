@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190930091822_initial")]
-    partial class initial
+    [Migration("20191004090009_initial2")]
+    partial class initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("FoodService.Models.Identity.AppUser", b =>
@@ -75,6 +75,8 @@ namespace FoodService.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description");
+
+                    b.Property<string>("ImageUri");
 
                     b.Property<string>("Name");
 
@@ -158,10 +160,27 @@ namespace FoodService.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "d3f7335b-350b-4073-a34c-27bcc997470f", ConcurrencyStamp = "ba651eae-90bd-4b3d-8066-ca1eefd462d3", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "153b9792-feec-4db0-b193-eda7371de1da", ConcurrencyStamp = "d214bed0-8585-446f-b13c-746e858c36aa", Name = "Manager", NormalizedName = "MANAGER" },
-                        new { Id = "f3112853-49dc-4629-8b47-ddf8d0e2a15f", ConcurrencyStamp = "55456b91-545b-4545-b916-148e52fce633", Name = "Customer", NormalizedName = "CUSTOMER" }
-                    );
+                        new
+                        {
+                            Id = "997e9ad1-1a97-46a1-bf27-b9fd48230fe8",
+                            ConcurrencyStamp = "99eb860e-4e80-4eb4-8f14-1b1e74e452fe",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "a097ab58-5d04-4841-86cf-fbae5dd8f177",
+                            ConcurrencyStamp = "93d91d3d-7efa-4f56-9090-81c6a6217f73",
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
+                        },
+                        new
+                        {
+                            Id = "25547674-8578-43f2-bd78-7e306ddbe079",
+                            ConcurrencyStamp = "1e16a514-3554-4346-9762-6a9e9840339a",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
