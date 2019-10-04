@@ -127,8 +127,8 @@ namespace FoodService.Services.RestaurantService
         {
             if (user.IsInRole("Manager"))
             {
-                var restaurantManager = await FindRestaurantByManagerNameOrEmailAsync(user.Identity.Name);
-                return PagingList.Create(restaurantManager, 10, page);
+                var restaurantsOfManager = await FindRestaurantByManagerNameOrEmailAsync(user.Identity.Name);
+                return PagingList.Create(restaurantsOfManager, 10, page);
             }
             if (String.Equals("Choose a city", searchRestaurantRequest.City))
             {
