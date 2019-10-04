@@ -23,6 +23,7 @@
             <th>PRICE</th>
             <th>EDIT</th>
             <th>DELETE</th>
+            <th>PHOTO</th>
         </tr>
     </thead>
     @foreach (var meal in Model.Meals)
@@ -42,6 +43,7 @@
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </td>
+            <td><img src=@meal.ImageUri width="100" height="100"></td>
         </tr>
     }
 </table>

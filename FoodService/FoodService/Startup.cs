@@ -15,19 +15,19 @@ using FoodService.Models.Identity;
 using FoodService.Services.User;
 using Microsoft.AspNetCore.Identity;
 using ReflectionIT.Mvc.Paging;
+using FoodService.Services.BlobService;
 using FoodService.Services.Profiles;
+
 
 namespace FoodService
 {
     public class Startup
     {
         private IConfiguration configuration;
-
         public Startup(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
-
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -55,14 +55,12 @@ namespace FoodService
                 });
 
             // Automatically perform database migration
-            services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
-
+            //  services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IMealService, MealService>();
-
+            services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.SetUpAutoMapper();
-
             services.AddMvc();
             services.AddPaging();
         }
@@ -82,7 +80,6 @@ namespace FoodService
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
-
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();

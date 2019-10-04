@@ -1,17 +1,12 @@
 using System.Threading.Tasks;
-using FoodService.Models.RequestModels.Restaurant;
+using FoodService.Models.RequestModels.RestaurantRequestModels;
 using FoodService.Services.RestaurantService;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using FoodService.Models;
-using FoodService.Services;
-using Microsoft.AspNetCore.Identity;
-using FoodService.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
+using FoodService.Services.BlobService;
 using FoodService.Models.ViewModels;
-using FoodService.Models.ViewModels.Restaurant;
+using FoodService.Models.ViewModels.RestaurantViewModels;
+
 
 namespace FoodService.Controllers
 {
@@ -58,7 +53,6 @@ namespace FoodService.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-
             var editRestaurantViewModel = await restaurantService.BuildEditRestaurantViewModelAsync(id);
             return View(editRestaurantViewModel);
         }
@@ -84,7 +78,7 @@ namespace FoodService.Controllers
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Index(long id)
-        {
+        {  
             var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
             return View(restaurant);
         }
