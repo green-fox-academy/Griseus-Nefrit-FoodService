@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using FoodService.Services.BlobService;
 using Microsoft.AspNetCore.Http;
 
-namespace FoodService.Models.RequestModels.Restaurant
+namespace FoodService.Models.RequestModels.RestaurantRequestModels
 {
     public class AddMealRequest
     {

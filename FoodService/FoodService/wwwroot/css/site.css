@@ -35,3 +35,8 @@ body {
         display: none;
     }
 }
+
+/* Positioning-Dani*/
+.left {
+    float: left;
+}

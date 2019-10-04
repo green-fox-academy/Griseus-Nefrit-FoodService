@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
-using FoodService.Models.RequestModels.Restaurant;
+using FoodService.Models.RequestModels.RestaurantRequestModels;
 using FoodService.Services.RestaurantService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using FoodService.Models.ViewModels.Restaurant;
 using FoodService.Services.BlobService;
+using FoodService.Models.ViewModels;
+using FoodService.Models.ViewModels.RestaurantViewModels;
+
 
 namespace FoodService.Controllers
 {

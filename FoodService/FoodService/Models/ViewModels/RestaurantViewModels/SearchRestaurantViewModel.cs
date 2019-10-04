@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using FoodService.Models.RequestModels.Restaurant;
+using FoodService.Models.RequestModels.RestaurantRequestModels;
 using ReflectionIT.Mvc.Paging;
 
-namespace FoodService.Models.ViewModels.Restaurant
+namespace FoodService.Models.ViewModels.RestaurantViewModels
 {
     public class SearchRestaurantViewModel
     {
-        public PagingList<FoodService.Models.Restaurant> PagingList { get; set; }
+        public PagingList<Restaurant> PagingList { get; set; }
         public SearchRestaurantRequest SearchRestaurantRequest { get; set; }
         public List<String> UniqueCities { get; set; } 
     }

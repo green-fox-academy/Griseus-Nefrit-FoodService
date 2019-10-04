@@ -4,10 +4,10 @@ using System.Security.Claims;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models;
-using FoodService.Models.RequestModels.Restaurant;
+using FoodService.Models.RequestModels.RestaurantRequestModels;
 using FoodService.Services.User;
 using Microsoft.EntityFrameworkCore;
-using FoodService.Models.ViewModels.Restaurant;
+using FoodService.Models.ViewModels.RestaurantViewModels;
 using ReflectionIT.Mvc.Paging;
 using AutoMapper;
 
@@ -52,7 +52,7 @@ namespace FoodService.Services.RestaurantService
         }
         public async Task<List<Restaurant>> FindRestaurantByManagerNameOrEmailAsync(string managerName)
         {
-            var restaurantList = await applicationDbContext.Restaurants.AsQueryable().Where(r => r.Manager.UserName == managerName).OrderBy(r => r.Name).ToListAsync();
+            var restaurantList = await applicationDbContext.Restaurants.Include(r => r.Meals).AsQueryable().Where(r => r.Manager.UserName == managerName).OrderBy(r => r.Name).ToListAsync();
             return restaurantList;
         }
 
@@ -125,25 +125,25 @@ namespace FoodService.Services.RestaurantService
 
         public async Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync(int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest)
         {
-            if (user.IsInRole("Manager"))
-            {
-                var restaurantsOfManager = await FindRestaurantByManagerNameOrEmailAsync(user.Identity.Name);
-                return PagingList.Create(restaurantsOfManager, 10, page);
-            }
             if (String.Equals("Choose a city", searchRestaurantRequest.City))
             {
                 searchRestaurantRequest.City = null;
             }
-            var restaurants = await applicationDbContext.Restaurants.Include(r => r.Meals).Where(r => r.City.Equals(searchRestaurantRequest.City)
-                            || String.IsNullOrEmpty(searchRestaurantRequest.City)).OrderBy(r => r.Name).ToListAsync();
-            var restaurantQuery = new List<Restaurant>();
-            if (String.IsNullOrEmpty(searchRestaurantRequest.MealName) || String.IsNullOrEmpty(searchRestaurantRequest.City))
+            var restaurants = await applicationDbContext.Restaurants.Include(r => r.Meals).ToListAsync();
+            if (user.IsInRole("Manager"))
             {
-                restaurantQuery = restaurants;
+                restaurants = await FindRestaurantByManagerNameOrEmailAsync(user.Identity.Name);
+            }
+            var filteredRestaurantsList = restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).OrderBy(r => r.Name).ToList();
+           
+            var restaurantQuery = new List<Restaurant>();
+            if (String.IsNullOrEmpty(searchRestaurantRequest.MealName))
+            {
+                restaurantQuery = filteredRestaurantsList;
             }
             else
             {
-                foreach (Restaurant restaurant in restaurants)
+                foreach (Restaurant restaurant in filteredRestaurantsList)
                 {
                     foreach (Meal meal in restaurant.Meals)
                     {
@@ -155,7 +155,7 @@ namespace FoodService.Services.RestaurantService
                     }
                 }
             }
-            return PagingList.Create(restaurantQuery, 10, page);
+            return PagingList.Create(restaurantQuery, 4, page);
         }
     }
 }

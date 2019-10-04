@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using FoodService.Models.RequestModels.Restaurant;
+using FoodService.Models.RequestModels.RestaurantRequestModels;
 using FoodService.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Azure.Storage.Blob;

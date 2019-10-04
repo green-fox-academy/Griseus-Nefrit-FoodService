@@ -1,10 +1,10 @@
-﻿using FoodService.Models.RequestModels.Restaurant;
+﻿using FoodService.Models.RequestModels.RestaurantRequestModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodService.Models.ViewModels.Restaurant
+namespace FoodService.Models.ViewModels.RestaurantViewModels
 {
     public class EditRestaurantViewModel
     {
