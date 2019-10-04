@@ -137,7 +137,7 @@ namespace FoodService.Services.RestaurantService
             var restaurants = await applicationDbContext.Restaurants.Include(r => r.Meals).Where(r => r.City.Equals(searchRestaurantRequest.City)
                             || String.IsNullOrEmpty(searchRestaurantRequest.City)).OrderBy(r => r.Name).ToListAsync();
             var restaurantQuery = new List<Restaurant>();
-            if (String.IsNullOrEmpty(searchRestaurantRequest.MealName) || String.IsNullOrEmpty(searchRestaurantRequest.City))
+            if (String.IsNullOrEmpty(searchRestaurantRequest.MealName))
             {
                 restaurantQuery = restaurants;
             }
