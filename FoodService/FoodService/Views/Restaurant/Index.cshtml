@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Restaurant details";
+  ViewData["Title"] = "Restaurant details";
 }
 @model Restaurant
 
@@ -32,22 +32,24 @@
 <br />
 <h2>List of available meals</h2>
 <table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>PRICE</th>
-        </tr>
-    </thead>
-    @foreach (var meal in Model.Meals)
-    {
-        <tr>
-            <td>@meal.Name</td>
-            <td>@meal.Description</td>
-            <td>@meal.Price.Amount @meal.Price.Currency</td>
-        </tr>
-    }
+  <thead class="thead-dark">
+    <tr>
+      <th>NAME</th>
+      <th>DESCRIPTION</th>
+      <th>PRICE</th>
+      <th>PHOTO</th>
+    </tr>
+  </thead>
+  @foreach (var meal in Model.Meals)
+  {
+    <tr>
+      <td>@meal.Name</td>
+      <td>@meal.Description</td>
+      <td>@meal.Price.Amount @meal.Price.Currency</td>
+      <td><img src=@meal.ImageUri width="100" height="100"></td>
+    </tr>
+  }
 </table>
 <form asp-controller="Home" asp-action="Index" method="get">
-    <button type="submit" class="btn btn-info">Back to restaurants</button>
+  <button type="submit" class="btn btn-info">Back to restaurants</button>
 </form>

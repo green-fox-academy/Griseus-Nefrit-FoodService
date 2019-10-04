@@ -431,3 +431,4 @@ modules.xml
 *.ipr
 
 # End of https://www.gitignore.io/api/rider,visualstudio
+FoodService/FoodService/Properties/launchSettings.json
