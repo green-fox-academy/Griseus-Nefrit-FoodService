@@ -20,7 +20,7 @@ namespace FoodService.Services.RestaurantService
         Task<bool> ValidateAccessAsync(long restaurantId, string managerName);
         Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId);
         Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId, RestaurantRequest restaurantRequest);
-        Task<List<String>> GetUniqueCities();
+        Task<List<String>> GetUniqueCitiesAsync();
         Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync(int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest);
     }
 }
