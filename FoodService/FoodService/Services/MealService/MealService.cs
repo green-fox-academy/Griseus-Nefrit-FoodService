@@ -4,6 +4,8 @@ using FoodService.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Azure.Storage.Blob;
 using AutoMapper;
+using FoodService.Services.RestaurantService;
+using System.Collections.Generic;
 using FoodService.Services.BlobService;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -13,12 +15,14 @@ namespace FoodService.Services.MealService
     public class MealService : IMealService
     {
         private readonly ApplicationDbContext applicationDbContext;
+        private readonly IRestaurantService restaurantService;
         private readonly IMapper iMapper;
         IBlobStorageService blobStorageService;
 
-        public MealService(ApplicationDbContext applicationDbContext, IMapper iMapper, IBlobStorageService blobStorageService)
+        public MealService(ApplicationDbContext applicationDbContext, IMapper iMapper, IBlobStorageService blobStorageService, IRestaurantService restaurantService)
         {
             this.applicationDbContext = applicationDbContext;
+            this.restaurantService = restaurantService;
             this.iMapper = iMapper;
             this.blobStorageService = blobStorageService;
         }
@@ -60,7 +64,7 @@ namespace FoodService.Services.MealService
             return meal;
         }
 
-        public async Task<AddMealRequest> CreateRequestAsync(long id)
+        public async Task<AddMealRequest> CreateMealRequestAsync(long id)
         {
             var meal = await GetMealByIdAsync(id);
             if (meal != null)
@@ -86,6 +90,12 @@ namespace FoodService.Services.MealService
             await applicationDbContext.SaveChangesAsync();
         }
 
+        public async Task<bool> ValidateAccessAsync(long mealId, string managerName)
+        {
+            List<Restaurant> ownedRestaurants = await restaurantService.FindRestaurantByManagerNameOrEmailAsync(managerName);
+            Meal currentMeal = await GetMealByIdAsync(mealId);
+            return ownedRestaurants.Contains(currentMeal.Restaurant);
+        }
         public async Task AddImageUriToMealAsync(long mealId, CloudBlockBlob blob)
         {
             var meal = await GetMealByIdAsync(mealId);
