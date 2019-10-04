@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
+using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models;
 using FoodService.Models.RequestModels.RestaurantRequestModels;
@@ -50,10 +50,9 @@ namespace FoodService.Services.RestaurantService
             List<Restaurant> restaurantList = await applicationDbContext.Restaurants.AsQueryable().OrderBy(r => r.Name).ToListAsync();
             return restaurantList;
         }
-
         public async Task<List<Restaurant>> FindRestaurantByManagerNameOrEmailAsync(string managerName)
         {
-            var restaurantList = await applicationDbContext.Restaurants.AsQueryable().Where(r => r.Manager.UserName == managerName).OrderBy(r => r.Name).ToListAsync();
+            var restaurantList = await applicationDbContext.Restaurants.Include(r => r.Meals).AsQueryable().Where(r => r.Manager.UserName == managerName).OrderBy(r => r.Name).ToListAsync();
             return restaurantList;
         }
 
@@ -104,8 +103,8 @@ namespace FoodService.Services.RestaurantService
             await applicationDbContext.SaveChangesAsync();
             return editRestauratnViewModel;
         }
-        
-        public async Task<List<String>> GetUniqueCities()
+
+        public async Task<List<String>> GetUniqueCitiesAsync()
         {
             var restaurants = await FindAllAsync();
             var listCities = new List<String>();
@@ -113,25 +112,50 @@ namespace FoodService.Services.RestaurantService
             {
                 listCities.Add(restaurants[i].City);
             }
-            
+
             var uniqueCities = listCities.Distinct().ToList();
             return uniqueCities;
         }
 
-        public async Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync( int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest)
+        public async Task<List<Restaurant>> FindRestaurantsByCityAsync(SearchRestaurantRequest searchRestaurantRequest)
+        {
+            var restaurants = await applicationDbContext.Restaurants.Where(r => r.City == searchRestaurantRequest.City).ToListAsync();
+            return restaurants;
+        }
+
+        public async Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync(int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest)
         {
             if (String.Equals("Choose a city", searchRestaurantRequest.City))
             {
                 searchRestaurantRequest.City = null;
             }
-            var restaurants = await applicationDbContext.Restaurants.ToListAsync();
+            var restaurants = await applicationDbContext.Restaurants.Include(r => r.Meals).ToListAsync();
             if (user.IsInRole("Manager"))
             {
                 restaurants = await FindRestaurantByManagerNameOrEmailAsync(user.Identity.Name);
             }
-            var filteredList = restaurants.Where(r =>
-                r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).ToList();
-            return PagingList.Create(filteredList, 4, page);
+            var filteredRestaurantsList = restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).OrderBy(r => r.Name).ToList();
+           
+            var restaurantQuery = new List<Restaurant>();
+            if (String.IsNullOrEmpty(searchRestaurantRequest.MealName) || String.IsNullOrEmpty(searchRestaurantRequest.City))
+            {
+                restaurantQuery = filteredRestaurantsList;
+            }
+            else
+            {
+                foreach (Restaurant restaurant in filteredRestaurantsList)
+                {
+                    foreach (Meal meal in restaurant.Meals)
+                    {
+                        if(meal.Name.Contains(searchRestaurantRequest.MealName))
+                        {
+                            restaurantQuery.Add(restaurant);
+                            break;
+                        }
+                    }
+                }
+            }
+            return PagingList.Create(restaurantQuery, 4, page);
         }
     }
 }

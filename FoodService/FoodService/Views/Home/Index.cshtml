@@ -1,4 +1,4 @@
-﻿@model SearchRestaurantViewModel
+@model SearchRestaurantViewModel
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @using ReflectionIT.Mvc.Paging
 @{
@@ -22,10 +22,13 @@ else
             <option value="@city">@city</option>
         }
     </select>
+    <label asp-for="SearchRestaurantRequest.MealName">Food name:</label>
+    <input type="text" asp-for="SearchRestaurantRequest.MealName" class="form-control" />
+    <span asp-validation-for="SearchRestaurantRequest.MealName" class="text-primary"></span>
     <button type="submit" class="btn btn-success">Filter</button>
     <a asp-action="Index">Clear filters</a>
 </form>
-<br/>
+<br />
 <table class="table">
     <thead class="thead-light">
         <tr>
