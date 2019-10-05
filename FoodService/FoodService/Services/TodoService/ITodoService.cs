@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace FoodService.Services.TodoService
 {
-    interface ITodoService
+    public interface ITodoService
     {
         Task<List<Todo>> FindAllAsync();
-        Task<Todo> FindTodoByIdAsync(long postId);
+        Task<Todo> FindTodoByIdAsync(long todoId);
         Task<Todo> AddTodoAsync(TodoRequest todoRequest);
-        Task<Todo> EditTodoAsync(TodoRequest todoRequest);
+        Task<Todo> EditTodoAsync(TodoRequest todoRequest, long todoId);
         Task<Todo> DeleteTodoAsync(long todoId);
+        Task<TodoRequest> CreateTodoRequestAsync(long todoId);
     }
 }

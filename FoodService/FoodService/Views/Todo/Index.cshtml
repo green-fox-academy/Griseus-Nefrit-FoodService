@@ -1,0 +1,40 @@
+﻿@model List<Todo>
+
+<h3>List of todos</h3>
+@{
+    ViewData["Title"] = "Todos";
+}
+
+<form asp-controller="Todo" asp-action="Add" method="get">
+    <button type="submit" class="btn btn-success">Add a new todo</button>
+</form>
+<br />
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>DESCRIPTION</th>
+            <th>OWNER</th>
+            <th>ISDONE</th>
+        </tr>
+    </thead>
+    @foreach (var todo in Model)
+{
+        <tr>
+            <td>@todo.TodoId</td>
+            <td>@todo.Description</td>
+            <td>@todo.Owner</td>
+            <td>@todo.IsDone</td>
+            <td>
+                <form asp-controller="Todo" asp-action="Edit" method="get" asp-route-Id="@todo.TodoId">
+                    <button type="submit" class="btn btn-success">Edit</button>
+                </form>
+            </td>
+            <td>
+                <form asp-controller="Todo" asp-action="Delete" method="post" asp-route-Id="@todo.TodoId">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

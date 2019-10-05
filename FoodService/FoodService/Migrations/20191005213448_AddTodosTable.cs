@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoodService.Migrations
 {
-    public partial class init : Migration
+    public partial class AddTodosTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,6 +59,21 @@ namespace FoodService.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Prices", x => x.PriceId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Todos",
+                columns: table => new
+                {
+                    TodoId = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: true),
+                    Owner = table.Column<string>(nullable: true),
+                    IsDone = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Todos", x => x.TodoId);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,17 +238,17 @@ namespace FoodService.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "64fa5af0-3d39-4292-88c7-8e34ba944d26", "68c0cea4-5474-47fd-9259-f9df09a2dea8", "Admin", "ADMIN" });
+                values: new object[] { "2008c024-7d88-494f-aa95-6d5875daebf7", "5ee0506b-b4bd-4049-9cd9-e80c85c2b141", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "0a30bdfd-1910-4578-997c-e7d1e34b0ca1", "5cbbd19c-1a5f-4890-b21f-14107ec933f1", "Manager", "MANAGER" });
+                values: new object[] { "67f4e734-72df-4102-91c6-91fde61b93ad", "0cb97cd0-2034-4e04-ad33-11834f5ffdc5", "Manager", "MANAGER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "d1c43b12-b1ff-47f9-bdeb-f7277787255a", "73db48b7-9b23-4056-a58e-aa2b50de7623", "Customer", "CUSTOMER" });
+                values: new object[] { "8e26175d-c79f-46f8-baa1-539f87f5a81b", "002b8b73-3528-4d45-8091-b714a760ac5e", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -307,6 +322,9 @@ namespace FoodService.Migrations
 
             migrationBuilder.DropTable(
                 name: "Meals");
+
+            migrationBuilder.DropTable(
+                name: "Todos");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

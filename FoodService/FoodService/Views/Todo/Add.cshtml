@@ -1,0 +1,6 @@
+﻿@model TodoRequest
+@{
+    ViewData["Title"] = "Add Todo";
+    ViewData["Action"] = "Add";
+    await Html.RenderPartialAsync("_TodoPartial");
+}
