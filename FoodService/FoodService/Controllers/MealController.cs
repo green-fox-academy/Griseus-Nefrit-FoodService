@@ -27,7 +27,7 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Add(long id)
         {
-            if (!await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
+            if (!User.IsInRole("Admin") && !await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
@@ -44,7 +44,7 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddMealRequest addMealRequest)
         {
-            if (!await restaurantService.ValidateAccessAsync(addMealRequest.RestaurantId, User.Identity.Name))
+            if (!User.IsInRole("Admin") && !await restaurantService.ValidateAccessAsync(addMealRequest.RestaurantId, User.Identity.Name))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
@@ -61,7 +61,7 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
-            if (!await mealService.ValidateAccessAsync(id, User.Identity.Name))
+            if (!User.IsInRole("Admin") && !await mealService.ValidateAccessAsync(id, User.Identity.Name))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
@@ -75,7 +75,7 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long id)
         {
-            if (!await mealService.ValidateAccessAsync(id, User.Identity.Name))
+            if (!User.IsInRole("Admin") && !await mealService.ValidateAccessAsync(id, User.Identity.Name))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
@@ -92,7 +92,7 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(AddMealRequest addMealRequest, long id)
         {
-            if (!await mealService.ValidateAccessAsync(id, User.Identity.Name))
+            if (!User.IsInRole("Admin") && !await mealService.ValidateAccessAsync(id, User.Identity.Name))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }

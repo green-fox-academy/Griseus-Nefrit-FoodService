@@ -33,7 +33,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        @if (User.IsInRole("Manager"))
+                        @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
                         {
                             <li><a asp-area="" asp-controller="Restaurant" asp-action="Add">Add Restaurant</a></li>
                         }
