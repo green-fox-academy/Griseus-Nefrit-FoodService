@@ -130,12 +130,7 @@ namespace FoodService.Services.RestaurantService
                 searchRestaurantRequest.City = null;
             }
             var restaurants = await applicationDbContext.Restaurants.Include(r => r.Meals).ToListAsync();
-            if (user.IsInRole("Manager"))
-            {
-                restaurants = await FindRestaurantByManagerNameOrEmailAsync(user.Identity.Name);
-            }
             var filteredRestaurantsList = restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).OrderBy(r => r.Name).ToList();
-           
             var restaurantQuery = new List<Restaurant>();
             if (String.IsNullOrEmpty(searchRestaurantRequest.MealName))
             {
