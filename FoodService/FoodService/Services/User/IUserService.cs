@@ -1,5 +1,6 @@
 ﻿using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.Account;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,6 @@ namespace FoodService.Services.User
         Task Logout();
         Task<IdentityResult> RegisterAsync(RegisterRequest regRequest);
         Task<AppUser> FindUserByNameOrEmail(string emailAddr);
+        Task<IList<AuthenticationScheme>> GetExternalAuthenticationSchemesAsync();
     }
 }

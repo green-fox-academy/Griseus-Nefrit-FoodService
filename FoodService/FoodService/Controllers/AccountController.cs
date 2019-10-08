@@ -26,9 +26,15 @@ namespace FoodService.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Login(string returnUrl)
         {
-            return View();
+            LoginRequest loginRequest = new LoginRequest
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins = await userService.GetExternalAuthenticationSchemesAsync()
+            };
+
+            return View(loginRequest);
         }
 
         [HttpPost]

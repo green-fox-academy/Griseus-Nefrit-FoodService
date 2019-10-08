@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.Account;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
 namespace FoodService.Services.User
@@ -25,6 +26,11 @@ namespace FoodService.Services.User
         public async Task<AppUser> FindUserByNameOrEmail(string nameOrEmailAddr)
         {
             return await userMgr.FindByEmailAsync(nameOrEmailAddr);
+        }
+
+        public async Task<IList<AuthenticationScheme>> GetExternalAuthenticationSchemesAsync()
+        {
+            return (await signInMgr.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<SignInResult> LoginAsync(LoginRequest loginRequest)
