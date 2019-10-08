@@ -163,7 +163,6 @@ namespace FoodService.Services.RestaurantService
             {
                 blobStorageService.DeleteBlobFolder(restaurant.Meals[i].MealId);
                 applicationDbContext.Meals.Remove(restaurant.Meals[i]);
-
             }
             applicationDbContext.Restaurants.Remove(restaurant);
             applicationDbContext.SaveChanges();

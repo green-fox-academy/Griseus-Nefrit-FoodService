@@ -87,6 +87,10 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
+            if (!User.IsInRole("Admin") && !await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
             await restaurantService.DeleteRestaurantAsync(id);
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
