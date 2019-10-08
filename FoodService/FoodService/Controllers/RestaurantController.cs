@@ -82,5 +82,13 @@ namespace FoodService.Controllers
             var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
             return View(restaurant);
         }
+
+        [Authorize(Roles = "Manager, Admin")]
+        [HttpPost]
+        public async Task<IActionResult> Delete(long id)
+        {
+            await restaurantService.DeleteRestaurantAsync(id);
+            return Redirect(nameof(HomeController.Index));
+        }
     }
 }

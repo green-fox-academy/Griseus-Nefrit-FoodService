@@ -22,5 +22,6 @@ namespace FoodService.Services.RestaurantService
         Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId, RestaurantRequest restaurantRequest);
         Task<List<String>> GetUniqueCitiesAsync();
         Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync(int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest);
+        Task DeleteRestaurantAsync(long id);
     }
 }

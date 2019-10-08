@@ -1,9 +1,20 @@
 @{
   ViewData["Title"] = "Restaurant details";
 }
+@using Microsoft.AspNetCore.Mvc.ModelBinding
 @model Restaurant
 
-<h2>Restaurant details</h2>
+<h2>Restaurant details</h2><br />
+
+@if (User.IsInRole("Manager") && User.Identity.Name == Model.Manager.UserName)
+{
+    <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.RestaurantId" class="btn btn-warning" role="button">Edit restaurant</a>
+    
+    <form asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.RestaurantId" method="post">
+        <button type="submit" class="btn btn-danger">Delete restaurant</button>
+    </form>
+}
+
 <br />
 <table class="table">
     <tr>
@@ -32,24 +43,25 @@
 <br />
 <h2>List of available meals</h2>
 <table class="table">
-  <thead class="thead-dark">
+    <thead class="thead-dark">
     <tr>
-      <th>NAME</th>
-      <th>DESCRIPTION</th>
-      <th>PRICE</th>
-      <th>PHOTO</th>
+        <th>NAME</th>
+        <th>DESCRIPTION</th>
+        <th>PRICE</th>
+        <th>PHOTO</th>
     </tr>
-  </thead>
-  @foreach (var meal in Model.Meals)
-  {
-    <tr>
-      <td>@meal.Name</td>
-      <td>@meal.Description</td>
-      <td>@meal.Price.Amount @meal.Price.Currency</td>
-      <td><img src=@meal.ImageUri width="100" height="100"></td>
-    </tr>
-  }
+    </thead>
+    @foreach (var meal in Model.Meals)
+    {
+        <tr>
+            <td>@meal.Name</td>
+            <td>@meal.Description</td>
+            <td>@meal.Price.Amount @meal.Price.Currency</td>
+            <td><img src=@meal.ImageUri width="100" height="100"></td>
+        </tr>
+    }
 </table>
+
 <form asp-controller="Home" asp-action="Index" method="get">
-    <button type="button" class="btn btn-info" onclick="history.back()">Back to restaurants</button>
-</form>
+    <button type="button" class="btn btn-info" onclick="history.back()">Back to Available restaurants</button>
+</form><br />

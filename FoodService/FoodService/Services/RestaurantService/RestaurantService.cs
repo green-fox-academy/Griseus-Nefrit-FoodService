@@ -28,7 +28,7 @@ namespace FoodService.Services.RestaurantService
 
         public async Task<Restaurant> GetRestaurantByIdAsync(long id)
         {
-            var restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price).FirstOrDefaultAsync(t => t.RestaurantId == id);
+            var restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price).Include(t => t.Manager).FirstOrDefaultAsync(t => t.RestaurantId == id);
             if (restaurant == null)
             {
                 return null;
@@ -151,6 +151,13 @@ namespace FoodService.Services.RestaurantService
                 }
             }
             return PagingList.Create(restaurantQuery, 10, page);
+        }
+
+        public async Task DeleteRestaurantAsync(long id)
+        {
+            var restaurantForDeleting = await FindByIdAsync(id);
+            applicationDbContext.Restaurants.Remove(restaurantForDeleting);
+            applicationDbContext.SaveChanges();
         }
     }
 }
