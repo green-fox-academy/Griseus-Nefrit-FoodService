@@ -30,7 +30,7 @@ namespace FoodService.Services.BlobService
 
         public CloudBlobContainer GetCloudBlobContainer()
         {
-            string storageConnectionString = configuration["storageconnectionstring"];
+            string storageConnectionString = Environment.GetEnvironmentVariable("BLOB_CONNECTIONSTRING");
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
             string containerName = Environment.GetEnvironmentVariable("BLOBCONTAINER_NAME");
