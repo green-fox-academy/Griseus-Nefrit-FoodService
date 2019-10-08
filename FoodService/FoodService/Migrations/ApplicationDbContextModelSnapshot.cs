@@ -17,6 +17,24 @@ namespace FoodService.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("FoodService.Models.Address", b =>
+                {
+                    b.Property<long>("AddressId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Country");
+
+                    b.Property<string>("Street");
+
+                    b.Property<string>("ZipCode");
+
+                    b.HasKey("AddressId");
+
+                    b.ToTable("Addresses");
+                });
+
             modelBuilder.Entity("FoodService.Models.CartItem", b =>
                 {
                     b.Property<long>("CartItemId")
@@ -24,15 +42,15 @@ namespace FoodService.Migrations
 
                     b.Property<long?>("MealId");
 
-                    b.Property<int>("Quantity");
+                    b.Property<long?>("OrderId");
 
-                    b.Property<long?>("ShoppingCartId");
+                    b.Property<int>("Quantity");
 
                     b.HasKey("CartItemId");
 
                     b.HasIndex("MealId");
 
-                    b.HasIndex("ShoppingCartId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("CartItems");
                 });
@@ -111,6 +129,30 @@ namespace FoodService.Migrations
                     b.ToTable("Meals");
                 });
 
+            modelBuilder.Entity("FoodService.Models.Order", b =>
+                {
+                    b.Property<long>("OrderId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("AddressId");
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime>("LastUpdate");
+
+                    b.Property<int>("OrderStatus");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("FoodService.Models.Price", b =>
                 {
                     b.Property<long>("PriceId")
@@ -155,26 +197,6 @@ namespace FoodService.Migrations
                     b.ToTable("Restaurants");
                 });
 
-            modelBuilder.Entity("FoodService.Models.ShoppingCart", b =>
-                {
-                    b.Property<long>("ShoppingCartId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("DateCreated");
-
-                    b.Property<DateTime>("LastUpdate");
-
-                    b.Property<int>("OrderStatus");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("ShoppingCartId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ShoppingCarts");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -200,22 +222,22 @@ namespace FoodService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "39b57eb7-ba79-49ad-a702-4daa5293ecc3",
-                            ConcurrencyStamp = "2680c856-6e3e-4640-9285-ce7128b62601",
+                            Id = "6d4057ad-82cd-4e5b-8bf7-5cc259f23015",
+                            ConcurrencyStamp = "528f229f-5476-4049-9acd-43210732341e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "e3ae4675-48a5-4184-b749-52068c9ac5e7",
-                            ConcurrencyStamp = "155f0256-0ae3-401d-8958-a54121e51411",
+                            Id = "6b37a532-d5b1-47f0-a287-5efc43f3da81",
+                            ConcurrencyStamp = "30d7252d-c7af-49db-ac72-a2197e2daa33",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "094ffe12-179a-4151-8f87-943a4eb3b681",
-                            ConcurrencyStamp = "628c8b5d-8e09-4eea-bd07-23f15bccfd2c",
+                            Id = "1dc694fd-d94c-4559-94a2-4fc5b0bd6d96",
+                            ConcurrencyStamp = "27ad2ff2-5fe1-42c9-bc4b-f33c4ce7b04a",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -307,13 +329,13 @@ namespace FoodService.Migrations
 
             modelBuilder.Entity("FoodService.Models.CartItem", b =>
                 {
-                    b.HasOne("FoodService.Models.Meal", "meal")
+                    b.HasOne("FoodService.Models.Meal", "Meal")
                         .WithMany("CartItems")
                         .HasForeignKey("MealId");
 
-                    b.HasOne("FoodService.Models.ShoppingCart", "ShoppingCart")
+                    b.HasOne("FoodService.Models.Order", "Order")
                         .WithMany("CartItems")
-                        .HasForeignKey("ShoppingCartId");
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("FoodService.Models.Meal", b =>
@@ -327,19 +349,23 @@ namespace FoodService.Migrations
                         .HasForeignKey("RestaurantId");
                 });
 
+            modelBuilder.Entity("FoodService.Models.Order", b =>
+                {
+                    b.HasOne("FoodService.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.HasOne("FoodService.Models.Identity.AppUser", "User")
+                        .WithMany("ShoppingCarts")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("FoodService.Models.Restaurant", b =>
                 {
                     b.HasOne("FoodService.Models.Identity.AppUser", "Manager")
                         .WithMany("OwnedRestaurants")
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("FoodService.Models.ShoppingCart", b =>
-                {
-                    b.HasOne("FoodService.Models.Identity.AppUser", "User")
-                        .WithMany("ShoppingCarts")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
