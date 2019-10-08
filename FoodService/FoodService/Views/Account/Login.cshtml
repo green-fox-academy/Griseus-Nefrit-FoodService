@@ -3,6 +3,8 @@
 }
 @model LoginRequest
 
+<h1>Sign in</h1>
+
 <div class="row">
     <div class="col-md-12">
         <form asp-controller="Account" asp-action="Login" method="post">
@@ -24,12 +26,14 @@
     <div class="col-md-6">
         <hr />
         <form asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <div>
-                <div class="g-signin2" data-width="240" data-theme="dark" data-longtitle="true"></div>
-            </div>
+            @foreach (var provider in Model.ExternalLogins)
+            {
+                <button type="submit" name="provider" class="google-sign-in-button"
+                        value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                    <img class="google-sign-in-img" src="~/img/google_signin_buttons/btn_google_signin_dark_normal_web_2x.png">
+                </button>
+            }
         </form>
     </div>
 </div>
-
-<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 

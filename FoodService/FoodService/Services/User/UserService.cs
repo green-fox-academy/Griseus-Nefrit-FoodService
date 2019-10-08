@@ -28,15 +28,20 @@ namespace FoodService.Services.User
             return await userMgr.FindByEmailAsync(nameOrEmailAddr);
         }
 
+        public async Task<SignInResult> LoginAsync(LoginRequest loginRequest)
+        {
+            var result = await signInMgr.PasswordSignInAsync(userName: loginRequest.Email, password: loginRequest.Password, isPersistent: false, lockoutOnFailure: false);
+            return result;
+        }
+
         public async Task<IList<AuthenticationScheme>> GetExternalAuthenticationSchemesAsync()
         {
             return (await signInMgr.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<SignInResult> LoginAsync(LoginRequest loginRequest)
+        public AuthenticationProperties ConfigureExternalAuthenticaticationProperties(string provider, string redirectUrl)
         {
-            var result = await signInMgr.PasswordSignInAsync(userName: loginRequest.Email, password: loginRequest.Password, isPersistent: false, lockoutOnFailure: false);
-            return result;
+            return signInMgr.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
         }
 
         public async Task Logout()

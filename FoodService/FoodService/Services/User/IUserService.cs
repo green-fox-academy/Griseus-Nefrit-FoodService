@@ -16,5 +16,6 @@ namespace FoodService.Services.User
         Task<IdentityResult> RegisterAsync(RegisterRequest regRequest);
         Task<AppUser> FindUserByNameOrEmail(string emailAddr);
         Task<IList<AuthenticationScheme>> GetExternalAuthenticationSchemesAsync();
+        AuthenticationProperties ConfigureExternalAuthenticaticationProperties(string provider, string redirectUrl);
     }
 }
