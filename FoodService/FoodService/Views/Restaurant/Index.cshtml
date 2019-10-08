@@ -38,6 +38,7 @@
       <th>DESCRIPTION</th>
       <th>PRICE</th>
       <th>PHOTO</th>
+      <th></th>
     </tr>
   </thead>
   @foreach (var meal in Model.Meals)
@@ -47,6 +48,11 @@
       <td>@meal.Description</td>
       <td>@meal.Price.Amount @meal.Price.Currency</td>
       <td><img src=@meal.ImageUri width="100" height="100"></td>
+      <td>
+          <form asp-controller="Order" asp-action="Add" method="post" asp-route-Id="@meal.MealId">
+              <button type="submit" class="btn btn-success">Add To Cart</button>
+          </form>
+      </td>
     </tr>
   }
 </table>

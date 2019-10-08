@@ -9,5 +9,6 @@ namespace FoodService.Models.Identity
     public class AppUser : IdentityUser
     {
         public List<Restaurant> OwnedRestaurants { get; set; }
+        public List<ShoppingCart> ShoppingCarts { get; set; }
     }
 }

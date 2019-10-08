@@ -9,7 +9,7 @@ namespace FoodService.Models
     {
         public long CartItemId { get; set; }
         public int Quantity { get; set; }
-        public Meal meal { get; set; }
+        public Meal Meal { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
 
     }

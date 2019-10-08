@@ -1,7 +1,9 @@
 
 using FoodService.Services.BlobService;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FoodService.Models
 {
@@ -14,6 +16,5 @@ namespace FoodService.Models
         public Restaurant Restaurant { get; set; }
         public string ImageUri { get; set; }
         public List<CartItem> CartItems { get; set; }
-
     }
 }
