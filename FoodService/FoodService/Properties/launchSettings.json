@@ -13,7 +13,8 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "BLOBCONTAINER_NAME": "devdaniel"
+        "BLOBCONTAINER_NAME": "devbabics",
+        "BLOB_CONNECTIONSTRING": "DefaultEndpointsProtocol=https;AccountName=dotnetpincerstorage;AccountKey=Fj4J62mp1WhlNSzF49tDGHkFDGnB4XgLoMsAQ3zAX5mKdtIUh5s4hFEzyhoW+zR5KmLJ06alPGco3w+6E6cLmw==;EndpointSuffix=core.windows.net"
       }
     },
     "FoodService": {
