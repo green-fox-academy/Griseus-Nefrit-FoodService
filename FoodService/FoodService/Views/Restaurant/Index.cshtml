@@ -6,7 +6,7 @@
 
 <h2>Restaurant details</h2><br />
 
-@if (User.IsInRole("Manager") && User.Identity.Name == Model.Manager.UserName)
+@if ((User.IsInRole("Manager") && User.Identity.Name == Model.Manager.UserName) || User.IsInRole("Admin"))
 {
     <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.RestaurantId" class="btn btn-warning" role="button">Edit restaurant</a>
     

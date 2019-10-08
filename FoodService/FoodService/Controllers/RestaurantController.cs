@@ -49,7 +49,7 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long id)
         {
-            if (!await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
+            if (!User.IsInRole("Admin") && !await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
@@ -61,7 +61,7 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditRestaurantViewModel editRestaurantViewModel, long id)
         {
-            if (!await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
+            if (!User.IsInRole("Admin") && !await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
@@ -88,7 +88,7 @@ namespace FoodService.Controllers
         public async Task<IActionResult> Delete(long id)
         {
             await restaurantService.DeleteRestaurantAsync(id);
-            return Redirect(nameof(HomeController.Index));
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }
 }

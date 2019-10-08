@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using FoodService.Models.ViewModels.RestaurantViewModels;
 using ReflectionIT.Mvc.Paging;
 using AutoMapper;
+using FoodService.Services.BlobService;
 
 namespace FoodService.Services.RestaurantService
 {
@@ -18,12 +19,14 @@ namespace FoodService.Services.RestaurantService
         private readonly ApplicationDbContext applicationDbContext;
         private readonly IUserService userService;
         private readonly IMapper iMapper;
+        private readonly IBlobStorageService blobStorageService;
 
-        public RestaurantService(ApplicationDbContext applicationDbContext, IUserService userService, IMapper iMapper)
+        public RestaurantService(ApplicationDbContext applicationDbContext, IUserService userService, IMapper iMapper, IBlobStorageService blobStorageService)
         {
             this.applicationDbContext = applicationDbContext;
             this.userService = userService;
             this.iMapper = iMapper;
+            this.blobStorageService = blobStorageService;
         }
 
         public async Task<Restaurant> GetRestaurantByIdAsync(long id)
@@ -66,7 +69,7 @@ namespace FoodService.Services.RestaurantService
 
         public async Task<Restaurant> FindByIdAsync(long restaurantId)
         {
-            return await applicationDbContext.Restaurants.FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
+            return await applicationDbContext.Restaurants.Include(r => r.Meals).FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
         }
 
         public async Task<bool> ValidateAccessAsync(long restaurantId, string managerName)
@@ -155,8 +158,14 @@ namespace FoodService.Services.RestaurantService
 
         public async Task DeleteRestaurantAsync(long id)
         {
-            var restaurantForDeleting = await FindByIdAsync(id);
-            applicationDbContext.Restaurants.Remove(restaurantForDeleting);
+            var restaurant = await FindByIdAsync(id);
+            for (int i = 0; i < restaurant.Meals.Count; i++)
+            {
+                blobStorageService.DeleteBlobFolder(restaurant.Meals[i].MealId);
+                applicationDbContext.Meals.Remove(restaurant.Meals[i]);
+
+            }
+            applicationDbContext.Restaurants.Remove(restaurant);
             applicationDbContext.SaveChanges();
         }
     }
