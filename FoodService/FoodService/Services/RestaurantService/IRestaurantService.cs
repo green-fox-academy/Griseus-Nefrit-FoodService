@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FoodService.Models;
+using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.RestaurantRequestModels;
 using FoodService.Models.ViewModels.RestaurantViewModels;
 using ReflectionIT.Mvc.Paging;
@@ -22,5 +23,6 @@ namespace FoodService.Services.RestaurantService
         Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId, RestaurantRequest restaurantRequest);
         Task<List<String>> GetUniqueCitiesAsync();
         Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync(int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest);
+        //Task<SingleRestaurantViewModel> BuildSingleRestaurantViewModelAsync(long restaurantId, ClaimsPrincipal user);
     }
 }

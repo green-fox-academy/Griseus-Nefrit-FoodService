@@ -96,8 +96,6 @@ namespace FoodService.Services.OrderService
         public async Task<bool> ValidateAccessAsync(long cartItemId, string userName)
         {
             var cartItem = await GetCartItemByIdAsync(cartItemId);
-            //List<Restaurant> ownedRestaurants = await restaurantService.FindRestaurantByManagerNameOrEmailAsync(managerName);
-            //Meal currentMeal = await GetMealByIdAsync(mealId);
             if(cartItem != null)
             {
                 return cartItem.Order.User.UserName == userName;
@@ -107,7 +105,7 @@ namespace FoodService.Services.OrderService
 
         public async Task<CartItem> GetCartItemByIdAsync(long cartItemId)
         {
-            return await applicationDbContext.CartItems.Include(ci => ci.Order).FirstOrDefaultAsync(ci => (ci.CartItemId == cartItemId));
+            return await applicationDbContext.CartItems.Include(ci => ci.Order).ThenInclude(o => o.User).FirstOrDefaultAsync(ci => (ci.CartItemId == cartItemId));
         }
 
         public async Task DeleteCartItemAsync(long cartItemId)
@@ -135,6 +133,20 @@ namespace FoodService.Services.OrderService
         public async Task<Order> GetOrderById(long orderId)
         {
             return await applicationDbContext.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+        }
+
+        public async Task<int> GetNumberOfItemsInBasket(string userName)
+        {
+            var shoppingCart = await GetShoppingCartByUserAsync(userName);
+            try
+            {
+                return shoppingCart.CartItems.Count;
+            }
+            catch
+            {
+                return 0;
+            }
+            
         }
     }
 }

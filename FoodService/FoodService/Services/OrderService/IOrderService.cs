@@ -17,5 +17,7 @@ namespace FoodService.Services.OrderService
         Task<CartItem> GetCartItemByIdAsync(long cartItemId);
         Task DeleteCartItemAsync(long cartItemId);
         Task SaveOrderAsync(long orderId, Address address);
+        Task<int> GetNumberOfItemsInBasket(string userName);
+        Task<bool> ValidateAccessAsync(long cartItemId, string userName);
     }
 }

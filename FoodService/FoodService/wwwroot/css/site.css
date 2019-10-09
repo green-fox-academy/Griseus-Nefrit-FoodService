@@ -40,3 +40,8 @@ body {
 .left {
     float: left;
 }
+
+.redinfo{
+    color: red;
+    text-align: right;
+}

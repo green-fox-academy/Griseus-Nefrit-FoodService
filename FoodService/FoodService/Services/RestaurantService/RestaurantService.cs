@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using FoodService.Models.ViewModels.RestaurantViewModels;
 using ReflectionIT.Mvc.Paging;
 using AutoMapper;
+using FoodService.Models.Identity;
+using FoodService.Services.OrderService;
 
 namespace FoodService.Services.RestaurantService
 {
@@ -157,5 +159,22 @@ namespace FoodService.Services.RestaurantService
             }
             return PagingList.Create(restaurantQuery, 10, page);
         }
+
+        //public async Task<SingleRestaurantViewModel> BuildSingleRestaurantViewModelAsync(long restaurantId, ClaimsPrincipal user)
+        //{
+        //    var restaurant = await GetRestaurantByIdAsync(restaurantId);
+        //    int numberOfCartItems = 0;
+        //    if (user != null)
+        //    {
+        //        numberOfCartItems = await orderService.GetNumberOfItemsInBasket(user.Identity.Name);
+        //    }
+
+        //    SingleRestaurantViewModel singleRestaurantViewModel = new SingleRestaurantViewModel()
+        //    {
+        //        Restaurant = restaurant,
+        //        NumberOfCartItems = numberOfCartItems
+        //    };
+        //    return singleRestaurantViewModel;
+        //}
     }
 }

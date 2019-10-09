@@ -1,31 +1,32 @@
 @{
   ViewData["Title"] = "Restaurant details";
 }
-@model Restaurant
+@model SingleRestaurantViewModel
 
-<h2>Restaurant details</h2>
+    <h3 class="redinfo"> (Meal items in your Basket: @Model.NumberOfCartItems)</h3>
+    <h2>Restaurant details</h2>
 <br />
 <table class="table">
     <tr>
         <th>NAME</th>
-        <td>@Model.Name</td>
+        <td>@Model.Restaurant.Name</td>
     </tr>
     <tr>
         <th>DESCRIPTION</th>
-        <td>@Model.Description</td>
+        <td>@Model.Restaurant.Description</td>
     </tr>
     <tr>
         <th>CITY</th>
-        <td>@Model.City</td>
+        <td>@Model.Restaurant.City</td>
     </tr>
     <tr>
         <th>FOODTYPE</th>
-        <td>@Model.FoodType</td>
+        <td>@Model.Restaurant.FoodType</td>
     </tr>
     <tr>
         <th>PRICE CATEGORY</th>
         <td>
-            <input value="@((byte)Model.PriceCategory)" class="rating rating-loading green" data-theme="krajee-fa" data-display-only="true" data-size="1" data-stars="4" data-max="4" data-step="1" data-show-clear="false" data-show-caption="false" data-show-caption-as-title="false">
+            <input value="@((byte)Model.Restaurant.PriceCategory)" class="rating rating-loading green" data-theme="krajee-fa" data-display-only="true" data-size="1" data-stars="4" data-max="4" data-step="1" data-show-clear="false" data-show-caption="false" data-show-caption-as-title="false">
         </td>
     </tr>
 </table>
@@ -41,7 +42,7 @@
       <th></th>
     </tr>
   </thead>
-  @foreach (var meal in Model.Meals)
+  @foreach (var meal in Model.Restaurant.Meals)
   {
     <tr>
       <td>@meal.Name</td>

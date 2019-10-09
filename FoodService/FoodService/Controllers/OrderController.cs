@@ -53,7 +53,7 @@ namespace FoodService.Controllers
             if (ModelState.IsValid)
             {
                 await orderService.SaveOrderAsync(id, address);
-                return RedirectToAction(nameof(OrderController.Submit), "Order");
+                return RedirectToAction(nameof(OrderController.ThankYou), "Order");
             }
             var shoppingCartRequest = await orderService.CreateShoppingCartRequestByUserAsync(User.Identity.Name, address);
             return View(shoppingCartRequest);
@@ -62,7 +62,7 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
-            if (!await mealService.ValidateAccessAsync(id, User.Identity.Name))
+            if (!await orderService.ValidateAccessAsync(id, User.Identity.Name))
             {
                 return RedirectToAction(nameof(OrderController.Submit), "Order");
             }
@@ -70,6 +70,12 @@ namespace FoodService.Controllers
             var cartItem = await orderService.GetCartItemByIdAsync(id);
             await orderService.DeleteCartItemAsync(id);
             return RedirectToAction(nameof(OrderController.Submit), "Order");
+        }
+
+        [HttpGet]
+        public IActionResult ThankYou()
+        {
+            return View();
         }
     }
 }
