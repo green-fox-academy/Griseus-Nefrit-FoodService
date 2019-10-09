@@ -15,13 +15,13 @@ namespace FoodService.Services.User
     {
         private readonly UserManager<AppUser> userMgr;
         private readonly SignInManager<AppUser> signInMgr;
-        private readonly IMapper iMapper;
+        private readonly IMapper mapper;
 
-        public UserService(UserManager<AppUser> userMgr, SignInManager<AppUser> signInMgr, IMapper iMapper)
+        public UserService(UserManager<AppUser> userMgr, SignInManager<AppUser> signInMgr, IMapper mapper)
         {
             this.userMgr = userMgr;
             this.signInMgr = signInMgr;
-            this.iMapper = iMapper;
+            this.mapper = mapper;
         }
 
         public async Task<AppUser> FindUserByNameOrEmailAsync(string nameOrEmailAddr)
@@ -73,7 +73,7 @@ namespace FoodService.Services.User
 
         public async Task<IdentityResult> RegisterAsync(RegisterRequest regRequest)
         {
-            var user = iMapper.Map<RegisterRequest, AppUser>(regRequest);
+            var user = mapper.Map<RegisterRequest, AppUser>(regRequest);
             var result = await userMgr.CreateAsync(user, regRequest.Password);
             if (result.Succeeded)
             {

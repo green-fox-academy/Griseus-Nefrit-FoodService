@@ -17,20 +17,20 @@ namespace FoodService.Services.MealService
     {
         private readonly ApplicationDbContext applicationDbContext;
         private readonly IRestaurantService restaurantService;
-        private readonly IMapper iMapper;
+        private readonly IMapper mapper;
         IBlobStorageService blobStorageService;
 
-        public MealService(ApplicationDbContext applicationDbContext, IMapper iMapper, IBlobStorageService blobStorageService, IRestaurantService restaurantService)
+        public MealService(ApplicationDbContext applicationDbContext, IMapper mapper, IBlobStorageService blobStorageService, IRestaurantService restaurantService)
         {
             this.applicationDbContext = applicationDbContext;
             this.restaurantService = restaurantService;
-            this.iMapper = iMapper;
+            this.mapper = mapper;
             this.blobStorageService = blobStorageService;
         }
 
         public async Task SaveMealAsync(AddMealRequest addMealRequest)
         {
-            var meal = iMapper.Map<AddMealRequest, Meal>(addMealRequest);
+            var meal = mapper.Map<AddMealRequest, Meal>(addMealRequest);
             meal.Restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
                 .FirstOrDefaultAsync(t => t.RestaurantId == addMealRequest.RestaurantId);
             await applicationDbContext.Meals.AddAsync(meal);
@@ -70,7 +70,7 @@ namespace FoodService.Services.MealService
             var meal = await GetMealByIdAsync(id);
             if (meal != null)
             {
-                var addMealRequest = iMapper.Map<Meal, AddMealRequest>(meal);
+                var addMealRequest = mapper.Map<Meal, AddMealRequest>(meal);
                 addMealRequest.RestaurantId = meal.Restaurant.RestaurantId;
                 return addMealRequest;
             }
@@ -80,7 +80,7 @@ namespace FoodService.Services.MealService
         public async Task EditAsync(long id, AddMealRequest addMealRequest)
         {
             var meal = await GetMealByIdAsync(id);
-            meal = iMapper.Map<AddMealRequest, Meal>(addMealRequest, meal);
+            meal = mapper.Map<AddMealRequest, Meal>(addMealRequest, meal);
             meal.Restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price)
                 .FirstOrDefaultAsync(t => t.RestaurantId == addMealRequest.RestaurantId);
             if (addMealRequest.Image != null)
