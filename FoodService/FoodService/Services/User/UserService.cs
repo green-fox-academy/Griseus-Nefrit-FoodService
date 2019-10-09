@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using FoodService.Models.Identity;
@@ -23,7 +24,7 @@ namespace FoodService.Services.User
             this.iMapper = iMapper;
         }
 
-        public async Task<AppUser> FindUserByNameOrEmail(string nameOrEmailAddr)
+        public async Task<AppUser> FindUserByNameOrEmailAsync(string nameOrEmailAddr)
         {
             return await userMgr.FindByEmailAsync(nameOrEmailAddr);
         }
@@ -31,6 +32,17 @@ namespace FoodService.Services.User
         public async Task<SignInResult> LoginAsync(LoginRequest loginRequest)
         {
             var result = await signInMgr.PasswordSignInAsync(userName: loginRequest.Email, password: loginRequest.Password, isPersistent: false, lockoutOnFailure: false);
+            return result;
+        }
+
+        public async Task<IdentityResult> CreateAsync(AppUser user)
+        {
+            var result = await userMgr.CreateAsync(user);
+            if (result.Succeeded)
+            {
+                await userMgr.AddToRoleAsync(user, "Customer");
+                await signInMgr.SignInAsync(user, isPersistent: false);
+            }
             return result;
         }
 
@@ -42,6 +54,16 @@ namespace FoodService.Services.User
         public AuthenticationProperties ConfigureExternalAuthenticaticationProperties(string provider, string redirectUrl)
         {
             return signInMgr.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+        }
+
+        public async Task<ExternalLoginInfo> GetExternalLoginInfoAsync()
+        {
+            return await signInMgr.GetExternalLoginInfoAsync();
+        }
+
+        public async Task<SignInResult> ExternalLoginSignInAsync(string loginProvider, string providerKey)
+        {
+            return await signInMgr.ExternalLoginSignInAsync(loginProvider, providerKey, isPersistent: false, bypassTwoFactor: true);
         }
 
         public async Task Logout()
@@ -60,6 +82,24 @@ namespace FoodService.Services.User
             }
 
             return result;
+        }
+
+        public async Task<SignInResult> RegisterExternalUserAsync(string emailAddr, ExternalLoginInfo userLoginInfo)
+        {
+            var user = await FindUserByNameOrEmailAsync(emailAddr);
+
+            if (user == null)
+            {
+                user = new AppUser
+                {
+                    UserName = emailAddr,
+                    Email = emailAddr
+                };
+                await CreateAsync(user);
+            }
+
+            await userMgr.AddLoginAsync(user, userLoginInfo);
+            return await ExternalLoginSignInAsync(userLoginInfo.LoginProvider, userLoginInfo.ProviderKey);
         }
     }
 }
