@@ -152,7 +152,7 @@ namespace FoodService.Services.RestaurantService
                 {
                     foreach (Meal meal in restaurant.Meals)
                     {
-                        if(meal.Name.Contains(searchRestaurantRequest.MealName))
+                        if(meal.Name.ToLower().Contains(searchRestaurantRequest.MealName.ToLower()))
                         {
                             restaurantQuery.Add(restaurant);
                             break;
