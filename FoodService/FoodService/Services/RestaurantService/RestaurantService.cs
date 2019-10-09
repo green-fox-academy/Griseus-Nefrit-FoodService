@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using FoodService.Models.ViewModels.RestaurantViewModels;
 using ReflectionIT.Mvc.Paging;
 using AutoMapper;
+using FoodService.Services.BlobService;
 
 namespace FoodService.Services.RestaurantService
 {
@@ -18,17 +19,19 @@ namespace FoodService.Services.RestaurantService
         private readonly ApplicationDbContext applicationDbContext;
         private readonly IUserService userService;
         private readonly IMapper iMapper;
+        private readonly IBlobStorageService blobStorageService;
 
-        public RestaurantService(ApplicationDbContext applicationDbContext, IUserService userService, IMapper iMapper)
+        public RestaurantService(ApplicationDbContext applicationDbContext, IUserService userService, IMapper iMapper, IBlobStorageService blobStorageService)
         {
             this.applicationDbContext = applicationDbContext;
             this.userService = userService;
             this.iMapper = iMapper;
+            this.blobStorageService = blobStorageService;
         }
 
         public async Task<Restaurant> GetRestaurantByIdAsync(long id)
         {
-            var restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price).FirstOrDefaultAsync(t => t.RestaurantId == id);
+            var restaurant = await applicationDbContext.Restaurants.Include(t => t.Meals).ThenInclude(m => m.Price).Include(t => t.Manager).FirstOrDefaultAsync(t => t.RestaurantId == id);
             if (restaurant == null)
             {
                 return null;
@@ -66,14 +69,21 @@ namespace FoodService.Services.RestaurantService
 
         public async Task<Restaurant> FindByIdAsync(long restaurantId)
         {
-            return await applicationDbContext.Restaurants.FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
+            return await applicationDbContext.Restaurants.Include(r => r.Meals).FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
         }
 
-        public async Task<bool> ValidateAccessAsync(long restaurantId, string managerName)
+        public async Task<bool> ValidateAccessAsync(long restaurantId, ClaimsPrincipal user)
         {
-            List<Restaurant> ownedRestaurants = await FindRestaurantByManagerNameOrEmailAsync(managerName);
-            Restaurant currentRestaurant = await FindByIdAsync(restaurantId);
-            return ownedRestaurants.Contains(currentRestaurant);
+            if (user.IsInRole("Admin"))
+            {
+                return true;
+            }
+            else
+            {
+                List<Restaurant> ownedRestaurants = await FindRestaurantByManagerNameOrEmailAsync(user.Identity.Name);
+                Restaurant currentRestaurant = await FindByIdAsync(restaurantId);
+                return ownedRestaurants.Contains(currentRestaurant);
+            }
         }
 
         public async Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId)
@@ -130,13 +140,9 @@ namespace FoodService.Services.RestaurantService
                 searchRestaurantRequest.City = null;
             }
             var restaurants = await applicationDbContext.Restaurants.Include(r => r.Meals).ToListAsync();
-            if (user.IsInRole("Manager"))
-            {
-                restaurants = await FindRestaurantByManagerNameOrEmailAsync(user.Identity.Name);
-            }
             var filteredRestaurantsList = restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).OrderBy(r => r.Name).ToList();
-
             var restaurantQuery = new List<Restaurant>();
+
             if (String.IsNullOrEmpty(searchRestaurantRequest.MealName))
             {
                 restaurantQuery = filteredRestaurantsList;
@@ -156,6 +162,18 @@ namespace FoodService.Services.RestaurantService
                 }
             }
             return PagingList.Create(restaurantQuery, 10, page);
+        }
+
+        public async Task DeleteRestaurantAsync(long id)
+        {
+            var restaurant = await FindByIdAsync(id);
+            for (int i = 0; i < restaurant.Meals.Count; i++)
+            {
+                blobStorageService.DeleteBlobFolder(restaurant.Meals[i].MealId);
+                applicationDbContext.Meals.Remove(restaurant.Meals[i]);
+            }
+            applicationDbContext.Restaurants.Remove(restaurant);
+            await applicationDbContext.SaveChangesAsync();
         }
     }
 }
