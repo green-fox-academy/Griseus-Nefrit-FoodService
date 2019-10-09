@@ -17,7 +17,10 @@ using Microsoft.AspNetCore.Identity;
 using ReflectionIT.Mvc.Paging;
 using FoodService.Services.BlobService;
 using FoodService.Services.Profiles;
-
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace FoodService
 {
@@ -65,7 +68,25 @@ namespace FoodService
             services.AddTransient<IMealService, MealService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.SetUpAutoMapper();
-            services.AddMvc();
+            services.AddLocalization(options => {
+                options.ResourcesPath = "Resources";
+            });
+            services.AddMvc()
+                .AddViewLocalization(
+                    options => { options.ResourcesPath = "Resources"; })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.Configure<RequestLocalizationOptions>(options => {
+                var supportedCultures = new List<CultureInfo> {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("hu-HU"),
+                  };
+                options.DefaultRequestCulture = new RequestCulture("en-US");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+        
             services.AddPaging();
             services.AddAuthentication()
                 .AddGoogle(options =>
