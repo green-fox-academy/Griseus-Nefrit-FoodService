@@ -41,7 +41,22 @@ body {
     float: left;
 }
 
-.redinfo{
+.redinfo {
     color: red;
     text-align: right;
+}
+
+/* Google sign-in button - Gabor*/
+.google-sign-in-button {
+    display: contents;
+}
+
+.google-sign-in-img {
+    width: 200px;
+    box-shadow: 1px 1px #888888;
+}
+
+.google-sign-in-img:hover {
+    width: 200px;
+    box-shadow: 1px 1px #888888;
 }

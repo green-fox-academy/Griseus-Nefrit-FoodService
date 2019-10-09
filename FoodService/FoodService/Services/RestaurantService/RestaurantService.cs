@@ -40,7 +40,7 @@ namespace FoodService.Services.RestaurantService
         }
         public async Task<Restaurant> SaveRestaurantAsync(RestaurantRequest restaurantReq, string managerName)
         {
-            var manager = await userService.FindUserByNameOrEmail(managerName);
+            var manager = await userService.FindUserByNameOrEmailAsync(managerName);
             var restaurant = mapper.Map<RestaurantRequest, Restaurant>(restaurantReq);
             restaurant.Manager = manager;
             await applicationDbContext.Restaurants.AddAsync(restaurant);
@@ -71,7 +71,7 @@ namespace FoodService.Services.RestaurantService
         {
             return await applicationDbContext.Restaurants.Include(r => r.Meals).FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
         }
-        
+
         public async Task<bool> ValidateAccessAsync(long restaurantId, ClaimsPrincipal user)
         {
             if (user.IsInRole("Admin"))
@@ -85,7 +85,7 @@ namespace FoodService.Services.RestaurantService
                 return ownedRestaurants.Contains(currentRestaurant);
             }
         }
-        
+
         public async Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId)
         {
             var restaurant = await GetRestaurantByIdAsync(restaurantId);
@@ -95,7 +95,7 @@ namespace FoodService.Services.RestaurantService
                 Meals = restaurant.Meals,
                 RestaurantId = restaurant.RestaurantId
             };
-            
+
             await applicationDbContext.SaveChangesAsync();
             return editRestaurantViewModel;
         }
@@ -142,6 +142,7 @@ namespace FoodService.Services.RestaurantService
             var restaurants = await applicationDbContext.Restaurants.Include(r => r.Meals).ToListAsync();
             var filteredRestaurantsList = restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).OrderBy(r => r.Name).ToList();
             var restaurantQuery = new List<Restaurant>();
+
             if (String.IsNullOrEmpty(searchRestaurantRequest.MealName))
             {
                 restaurantQuery = filteredRestaurantsList;
@@ -152,7 +153,7 @@ namespace FoodService.Services.RestaurantService
                 {
                     foreach (Meal meal in restaurant.Meals)
                     {
-                        if(meal.Name.ToLower().Contains(searchRestaurantRequest.MealName.ToLower()))
+                        if (meal.Name.ToLower().Contains(searchRestaurantRequest.MealName.ToLower()))
                         {
                             restaurantQuery.Add(restaurant);
                             break;
@@ -170,7 +171,7 @@ namespace FoodService.Services.RestaurantService
                 blobStorageService.DeleteBlobFolder(restaurant.Meals[i].MealId);
                 applicationDbContext.Meals.Remove(restaurant.Meals[i]);
             }
-            applicationDbContext.Restaurants.Remove(restaurant); 
+            applicationDbContext.Restaurants.Remove(restaurant);
             await applicationDbContext.SaveChangesAsync();
         }
     }
