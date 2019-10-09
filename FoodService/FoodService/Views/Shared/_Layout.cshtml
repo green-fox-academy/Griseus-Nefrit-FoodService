@@ -33,6 +33,12 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
+                        @if (User.IsInRole("Customer") || User.IsInRole("Manager") || User.IsInRole("Admin"))
+                        {
+                            <li><a asp-area="" asp-controller="UserSettings" asp-action="UserSettings">User settings</a></li>
+                        }
+                    </ul>
+                    <ul class="nav navbar-nav">
                         @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
                         {
                             <li><a asp-area="" asp-controller="Restaurant" asp-action="Add">Add Restaurant</a></li>
