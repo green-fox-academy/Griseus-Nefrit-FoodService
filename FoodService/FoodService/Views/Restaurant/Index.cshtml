@@ -10,7 +10,7 @@
 {
     <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.RestaurantId" class="btn btn-warning" role="button">Edit restaurant</a>
     
-    <form asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.RestaurantId" method="post">
+    <form asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.RestaurantId" method="post" onclick="return GetConfirmation();">
         <button type="submit" class="btn btn-danger">Delete restaurant</button>
     </form>
 }
@@ -65,3 +65,18 @@
 <form asp-controller="Home" asp-action="Index" method="get">
     <button type="button" class="btn btn-info" onclick="history.back()">Back to Available restaurants</button>
 </form><br />
+
+<script type="text/javascript">
+    function GetConfirmation()
+    {
+        var reply = confirm("Are you sure you want to delete the restaurant?");
+        if(reply)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+</script>
