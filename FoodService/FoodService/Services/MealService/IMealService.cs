@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Threading.Tasks;
 using FoodService.Models.RequestModels.RestaurantRequestModels;
 using FoodService.Models;
@@ -12,7 +13,7 @@ namespace FoodService.Services.MealService
         Task<Meal> GetMealByIdAsync(long mealId);
         Task EditAsync(long id, AddMealRequest addMealRequest);
         Task<AddMealRequest> CreateMealRequestAsync(long id);
-        Task<bool> ValidateAccessAsync(long mealId, string managerName);
+        Task<bool> ValidateAccessAsync(long mealId, ClaimsPrincipal user);
         Task AddImageUriToMealAsync(long mealID, Microsoft.Azure.Storage.Blob.CloudBlockBlob blob);
     }
 }

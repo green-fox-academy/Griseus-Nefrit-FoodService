@@ -71,14 +71,21 @@ namespace FoodService.Services.RestaurantService
         {
             return await applicationDbContext.Restaurants.Include(r => r.Meals).FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
         }
-
-        public async Task<bool> ValidateAccessAsync(long restaurantId, string managerName)
+        
+        public async Task<bool> ValidateAccessAsync(long restaurantId, ClaimsPrincipal user)
         {
-            List<Restaurant> ownedRestaurants = await FindRestaurantByManagerNameOrEmailAsync(managerName);
-            Restaurant currentRestaurant = await FindByIdAsync(restaurantId);
-            return ownedRestaurants.Contains(currentRestaurant);
+            if (user.IsInRole("Admin"))
+            {
+                return true;
+            }
+            else
+            {
+                List<Restaurant> ownedRestaurants = await FindRestaurantByManagerNameOrEmailAsync(user.Identity.Name);
+                Restaurant currentRestaurant = await FindByIdAsync(restaurantId);
+                return ownedRestaurants.Contains(currentRestaurant);
+            }
         }
-
+        
         public async Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId)
         {
             var restaurant = await GetRestaurantByIdAsync(restaurantId);
@@ -164,8 +171,8 @@ namespace FoodService.Services.RestaurantService
                 blobStorageService.DeleteBlobFolder(restaurant.Meals[i].MealId);
                 applicationDbContext.Meals.Remove(restaurant.Meals[i]);
             }
-            applicationDbContext.Restaurants.Remove(restaurant);
-            applicationDbContext.SaveChanges();
+            applicationDbContext.Restaurants.Remove(restaurant); 
+            await applicationDbContext.SaveChangesAsync();
         }
     }
 }
