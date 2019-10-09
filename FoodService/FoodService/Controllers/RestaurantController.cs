@@ -51,7 +51,7 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long id)
         {
-            if (!await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
+            if (!await restaurantService.ValidateAccessAsync(id, User))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
@@ -63,7 +63,7 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditRestaurantViewModel editRestaurantViewModel, long id)
         {
-            if (!await restaurantService.ValidateAccessAsync(id, User.Identity.Name))
+            if (!await restaurantService.ValidateAccessAsync(id, User))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
@@ -94,6 +94,18 @@ namespace FoodService.Controllers
                 NumberOfCartItems = numberOfCartItems
             };
             return View(singleRestaurantViewModel);
+        }
+
+        [Authorize(Roles = "Manager, Admin")]
+        [HttpPost]
+        public async Task<IActionResult> Delete(long id)
+        {
+            if (!await restaurantService.ValidateAccessAsync(id, User))
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+            await restaurantService.DeleteRestaurantAsync(id);
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }
 }

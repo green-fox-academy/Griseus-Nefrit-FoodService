@@ -4,14 +4,8 @@
 @{
     ViewData["Title"] = "Restaurants";
 }
-@if (User.IsInRole("Manager"))
-{
-    <h1>My Restaurants</h1>
-}
-else
-{
-    <h1>Available Restaurants</h1>
-}
+
+<h1>Available Restaurants</h1>
 <form asp-controller="Home" asp-action="Index" method="get">
     <table width="100%">
         <tr>
@@ -29,7 +23,7 @@ else
                 </select>
             </td>
             <td>
-                <button type="submit" class="btn btn-success">Search</button>
+                <button type="submit" class="btn btn-success" ><i class="fas fa-search"></i> Search</button>
             </td>
             <td><a asp-action="Index">Clear filters</a></td>
         </tr>
@@ -66,12 +60,6 @@ else
                         <button type="submit" class="btn btn-success">Details</button>
                     </form>
                 </td>
-                @if (User.IsInRole("Manager"))
-                {
-                    <td>
-                        <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@restaurants.RestaurantId" class="btn btn-warning" role="button">Edit</a>
-                    </td>
-                }
             </tr>
         }
     </tbody>

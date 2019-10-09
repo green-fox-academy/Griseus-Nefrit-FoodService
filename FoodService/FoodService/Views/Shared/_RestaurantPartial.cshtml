@@ -26,6 +26,8 @@
         <input asp-for="RestaurantRequest.PriceCategory" value="@if (Model != null) { @((byte)Model.RestaurantRequest.PriceCategory) } " class="rating green rating-loading form-control" data-theme="krajee-fa" data-stars="4" data-min="0" data-max="4" data-step="1" data-show-clear="false" data-show-caption="false" data-show-caption-as-title="false">
         <span asp-validation-for="RestaurantRequest.PriceCategory" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Submit changes</button>
-    <button type="button" class="btn btn-info" onclick="history.back()">Cancel</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <form>
+        <button type="button" class="btn btn-info" onclick="history.back()">Cancel</button>
+    </form>
 </form>
