@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using FoodService.Services.BlobService;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Security.Claims;
 
 namespace FoodService.Services.MealService
 {
@@ -89,13 +90,21 @@ namespace FoodService.Services.MealService
             }
             await applicationDbContext.SaveChangesAsync();
         }
-
-        public async Task<bool> ValidateAccessAsync(long mealId, string managerName)
+        
+        public async Task<bool> ValidateAccessAsync(long mealId, ClaimsPrincipal user)
         {
-            List<Restaurant> ownedRestaurants = await restaurantService.FindRestaurantByManagerNameOrEmailAsync(managerName);
-            Meal currentMeal = await GetMealByIdAsync(mealId);
-            return ownedRestaurants.Contains(currentMeal.Restaurant);
+            if (user.IsInRole("Admin"))
+            {
+                return true;
+            }
+            else
+            {
+                List<Restaurant> ownedRestaurants = await restaurantService.FindRestaurantByManagerNameOrEmailAsync(user.Identity.Name);
+                Meal currentMeal = await GetMealByIdAsync(mealId);
+                return ownedRestaurants.Contains(currentMeal.Restaurant);
+            }
         }
+        
         public async Task AddImageUriToMealAsync(long mealId, CloudBlockBlob blob)
         {
             var meal = await GetMealByIdAsync(mealId);
