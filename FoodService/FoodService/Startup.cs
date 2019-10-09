@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 
 namespace FoodService
 {
@@ -113,9 +114,8 @@ namespace FoodService
             }
             app.UseStaticFiles();
 
-            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>();
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
-
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
         }
