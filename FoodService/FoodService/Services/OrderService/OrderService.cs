@@ -17,14 +17,14 @@ namespace FoodService.Services.OrderService
         private readonly ApplicationDbContext applicationDbContext;
         private readonly IUserService userService;
         private readonly IMealService mealService;
-        private readonly IMapper iMapper;
+        private readonly IMapper mapper;
 
-        public OrderService(ApplicationDbContext applicationDbContext, IUserService userService, IMealService mealService, IMapper iMapper)
+        public OrderService(ApplicationDbContext applicationDbContext, IUserService userService, IMealService mealService, IMapper mapper)
         {
             this.applicationDbContext = applicationDbContext;
             this.userService = userService;
             this.mealService = mealService;
-            this.iMapper = iMapper;
+            this.mapper = mapper;
         }
 
         public async Task<Order> AddMealToOrderAsync(long mealId, string userName)
@@ -57,7 +57,7 @@ namespace FoodService.Services.OrderService
 
         public async Task<Order> GetShoppingCartByUserAsync(string userName)
         {
-            AppUser user = await userService.FindUserByNameOrEmail(userName);
+            AppUser user = await userService.FindUserByNameOrEmailAsync(userName);
             if (user != null)
             {
                 var shoppingCartDraft = await applicationDbContext.Orders.Include(o => o.CartItems).ThenInclude(ci => ci.Meal).ThenInclude(m => m.Price).FirstOrDefaultAsync(s => (s.User.UserName == userName && s.OrderStatus == OrderStatus.Draft));
@@ -83,7 +83,7 @@ namespace FoodService.Services.OrderService
             var order = await GetShoppingCartByUserAsync(userName);
             if (order != null)
             {
-                var shoppingCartRequest = iMapper.Map<Order, ShoppingCartRequest>(order);
+                var shoppingCartRequest = mapper.Map<Order, ShoppingCartRequest>(order);
                 if(address != null)
                 {
                     shoppingCartRequest.Address = address;
@@ -111,11 +111,10 @@ namespace FoodService.Services.OrderService
         public async Task DeleteCartItemAsync(long cartItemId)
         {
             var cartItem = await GetCartItemByIdAsync(cartItemId);
-            //var meal = await GetMealByIdAsync(id);
             if (cartItem != null)
             {
                 applicationDbContext.CartItems.Remove(cartItem);
-                applicationDbContext.SaveChanges();
+                await applicationDbContext.SaveChangesAsync();
             }
         }
 
@@ -146,7 +145,6 @@ namespace FoodService.Services.OrderService
             {
                 return 0;
             }
-            
         }
     }
 }

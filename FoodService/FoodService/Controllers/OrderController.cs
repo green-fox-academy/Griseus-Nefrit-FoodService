@@ -34,7 +34,6 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(long id)
         {
-            //var user = User;
             var shoppingCart = await orderService.AddMealToOrderAsync(id, User.Identity.Name);
             var meal = await mealService.GetMealByIdAsync(id);
             return RedirectToAction(nameof(RestaurantController.Index), "Restaurant", new { id = meal.Restaurant.RestaurantId });
