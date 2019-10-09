@@ -112,6 +112,10 @@ namespace FoodService
                 app.UseDatabaseErrorPage();
             }
             app.UseStaticFiles();
+
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>();
+            app.UseRequestLocalization(options.Value);
+
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
         }
