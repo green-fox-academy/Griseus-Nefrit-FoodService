@@ -89,7 +89,7 @@ namespace FoodService.Services.RestaurantService
         public async Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId)
         {
             var restaurant = await GetRestaurantByIdAsync(restaurantId);
-            var editRestauratnViewModel = new EditRestaurantViewModel()
+            var editRestaurantViewModel = new EditRestaurantViewModel()
             {
                 RestaurantRequest = mapper.Map<Restaurant, RestaurantRequest>(restaurant),
                 Meals = restaurant.Meals,
@@ -97,13 +97,13 @@ namespace FoodService.Services.RestaurantService
             };
             
             await applicationDbContext.SaveChangesAsync();
-            return editRestauratnViewModel;
+            return editRestaurantViewModel;
         }
 
         public async Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId, RestaurantRequest restaurantRequest)
         {
             var restaurant = await GetRestaurantByIdAsync(restaurantId);
-            var editRestauratnViewModel = new EditRestaurantViewModel()
+            var editRestaurantViewModel = new EditRestaurantViewModel()
             {
                 RestaurantRequest = restaurantRequest,
                 Meals = restaurant.Meals,
@@ -111,7 +111,7 @@ namespace FoodService.Services.RestaurantService
             };
 
             await applicationDbContext.SaveChangesAsync();
-            return editRestauratnViewModel;
+            return editRestaurantViewModel;
         }
 
         public async Task<List<String>> GetUniqueCitiesAsync()
