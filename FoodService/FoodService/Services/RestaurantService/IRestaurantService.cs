@@ -17,10 +17,11 @@ namespace FoodService.Services.RestaurantService
         Task<Restaurant> FindByIdAsync(long postId);
         Task<Restaurant> EditRestaurantAsync(long id, RestaurantRequest restaurantRequest);
         Task<List<Restaurant>> FindRestaurantByManagerNameOrEmailAsync(string managerName);
-        Task<bool> ValidateAccessAsync(long restaurantId, string managerName);
+        Task<bool> ValidateAccessAsync(long restaurantId, ClaimsPrincipal user);
         Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId);
         Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId, RestaurantRequest restaurantRequest);
         Task<List<String>> GetUniqueCitiesAsync();
         Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync(int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest);
+        Task DeleteRestaurantAsync(long id);
     }
 }
