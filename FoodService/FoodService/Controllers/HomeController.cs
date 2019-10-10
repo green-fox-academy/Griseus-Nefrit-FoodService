@@ -8,6 +8,7 @@ using FoodService.Models.ViewModels.RestaurantViewModels;
 using FoodService.Services;
 using FoodService.Services.RestaurantService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using ReflectionIT.Mvc.Paging;
 
 namespace FoodService.Controllers
@@ -16,7 +17,7 @@ namespace FoodService.Controllers
     {
         private readonly IRestaurantService restaurantService;
 
-        public HomeController(IRestaurantService restaurantService)
+        public HomeController(IRestaurantService restaurantService, IStringLocalizer<HomeController>  localizer)
         {
             this.restaurantService = restaurantService;
         }

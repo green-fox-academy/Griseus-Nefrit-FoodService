@@ -23,14 +23,6 @@ namespace FoodService.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Customer, Manager, Admin")]
-        [HttpGet]
-        public IActionResult About()
-        {
-            ViewData["Message"] = localizer["Description"];
-            return View();
-        }
-
         [HttpPost]
         public IActionResult SetLanguage(string culture, string returnUrl)
         {
