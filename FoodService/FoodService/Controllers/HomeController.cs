@@ -17,7 +17,7 @@ namespace FoodService.Controllers
     {
         private readonly IRestaurantService restaurantService;
 
-        public HomeController(IRestaurantService restaurantService, IStringLocalizer<HomeController>  localizer)
+        public HomeController(IRestaurantService restaurantService)
         {
             this.restaurantService = restaurantService;
         }
