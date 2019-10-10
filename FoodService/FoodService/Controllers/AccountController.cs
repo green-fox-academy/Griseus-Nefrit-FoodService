@@ -43,7 +43,7 @@ namespace FoodService.Controllers
                 {
                     return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
-                loginRequest = await userService.CreateLoginRequest(null);
+                loginRequest = await userService.CreateLoginRequest(String.Empty);
                 ModelState.AddModelError(string.Empty, "Invalid Email or Password");
             }
             return View(loginRequest);

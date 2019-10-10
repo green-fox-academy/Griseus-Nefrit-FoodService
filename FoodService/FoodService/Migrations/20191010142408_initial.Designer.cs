@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191008142057_initial")]
+    [Migration("20191010142408_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,13 +24,17 @@ namespace FoodService.Migrations
                     b.Property<long>("AddressId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("City");
+                    b.Property<string>("City")
+                        .IsRequired();
 
-                    b.Property<string>("Country");
+                    b.Property<string>("Country")
+                        .IsRequired();
 
-                    b.Property<string>("Street");
+                    b.Property<string>("Street")
+                        .IsRequired();
 
-                    b.Property<string>("ZipCode");
+                    b.Property<string>("ZipCode")
+                        .IsRequired();
 
                     b.HasKey("AddressId");
 
@@ -224,22 +228,22 @@ namespace FoodService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6d4057ad-82cd-4e5b-8bf7-5cc259f23015",
-                            ConcurrencyStamp = "528f229f-5476-4049-9acd-43210732341e",
+                            Id = "f3481966-3095-4596-9714-be069672ccb0",
+                            ConcurrencyStamp = "30c19c66-a54c-42ef-9ad9-47180e6670c0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "6b37a532-d5b1-47f0-a287-5efc43f3da81",
-                            ConcurrencyStamp = "30d7252d-c7af-49db-ac72-a2197e2daa33",
+                            Id = "43e36200-4c7f-45cf-b987-a5541e35b48b",
+                            ConcurrencyStamp = "3c9a1a7f-829d-468e-a3c8-f44657351510",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "1dc694fd-d94c-4559-94a2-4fc5b0bd6d96",
-                            ConcurrencyStamp = "27ad2ff2-5fe1-42c9-bc4b-f33c4ce7b04a",
+                            Id = "712c8eab-1741-4edf-8648-454974934603",
+                            ConcurrencyStamp = "1c0caa3e-a3d0-4b4e-8a05-de26194a4400",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
