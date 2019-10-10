@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancel" xml:space="preserve">
-    <value>Mégse</value>
+  <data name="Confirm password" xml:space="preserve">
+    <value>Jelszó megerősítése</value>
   </data>
-  <data name="Password" xml:space="preserve">
-    <value>Jelszó</value>
+  <data name="Email Address" xml:space="preserve">
+    <value>E-mail cím</value>
   </data>
-  <data name="Register" xml:space="preserve">
-    <value>Regisztráció</value>
+  <data name="Password and confirmation password do not match." xml:space="preserve">
+    <value>A jelszópár nem egyezik meg.</value>
   </data>
-  <data name="Sign up" xml:space="preserve">
-    <value>Regisztráció</value>
+  <data name="Sign up as Restaurant Manager" xml:space="preserve">
+    <value>Regisztráció étterem tulajdonosként.</value>
   </data>
 </root>
