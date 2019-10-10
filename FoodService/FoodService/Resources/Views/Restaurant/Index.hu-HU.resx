@@ -135,6 +135,9 @@
   <data name="FOODTYPE" xml:space="preserve">
     <value>ÉTEL FAJTÁJA</value>
   </data>
+  <data name="List of available meals" xml:space="preserve">
+    <value>Rendelhető ételek</value>
+  </data>
   <data name="NAME" xml:space="preserve">
     <value>NÉV</value>
   </data>
