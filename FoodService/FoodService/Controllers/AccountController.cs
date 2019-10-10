@@ -29,12 +29,7 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> Login(string returnUrl)
         {
-            LoginRequest loginRequest = new LoginRequest
-            {
-                ReturnUrl = returnUrl,
-                ExternalLogins = await userService.GetExternalAuthenticationSchemesAsync()
-            };
-
+            LoginRequest loginRequest = await userService.CreateLoginRequest(returnUrl);
             return View(loginRequest);
         }
 
@@ -64,44 +59,16 @@ namespace FoodService.Controllers
 
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
-
-            LoginRequest loginRequest = new LoginRequest
+            try
             {
-                ReturnUrl = returnUrl,
-                ExternalLogins = await userService.GetExternalAuthenticationSchemesAsync()
-            };
-
-            if (remoteError != null)
-            {
-                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
-                return View("Login", loginRequest);
+                returnUrl = returnUrl ?? Url.Content("~/");
+                string succeededReturnUrl = await userService.ExternalLoginCallbackAsync(returnUrl, remoteError);
+                return LocalRedirect(succeededReturnUrl);
             }
-
-            var userLoginInfo = await userService.GetExternalLoginInfoAsync();
-            if (userLoginInfo == null)
+            catch (InvalidOperationException ex)
             {
-                ModelState.AddModelError(string.Empty, "Error loading external login information.");
-                return View("Login", loginRequest);
-            }
-
-            var signInResult = await userService.ExternalLoginSignInAsync(userLoginInfo.LoginProvider, userLoginInfo.ProviderKey);
-
-            if (signInResult.Succeeded)
-            {
-                return LocalRedirect(returnUrl);
-            }
-            else
-            {
-                var email = userLoginInfo.Principal.FindFirst(ClaimTypes.Email).Value;
-
-                if (email != null)
-                {
-                    await userService.RegisterExternalUserAsync(email, userLoginInfo);
-                    return LocalRedirect(returnUrl);
-                }
-
-                ModelState.AddModelError(string.Empty, $"Email claim not received from: {userLoginInfo.LoginProvider}");
+                LoginRequest loginRequest = await userService.CreateLoginRequest(returnUrl);
+                ModelState.AddModelError(string.Empty, ex.Message);
                 return View("Login", loginRequest);
             }
         }

@@ -101,5 +101,56 @@ namespace FoodService.Services.User
             await userMgr.AddLoginAsync(user, userLoginInfo);
             return await ExternalLoginSignInAsync(userLoginInfo.LoginProvider, userLoginInfo.ProviderKey);
         }
+
+        public async Task<string> ExternalLoginCallbackAsync(string returnUrl, string remoteError)
+        {
+            LoginRequest loginRequest = new LoginRequest
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins = await GetExternalAuthenticationSchemesAsync()
+            };
+
+            if (remoteError != null)
+            {
+                throw new InvalidOperationException($"Error from external provider: { remoteError }");
+            }
+
+            var userLoginInfo = await GetExternalLoginInfoAsync();
+            if (userLoginInfo == null)
+            {
+                throw new InvalidOperationException("Error loading external login information.");
+            }
+
+            var signInResult = await ExternalLoginSignInAsync(userLoginInfo.LoginProvider, userLoginInfo.ProviderKey);
+
+            if (signInResult.Succeeded)
+            {
+                return returnUrl;
+            }
+            else
+            {
+                var email = userLoginInfo.Principal.FindFirst(ClaimTypes.Email).Value;
+
+                if (email != null)
+                {
+                    await RegisterExternalUserAsync(email, userLoginInfo);
+                    return returnUrl;
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Email claim not received from: {userLoginInfo.LoginProvider}");
+                }
+            }
+        }
+
+        public async Task<LoginRequest> CreateLoginRequest(string returnUrl)
+        {
+            LoginRequest loginRequest = new LoginRequest
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins = await GetExternalAuthenticationSchemesAsync()
+            };
+            return loginRequest;
+        }
     }
 }
