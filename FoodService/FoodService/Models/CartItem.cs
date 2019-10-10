@@ -11,6 +11,5 @@ namespace FoodService.Models
         public int Quantity { get; set; }
         public Meal Meal { get; set; }
         public Order Order { get; set; }
-
     }
 }

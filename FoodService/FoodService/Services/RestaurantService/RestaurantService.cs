@@ -163,6 +163,7 @@ namespace FoodService.Services.RestaurantService
             }
             return PagingList.Create(restaurantQuery, 10, page);
         }
+
         public async Task DeleteRestaurantAsync(long id)
         {
             var restaurant = await FindByIdAsync(id);
