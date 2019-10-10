@@ -120,6 +120,15 @@
   <data name="Cancel" xml:space="preserve">
     <value>Mégse</value>
   </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Pénznem</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Leírás</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Név</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Ár</value>
   </data>

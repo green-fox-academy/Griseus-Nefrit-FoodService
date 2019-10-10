@@ -123,8 +123,17 @@
   <data name="Delete" xml:space="preserve">
     <value>Törlés</value>
   </data>
+  <data name="DELETE MEAL" xml:space="preserve">
+    <value>TÖRLÉS</value>
+  </data>
+  <data name="DESCRIPTION" xml:space="preserve">
+    <value>LEÍRÁS</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Módosítás</value>
+  </data>
+  <data name="EDIT MEAL" xml:space="preserve">
+    <value>MÓDOSÍTÁS</value>
   </data>
   <data name="Edit Restaurant" xml:space="preserve">
     <value>Étterem módosítása</value>
@@ -134,5 +143,14 @@
   </data>
   <data name="List of your current meals" xml:space="preserve">
     <value>Rendelhető ételek</value>
+  </data>
+  <data name="NAME" xml:space="preserve">
+    <value>NÉV</value>
+  </data>
+  <data name="PHOTO" xml:space="preserve">
+    <value>FÉNYKÉP</value>
+  </data>
+  <data name="PRICE" xml:space="preserve">
+    <value>ÁR</value>
   </data>
 </root>
