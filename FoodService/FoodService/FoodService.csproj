@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Models\RequestModels\Account\RegisterRequest.hu-HU.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Account\Login.hu-HU.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
@@ -55,10 +58,6 @@
     <EmbeddedResource Update="Resources\Views\UserSettings\UserSettings.hu-HU.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Localization\" />
   </ItemGroup>
   
 </Project>

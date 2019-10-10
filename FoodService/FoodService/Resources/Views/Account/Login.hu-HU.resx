@@ -120,6 +120,9 @@
   <data name="Login" xml:space="preserve">
     <value>Bejelentkezés</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Jelszó</value>
+  </data>
   <data name="Sign in" xml:space="preserve">
     <value>Bejelentkezés</value>
   </data>
