@@ -1,17 +1,19 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @model EditRestaurantViewModel
 
-<h3>Edit the restaurant</h3>
+    <h3>@Localizer["Edit the restaurant"]</h3>
 @{
-    ViewData["Title"] = "Edit Restaurant";
+    ViewData["Title"] = @Localizer["Edit Restaurant"];
     ViewData["Action"] = "Edit";
     await Html.RenderPartialAsync("_RestaurantPartial");
 }
 
 <br />
-<h3>List of your current meals</h3>
+<h3>@Localizer["List of your current meals"]</h3>
 <br />
 <form asp-controller="Meal" asp-action="Add" method="get" asp-route-Id="@Model.RestaurantId">
-    <button type="submit" class="btn btn-success">Add a new meal</button>
+    <button type="submit" class="btn btn-success">@Localizer["Add a new meal"]</button>
 </form>
 <br />
 <table class="table">
@@ -35,12 +37,12 @@
             <td>@meal.Price.Amount @meal.Price.Currency</td>
             <td>
                 <form asp-controller="Meal" asp-action="Edit" method="get" asp-route-Id="@meal.MealId">
-                    <button type="submit" class="btn btn-success">Edit</button>
+                    <button type="submit" class="btn btn-success">@Localizer["Edit"]</button>
                 </form>
             </td>
             <td>
                 <form asp-controller="Meal" asp-action="Delete" method="post" asp-route-Id="@meal.MealId" onclick="return GetConfirmation();">
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger">@Localizer["Delete"]</button>
                 </form>
             </td>
             <td><img src=@meal.ImageUri width="100" height="100"></td>
