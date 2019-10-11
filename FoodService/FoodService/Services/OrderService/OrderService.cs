@@ -128,7 +128,7 @@ namespace FoodService.Services.OrderService
 
         public async Task<CartItem> GetCartItemByIdAsync(long cartItemId)
         {
-            return await applicationDbContext.CartItems.Include(ci => ci.Order).ThenInclude(o => o.User)
+            return await applicationDbContext.CartItems.Include(ci => ci.Order).ThenInclude(o => o.User).Include(ci => ci.Order).ThenInclude(o => o.Restaurant)
                 .FirstOrDefaultAsync(ci => (ci.CartItemId == cartItemId));
         }
 

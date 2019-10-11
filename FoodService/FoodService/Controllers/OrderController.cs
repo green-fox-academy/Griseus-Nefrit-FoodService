@@ -68,7 +68,8 @@ namespace FoodService.Controllers
 
             var cartItem = await orderService.GetCartItemByIdAsync(id);
             await orderService.DeleteCartItemAsync(id);
-            return RedirectToAction(nameof(OrderController.Submit), "Order");
+
+            return RedirectToAction(nameof(OrderController.Submit), "Order", new { id = cartItem.Order.Restaurant.RestaurantId});
         }
 
         [HttpGet]
