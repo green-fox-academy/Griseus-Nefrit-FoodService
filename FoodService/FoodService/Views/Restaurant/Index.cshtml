@@ -6,7 +6,7 @@
 @if (Model.NumberOfCartItems != 0)
 {
     <h3 class="redinfo">Meal item(s) in your Basket: @Model.NumberOfCartItems</h3>
-    <a class="redinfo" asp-area="" asp-controller="Order" asp-action="Submit" asp-route-id="@Model.Restaurant.RestaurantId"><i class="fas fa-shopping-cart"></i> Basket</a>
+    <h3 class="redinfo"><a asp-area="" asp-controller="Order" asp-action="Submit" asp-route-id="@Model.Restaurant.RestaurantId"><i class="fas fa-shopping-cart"></i>  Basket</a></h3>
 }
 else
 {
