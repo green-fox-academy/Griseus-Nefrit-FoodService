@@ -146,11 +146,15 @@ namespace FoodService.Migrations
 
                     b.Property<int>("OrderStatus");
 
+                    b.Property<long?>("RestaurantId");
+
                     b.Property<string>("UserId");
 
                     b.HasKey("OrderId");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("RestaurantId");
 
                     b.HasIndex("UserId");
 
@@ -226,22 +230,22 @@ namespace FoodService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f3481966-3095-4596-9714-be069672ccb0",
-                            ConcurrencyStamp = "30c19c66-a54c-42ef-9ad9-47180e6670c0",
+                            Id = "f22f6348-d45a-4dd2-b888-b85f00be4718",
+                            ConcurrencyStamp = "ee4b7ade-86d2-42d0-8d45-76a507eda56c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "43e36200-4c7f-45cf-b987-a5541e35b48b",
-                            ConcurrencyStamp = "3c9a1a7f-829d-468e-a3c8-f44657351510",
+                            Id = "505ead04-edf8-4896-94cf-5c5ab48040bb",
+                            ConcurrencyStamp = "25f8cdaa-5874-410e-b3dc-2fe73e4388a7",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "712c8eab-1741-4edf-8648-454974934603",
-                            ConcurrencyStamp = "1c0caa3e-a3d0-4b4e-8a05-de26194a4400",
+                            Id = "377c7f33-32ca-4d47-9561-c42752e8790f",
+                            ConcurrencyStamp = "bf06d2b9-c77d-435e-9f17-084565eeb3de",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -358,6 +362,10 @@ namespace FoodService.Migrations
                     b.HasOne("FoodService.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId");
+
+                    b.HasOne("FoodService.Models.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId");
 
                     b.HasOne("FoodService.Models.Identity.AppUser", "User")
                         .WithMany("ShoppingCarts")

@@ -85,7 +85,7 @@ namespace FoodService.Controllers
             int numberOfCartItems = 0;
             if (User.Identity.Name != null)
             {
-                numberOfCartItems = await orderService.GetNumberOfItemsInBasket(User.Identity.Name);
+                numberOfCartItems = await orderService.GetNumberOfItemsInBasket(User.Identity.Name, id);
             }
 
             SingleRestaurantViewModel singleRestaurantViewModel = new SingleRestaurantViewModel()

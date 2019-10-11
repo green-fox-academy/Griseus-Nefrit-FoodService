@@ -40,9 +40,9 @@ namespace FoodService.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Submit()
+        public async Task<IActionResult> Submit(long id)
         {
-            var shoppingCart = await orderService.CreateShoppingCartRequestByUserAsync(User.Identity.Name, null);
+            var shoppingCart = await orderService.CreateShoppingCartRequestByUserAndRestaurantAsync(User.Identity.Name, null, id);
             return View(shoppingCart);
         }
 
@@ -54,7 +54,7 @@ namespace FoodService.Controllers
                 await orderService.SaveOrderAsync(id, address);
                 return RedirectToAction(nameof(OrderController.ThankYou), "Order");
             }
-            var shoppingCartRequest = await orderService.CreateShoppingCartRequestByUserAsync(User.Identity.Name, address);
+            var shoppingCartRequest = await orderService.CreateShoppingCartRequestByIdAsync(address, id);
             return View(shoppingCartRequest);
         }
 

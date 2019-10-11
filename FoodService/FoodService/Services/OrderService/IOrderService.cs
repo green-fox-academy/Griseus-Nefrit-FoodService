@@ -12,12 +12,13 @@ namespace FoodService.Services.OrderService
     {
         Task<Order> GetOrderById(long orderId);
         Task<Order> AddMealToOrderAsync(long mealId, string userName);
-        Task<Order> GetShoppingCartByUserAsync(string userName);
-        Task<ShoppingCartRequest> CreateShoppingCartRequestByUserAsync(string userName, Address address);
+        Task<Order> GetShoppingCartByUserAndRestaurantAsync(string userName, long restaurantId);
+        Task<ShoppingCartRequest> CreateShoppingCartRequestByUserAndRestaurantAsync(string userName, Address address, long restaurantId);
+        Task<ShoppingCartRequest> CreateShoppingCartRequestByIdAsync(Address address, long orderId);
         Task<CartItem> GetCartItemByIdAsync(long cartItemId);
         Task DeleteCartItemAsync(long cartItemId);
         Task SaveOrderAsync(long orderId, Address address);
-        Task<int> GetNumberOfItemsInBasket(string userName);
+        Task<int> GetNumberOfItemsInBasket(string userName, long restaurantId);
         Task<bool> ValidateAccessAsync(long cartItemId, string userName);
     }
 }

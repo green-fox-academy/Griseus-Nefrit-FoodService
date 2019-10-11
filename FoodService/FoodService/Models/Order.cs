@@ -15,5 +15,6 @@ namespace FoodService.Models
         public AppUser User { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public Address Address { get; set; }
+        public Restaurant Restaurant { get; set; }
     }
 }
