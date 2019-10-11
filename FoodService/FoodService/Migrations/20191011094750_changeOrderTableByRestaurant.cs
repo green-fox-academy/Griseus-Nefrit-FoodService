@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoodService.Migrations
 {
-    public partial class initial : Migration
+    public partial class changeOrderTableByRestaurant : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -184,35 +184,6 @@ namespace FoodService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    OrderId = table.Column<long>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    DateCreated = table.Column<DateTime>(nullable: false),
-                    LastUpdate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    OrderStatus = table.Column<int>(nullable: false),
-                    AddressId = table.Column<long>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
-                    table.ForeignKey(
-                        name: "FK_Orders_Addresses_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Addresses",
-                        principalColumn: "AddressId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Restaurants",
                 columns: table => new
                 {
@@ -266,6 +237,42 @@ namespace FoodService.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderId = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    OrderStatus = table.Column<int>(nullable: false),
+                    AddressId = table.Column<long>(nullable: true),
+                    RestaurantId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.ForeignKey(
+                        name: "FK_Orders_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "AddressId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
+                        principalColumn: "RestaurantId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CartItems",
                 columns: table => new
                 {
@@ -295,17 +302,17 @@ namespace FoodService.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f3481966-3095-4596-9714-be069672ccb0", "30c19c66-a54c-42ef-9ad9-47180e6670c0", "Admin", "ADMIN" });
+                values: new object[] { "f22f6348-d45a-4dd2-b888-b85f00be4718", "ee4b7ade-86d2-42d0-8d45-76a507eda56c", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "43e36200-4c7f-45cf-b987-a5541e35b48b", "3c9a1a7f-829d-468e-a3c8-f44657351510", "Manager", "MANAGER" });
+                values: new object[] { "505ead04-edf8-4896-94cf-5c5ab48040bb", "25f8cdaa-5874-410e-b3dc-2fe73e4388a7", "Manager", "MANAGER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "712c8eab-1741-4edf-8648-454974934603", "1c0caa3e-a3d0-4b4e-8a05-de26194a4400", "Customer", "CUSTOMER" });
+                values: new object[] { "377c7f33-32ca-4d47-9561-c42752e8790f", "bf06d2b9-c77d-435e-9f17-084565eeb3de", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -370,6 +377,11 @@ namespace FoodService.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_RestaurantId",
+                table: "Orders",
+                column: "RestaurantId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",
                 table: "Orders",
                 column: "UserId");
@@ -413,10 +425,10 @@ namespace FoodService.Migrations
                 name: "Prices");
 
             migrationBuilder.DropTable(
-                name: "Restaurants");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
-                name: "Addresses");
+                name: "Restaurants");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

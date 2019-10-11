@@ -6,18 +6,20 @@
 @if (Model.NumberOfCartItems != 0)
 {
     <h3 class="redinfo">Meal item(s) in your Basket: @Model.NumberOfCartItems</h3>
+    <h3 class="redinfo"><a asp-area="" asp-controller="Order" asp-action="Submit" asp-route-id="@Model.Restaurant.RestaurantId"><i class="fas fa-shopping-cart"></i>  Basket</a></h3>
 }
 else
 {
     <h3 class="redinfo"></h3>
 }
 
-<h2>Restaurant details</h2><br />
+<h2>Restaurant details</h2>
+<br />
 
 @if ((User.IsInRole("Manager") && User.Identity.Name == Model.Restaurant.Manager.UserName) || User.IsInRole("Admin"))
 {
     <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Restaurant.RestaurantId" class="btn btn-success" role="button">Edit restaurant</a>
-    
+
     <form asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Restaurant.RestaurantId" method="post" onclick="return GetConfirmation();">
         <button type="submit" class="btn btn-danger">Delete restaurant</button>
     </form>
@@ -78,11 +80,11 @@ else
 
 <form asp-controller="Home" asp-action="Index" method="get">
     <button type="button" class="btn btn-info" onclick="history.back()">Back to Available restaurants</button>
-</form><br />
+</form>
+<br />
 
 <script type="text/javascript">
-    function GetConfirmation()
-    {
+    function GetConfirmation() {
         return confirm("Are you sure you want to delete the restaurant?");
     }
 </script>
