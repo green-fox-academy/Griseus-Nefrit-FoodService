@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FoodService.Models;
 using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.OrderRequestModels;
+using FoodService.Models.ViewModels.OrderViewModels;
 using FoodService.Services.MealService;
 using FoodService.Services.OrderService;
 using FoodService.Services.RestaurantService;
@@ -19,16 +20,13 @@ namespace FoodService.Controllers
     {
         private readonly IOrderService orderService;
         private readonly IMealService mealService;
+        private readonly IRestaurantService restaurantService;
 
-        public OrderController(IOrderService orderService, IMealService mealService)
+        public OrderController(IOrderService orderService, IMealService mealService, IRestaurantService restaurantService)
         {
             this.orderService = orderService;
             this.mealService = mealService;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
+            this.restaurantService = restaurantService;
         }
 
         [HttpPost]
@@ -76,6 +74,19 @@ namespace FoodService.Controllers
         public IActionResult ThankYou()
         {
             return View();
+        }
+        
+        [Authorize(Roles = "Manager, Admin")]
+        [HttpGet]
+        public async Task<IActionResult> CurrentOrder()
+        {
+            var user = User;
+            var orderList = await orderService.GetOrdersByManagerAsync(user);
+            return View(new CurrentOrderViewModel
+            {
+                RestaurantsOfManager = await restaurantService.GetRestaurantsByManagerAsync(user),
+                Orders = orderList
+            });
         }
     }
 }

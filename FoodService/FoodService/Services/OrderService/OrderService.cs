@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace FoodService.Services.OrderService
@@ -149,6 +150,7 @@ namespace FoodService.Services.OrderService
             {
                 order.Address = address;
                 order.OrderStatus = OrderStatus.Ordered;
+                order.DateSubmitted = DateTime.UtcNow;
             }
             await applicationDbContext.SaveChangesAsync();
         }
@@ -169,6 +171,12 @@ namespace FoodService.Services.OrderService
             {
                 return 0;
             }
+        }
+        
+        public async Task<List<Order>> GetOrdersByManagerAsync(ClaimsPrincipal user)
+        {
+            var currentOrders = await applicationDbContext.Orders.Where(or => or.OrderStatus == OrderStatus.Ordered).Where(or => or.Restaurant.Manager.Email == user.Identity.Name).Include(o => o.CartItems).ThenInclude(o => o.Meal).ThenInclude(o => o.Restaurant).ToListAsync();
+            return currentOrders;
         }
     }
 }

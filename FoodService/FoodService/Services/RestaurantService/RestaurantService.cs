@@ -175,5 +175,11 @@ namespace FoodService.Services.RestaurantService
             applicationDbContext.Restaurants.Remove(restaurant);
             await applicationDbContext.SaveChangesAsync();
         }
+        
+        public async Task<List<Restaurant>> GetRestaurantsByManagerAsync(ClaimsPrincipal user)
+        {
+            var restaurantsOfManager = await applicationDbContext.Restaurants.Where(r => r.Manager.UserName == user.Identity.Name).ToListAsync();
+            return restaurantsOfManager;
+        }
     }
 }

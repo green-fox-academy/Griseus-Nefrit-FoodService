@@ -24,5 +24,6 @@ namespace FoodService.Services.RestaurantService
         Task<List<String>> GetUniqueCitiesAsync();
         Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync(int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest);
         Task DeleteRestaurantAsync(long id);
+        Task<List<Restaurant>> GetRestaurantsByManagerAsync(ClaimsPrincipal user);
     }
 }

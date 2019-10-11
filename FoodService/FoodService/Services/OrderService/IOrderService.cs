@@ -4,6 +4,7 @@ using FoodService.Models.RequestModels.OrderRequestModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace FoodService.Services.OrderService
@@ -20,5 +21,6 @@ namespace FoodService.Services.OrderService
         Task SaveOrderAsync(long orderId, Address address);
         Task<int> GetNumberOfItemsInBasket(string userName, long restaurantId);
         Task<bool> ValidateAccessAsync(long cartItemId, string userName);
+        Task<List<Order>> GetOrdersByManagerAsync(ClaimsPrincipal user);
     }
 }
