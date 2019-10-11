@@ -72,8 +72,8 @@ namespace FoodService.Services.OrderService
                 {
                     shoppingCartDraft = new Order()
                     {
-                        DateCreated = DateTime.Now,
-                        LastUpdate = DateTime.Now,
+                        DateCreated = DateTime.UtcNow,
+                        LastUpdate = DateTime.UtcNow,
                         User = user,
                         Restaurant = restaurant,
                         OrderStatus = OrderStatus.Draft
