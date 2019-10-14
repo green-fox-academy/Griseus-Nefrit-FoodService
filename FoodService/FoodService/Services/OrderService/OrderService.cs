@@ -165,7 +165,7 @@ namespace FoodService.Services.OrderService
             {
                 return shoppingCart.CartItems.Count;
             }
-            catch
+            catch (NullReferenceException e)
             {
                 return 0;
             }
