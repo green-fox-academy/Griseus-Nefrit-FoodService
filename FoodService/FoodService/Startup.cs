@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Identity;
 using ReflectionIT.Mvc.Paging;
 using FoodService.Services.BlobService;
 using FoodService.Services.Profiles;
-
+using FoodService.Services.OrderService;
 
 namespace FoodService
 {
@@ -64,9 +64,16 @@ namespace FoodService
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IMealService, MealService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
+            services.AddTransient<IOrderService, OrderService>();
             services.SetUpAutoMapper();
             services.AddMvc();
             services.AddPaging();
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "574393877021-2qbplgcjcp3a1oqhfciildjfukkd4g4f.apps.googleusercontent.com";
+                    options.ClientSecret = "yUxiH6_LNBFherfhtafkpYat";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

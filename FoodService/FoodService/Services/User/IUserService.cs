@@ -1,5 +1,6 @@
 ﻿using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.Account;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,17 @@ namespace FoodService.Services.User
 {
     public interface IUserService
     {
+        Task<IdentityResult> CreateAsync(AppUser user);
+        Task<LoginRequest> CreateLoginRequest(string returnUrl);
         Task<SignInResult> LoginAsync(LoginRequest loginRequest);
         Task Logout();
         Task<IdentityResult> RegisterAsync(RegisterRequest regRequest);
-        Task<AppUser> FindUserByNameOrEmail(string emailAddr);
+        Task<AppUser> FindUserByNameOrEmailAsync(string emailAddr);
+        Task<IList<AuthenticationScheme>> GetExternalAuthenticationSchemesAsync();
+        AuthenticationProperties ConfigureExternalAuthenticaticationProperties(string provider, string redirectUrl);
+        Task<ExternalLoginInfo> GetExternalLoginInfoAsync();
+        Task<SignInResult> ExternalLoginSignInAsync(string loginProvider, string providerKey);
+        Task<string> ExternalLoginCallbackAsync(string returnUrl, string remoteError);
+        Task<SignInResult> RegisterExternalUserAsync(string emailAddr, ExternalLoginInfo userInfo);
     }
 }

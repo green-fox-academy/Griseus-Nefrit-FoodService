@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FoodService.Models;
+using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.RestaurantRequestModels;
 using FoodService.Models.ViewModels.RestaurantViewModels;
 using ReflectionIT.Mvc.Paging;

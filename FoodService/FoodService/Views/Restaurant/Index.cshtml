@@ -1,16 +1,26 @@
 @{
-  ViewData["Title"] = "Restaurant details";
+    ViewData["Title"] = "Restaurant details";
 }
-@using Microsoft.AspNetCore.Mvc.ModelBinding
-@model Restaurant
+@model SingleRestaurantViewModel
 
-<h2>Restaurant details</h2><br />
-
-@if ((User.IsInRole("Manager") && User.Identity.Name == Model.Manager.UserName) || User.IsInRole("Admin"))
+@if (Model.NumberOfCartItems != 0)
 {
-    <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.RestaurantId" class="btn btn-warning" role="button">Edit restaurant</a>
-    
-    <form asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.RestaurantId" method="post">
+    <h3 class="redinfo">Meal item(s) in your Basket: @Model.NumberOfCartItems</h3>
+    <h3 class="redinfo"><a asp-area="" asp-controller="Order" asp-action="Submit" asp-route-id="@Model.Restaurant.RestaurantId"><i class="fas fa-shopping-cart"></i>  Basket</a></h3>
+}
+else
+{
+    <h3 class="redinfo"></h3>
+}
+
+<h2>Restaurant details</h2>
+<br />
+
+@if ((User.IsInRole("Manager") && User.Identity.Name == Model.Restaurant.Manager.UserName) || User.IsInRole("Admin"))
+{
+    <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Restaurant.RestaurantId" class="btn btn-success" role="button">Edit restaurant</a>
+
+    <form asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Restaurant.RestaurantId" method="post" onclick="return GetConfirmation();">
         <button type="submit" class="btn btn-danger">Delete restaurant</button>
     </form>
 }
@@ -19,24 +29,24 @@
 <table class="table">
     <tr>
         <th>NAME</th>
-        <td>@Model.Name</td>
+        <td>@Model.Restaurant.Name</td>
     </tr>
     <tr>
         <th>DESCRIPTION</th>
-        <td>@Model.Description</td>
+        <td>@Model.Restaurant.Description</td>
     </tr>
     <tr>
         <th>CITY</th>
-        <td>@Model.City</td>
+        <td>@Model.Restaurant.City</td>
     </tr>
     <tr>
         <th>FOODTYPE</th>
-        <td>@Model.FoodType</td>
+        <td>@Model.Restaurant.FoodType</td>
     </tr>
     <tr>
         <th>PRICE CATEGORY</th>
         <td>
-            <input value="@((byte)Model.PriceCategory)" class="rating rating-loading green" data-theme="krajee-fa" data-display-only="true" data-size="1" data-stars="4" data-max="4" data-step="1" data-show-clear="false" data-show-caption="false" data-show-caption-as-title="false">
+            <input value="@((byte)Model.Restaurant.PriceCategory)" class="rating rating-loading green" data-theme="krajee-fa" data-display-only="true" data-size="1" data-stars="4" data-max="4" data-step="1" data-show-clear="false" data-show-caption="false" data-show-caption-as-title="false">
         </td>
     </tr>
 </table>
@@ -44,24 +54,37 @@
 <h2>List of available meals</h2>
 <table class="table">
     <thead class="thead-dark">
-    <tr>
-        <th>NAME</th>
-        <th>DESCRIPTION</th>
-        <th>PRICE</th>
-        <th>PHOTO</th>
-    </tr>
+        <tr>
+            <th>NAME</th>
+            <th>DESCRIPTION</th>
+            <th>PRICE</th>
+            <th>PHOTO</th>
+            <th></th>
+        </tr>
     </thead>
-    @foreach (var meal in Model.Meals)
+    @foreach (var meal in Model.Restaurant.Meals)
     {
         <tr>
             <td>@meal.Name</td>
             <td>@meal.Description</td>
             <td>@meal.Price.Amount @meal.Price.Currency</td>
             <td><img src=@meal.ImageUri width="100" height="100"></td>
+            <td>
+                <form asp-controller="Order" asp-action="Add" method="post" asp-route-Id="@meal.MealId">
+                    <button type="submit" class="btn btn-success">Add To Cart</button>
+                </form>
+            </td>
         </tr>
     }
 </table>
 
 <form asp-controller="Home" asp-action="Index" method="get">
     <button type="button" class="btn btn-info" onclick="history.back()">Back to Available restaurants</button>
-</form><br />
+</form>
+<br />
+
+<script type="text/javascript">
+    function GetConfirmation() {
+        return confirm("Are you sure you want to delete the restaurant?");
+    }
+</script>

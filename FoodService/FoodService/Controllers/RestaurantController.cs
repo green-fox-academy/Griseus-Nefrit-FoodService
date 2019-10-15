@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using FoodService.Services.BlobService;
 using FoodService.Models.ViewModels;
 using FoodService.Models.ViewModels.RestaurantViewModels;
-
+using FoodService.Services.OrderService;
 
 namespace FoodService.Controllers
 {
@@ -14,10 +14,12 @@ namespace FoodService.Controllers
     public class RestaurantController : Controller
     {
         private readonly IRestaurantService restaurantService;
+        private readonly IOrderService orderService;
 
-        public RestaurantController(IRestaurantService restaurantService)
+        public RestaurantController(IRestaurantService restaurantService, IOrderService orderService)
         {
             this.restaurantService = restaurantService;
+            this.orderService = orderService;
         }
 
         [Authorize(Roles = "Manager, Admin")]
@@ -78,9 +80,20 @@ namespace FoodService.Controllers
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Index(long id)
-        {  
+        {
             var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
-            return View(restaurant);
+            int numberOfCartItems = 0;
+            if (User.Identity.Name != null)
+            {
+                numberOfCartItems = await orderService.GetNumberOfItemsInBasket(User.Identity.Name, id);
+            }
+
+            SingleRestaurantViewModel singleRestaurantViewModel = new SingleRestaurantViewModel()
+            {
+                Restaurant = restaurant,
+                NumberOfCartItems = numberOfCartItems
+            };
+            return View(singleRestaurantViewModel);
         }
 
         [Authorize(Roles = "Manager, Admin")]

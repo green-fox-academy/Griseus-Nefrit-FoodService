@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace FoodService.Controllers
@@ -26,9 +27,10 @@ namespace FoodService.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Login(string returnUrl)
         {
-            return View();
+            LoginRequest loginRequest = await userService.CreateLoginRequest(returnUrl);
+            return View(loginRequest);
         }
 
         [HttpPost]
@@ -36,15 +38,39 @@ namespace FoodService.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await userService.LoginAsync(loginRequest);
-                if (result.Succeeded)
+                var signInResult = await userService.LoginAsync(loginRequest);
+                if (signInResult.Succeeded)
                 {
                     return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
-
+                loginRequest = await userService.CreateLoginRequest(String.Empty);
                 ModelState.AddModelError(string.Empty, "Invalid Email or Password");
             }
             return View(loginRequest);
+        }
+
+        [HttpPost]
+        public IActionResult ExternalLogin(string provider, string returnUrl)
+        {
+            var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl });
+            var properties = userService.ConfigureExternalAuthenticaticationProperties(provider, redirectUrl);
+            return new ChallengeResult(provider, properties);
+        }
+
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
+        {
+            try
+            {
+                returnUrl = returnUrl ?? Url.Content("~/");
+                string succeededReturnUrl = await userService.ExternalLoginCallbackAsync(returnUrl, remoteError);
+                return LocalRedirect(succeededReturnUrl);
+            }
+            catch (InvalidOperationException ex)
+            {
+                LoginRequest loginRequest = await userService.CreateLoginRequest(returnUrl);
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View("Login", loginRequest);
+            }
         }
 
         [HttpGet]

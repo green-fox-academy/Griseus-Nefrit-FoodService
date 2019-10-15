@@ -39,7 +39,7 @@
                 </form>
             </td>
             <td>
-                <form asp-controller="Meal" asp-action="Delete" method="post" asp-route-Id="@meal.MealId">
+                <form asp-controller="Meal" asp-action="Delete" method="post" asp-route-Id="@meal.MealId" onclick="return GetConfirmation();">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </td>
@@ -47,3 +47,10 @@
         </tr>
     }
 </table>
+
+<script type="text/javascript">
+    function GetConfirmation()
+    {
+        return confirm("Are you sure you want to delete the restaurant?");
+    }
+</script>

@@ -18,14 +18,14 @@ namespace FoodService.Services.RestaurantService
     {
         private readonly ApplicationDbContext applicationDbContext;
         private readonly IUserService userService;
-        private readonly IMapper iMapper;
+        private readonly IMapper mapper;
         private readonly IBlobStorageService blobStorageService;
 
-        public RestaurantService(ApplicationDbContext applicationDbContext, IUserService userService, IMapper iMapper, IBlobStorageService blobStorageService)
+        public RestaurantService(ApplicationDbContext applicationDbContext, IUserService userService, IMapper mapper, IBlobStorageService blobStorageService)
         {
             this.applicationDbContext = applicationDbContext;
             this.userService = userService;
-            this.iMapper = iMapper;
+            this.mapper = mapper;
             this.blobStorageService = blobStorageService;
         }
 
@@ -40,8 +40,8 @@ namespace FoodService.Services.RestaurantService
         }
         public async Task<Restaurant> SaveRestaurantAsync(RestaurantRequest restaurantReq, string managerName)
         {
-            var manager = await userService.FindUserByNameOrEmail(managerName);
-            var restaurant = iMapper.Map<RestaurantRequest, Restaurant>(restaurantReq);
+            var manager = await userService.FindUserByNameOrEmailAsync(managerName);
+            var restaurant = mapper.Map<RestaurantRequest, Restaurant>(restaurantReq);
             restaurant.Manager = manager;
             await applicationDbContext.Restaurants.AddAsync(restaurant);
             await applicationDbContext.SaveChangesAsync();
@@ -62,7 +62,7 @@ namespace FoodService.Services.RestaurantService
         public async Task<Restaurant> EditRestaurantAsync(long id, RestaurantRequest restaurantRequest)
         {
             var editedRestaurant = await GetRestaurantByIdAsync(id);
-            editedRestaurant = iMapper.Map<RestaurantRequest, Restaurant>(restaurantRequest, editedRestaurant);
+            editedRestaurant = mapper.Map<RestaurantRequest, Restaurant>(restaurantRequest, editedRestaurant);
             await applicationDbContext.SaveChangesAsync();
             return editedRestaurant;
         }
@@ -71,7 +71,7 @@ namespace FoodService.Services.RestaurantService
         {
             return await applicationDbContext.Restaurants.Include(r => r.Meals).FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
         }
-        
+
         public async Task<bool> ValidateAccessAsync(long restaurantId, ClaimsPrincipal user)
         {
             if (user.IsInRole("Admin"))
@@ -85,25 +85,25 @@ namespace FoodService.Services.RestaurantService
                 return ownedRestaurants.Contains(currentRestaurant);
             }
         }
-        
+
         public async Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId)
         {
             var restaurant = await GetRestaurantByIdAsync(restaurantId);
-            var editRestauratnViewModel = new EditRestaurantViewModel()
+            var editRestaurantViewModel = new EditRestaurantViewModel()
             {
-                RestaurantRequest = iMapper.Map<Restaurant, RestaurantRequest>(restaurant),
+                RestaurantRequest = mapper.Map<Restaurant, RestaurantRequest>(restaurant),
                 Meals = restaurant.Meals,
                 RestaurantId = restaurant.RestaurantId
             };
-            
+
             await applicationDbContext.SaveChangesAsync();
-            return editRestauratnViewModel;
+            return editRestaurantViewModel;
         }
 
         public async Task<EditRestaurantViewModel> BuildEditRestaurantViewModelAsync(long restaurantId, RestaurantRequest restaurantRequest)
         {
             var restaurant = await GetRestaurantByIdAsync(restaurantId);
-            var editRestauratnViewModel = new EditRestaurantViewModel()
+            var editRestaurantViewModel = new EditRestaurantViewModel()
             {
                 RestaurantRequest = restaurantRequest,
                 Meals = restaurant.Meals,
@@ -111,7 +111,7 @@ namespace FoodService.Services.RestaurantService
             };
 
             await applicationDbContext.SaveChangesAsync();
-            return editRestauratnViewModel;
+            return editRestaurantViewModel;
         }
 
         public async Task<List<String>> GetUniqueCitiesAsync()
@@ -142,6 +142,7 @@ namespace FoodService.Services.RestaurantService
             var restaurants = await applicationDbContext.Restaurants.Include(r => r.Meals).ToListAsync();
             var filteredRestaurantsList = restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).OrderBy(r => r.Name).ToList();
             var restaurantQuery = new List<Restaurant>();
+
             if (String.IsNullOrEmpty(searchRestaurantRequest.MealName))
             {
                 restaurantQuery = filteredRestaurantsList;
@@ -152,7 +153,7 @@ namespace FoodService.Services.RestaurantService
                 {
                     foreach (Meal meal in restaurant.Meals)
                     {
-                        if(meal.Name.Contains(searchRestaurantRequest.MealName))
+                        if (meal.Name.ToLower().Contains(searchRestaurantRequest.MealName.ToLower()))
                         {
                             restaurantQuery.Add(restaurant);
                             break;
@@ -171,7 +172,7 @@ namespace FoodService.Services.RestaurantService
                 blobStorageService.DeleteBlobFolder(restaurant.Meals[i].MealId);
                 applicationDbContext.Meals.Remove(restaurant.Meals[i]);
             }
-            applicationDbContext.Restaurants.Remove(restaurant); 
+            applicationDbContext.Restaurants.Remove(restaurant);
             await applicationDbContext.SaveChangesAsync();
         }
     }
