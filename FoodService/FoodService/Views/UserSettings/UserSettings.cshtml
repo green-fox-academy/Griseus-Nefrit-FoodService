@@ -6,9 +6,6 @@
 
 @{
     ViewData["Title"] = Localizer["User settings"];
+    <h2>@Localizer["User settings"]</h2>
+    @await Html.PartialAsync("_SelectLanguagePartial")
 }
-<h2>@Localizer["User settings"]</h2>
-
-<div class="col-sm-6 text-right">
-    @await Html.PartialAsync("../Shared/_SelectLanguagePartial.cshtml")
-</div>
