@@ -24,7 +24,6 @@ namespace FoodService.Services.OrderService
         private readonly IMealService mealService;
         private readonly IRestaurantService restaurantService;
         private readonly IMapper mapper;
-        private Timer Timer;
 
         public OrderService(ApplicationDbContext applicationDbContext, IUserService userService, IMealService mealService, IRestaurantService restaurantService, IMapper mapper)
         {
