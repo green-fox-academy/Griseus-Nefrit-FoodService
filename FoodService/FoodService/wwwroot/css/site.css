@@ -46,12 +46,11 @@ body {
     text-align: right;
 }
 
-/* Google sign-in button - Gabor*/
+/* Google sign-in button*/
 .google-sign-in-button {
     display: contents;
 }
 
-<style type="text/css" >
 #google-sign-in-button {
     display: inline-block;
     background: white;
@@ -63,8 +62,11 @@ body {
     white-space: nowrap;
 }
 
-#google-sign-in-button:hover {
-    cursor: pointer;
-}
+    #google-sign-in-button:hover {
+        cursor: pointer;
+    }
 
-</style >
+/* Upper Menu */
+.nounderline {
+    text-decoration: none !important
+}
