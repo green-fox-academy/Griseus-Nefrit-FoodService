@@ -11,6 +11,7 @@ using FoodService.Models.ViewModels.RestaurantViewModels;
 using ReflectionIT.Mvc.Paging;
 using AutoMapper;
 using FoodService.Services.BlobService;
+using Microsoft.Extensions.Localization;
 
 namespace FoodService.Services.RestaurantService
 {
@@ -135,10 +136,6 @@ namespace FoodService.Services.RestaurantService
 
         public async Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync(int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest)
         {
-            if (String.Equals("Choose a city", searchRestaurantRequest.City))
-            {
-                searchRestaurantRequest.City = null;
-            }
             var restaurants = await applicationDbContext.Restaurants.Include(r => r.Meals).ToListAsync();
             var filteredRestaurantsList = restaurants.Where(r => r.City.Equals(searchRestaurantRequest.City) || String.IsNullOrEmpty(searchRestaurantRequest.City)).OrderBy(r => r.Name).ToList();
             var restaurantQuery = new List<Restaurant>();
