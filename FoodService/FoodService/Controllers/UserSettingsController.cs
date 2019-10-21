@@ -16,7 +16,7 @@ namespace FoodService.Controllers
             this.localizer = localizer;
         }
 
-        [Authorize(Roles = "Customer, Manager, Admin")]
+        [Authorize]
         [HttpGet]
         public IActionResult UserSettings()
         {
