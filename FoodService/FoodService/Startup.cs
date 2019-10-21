@@ -17,6 +17,11 @@ using Microsoft.AspNetCore.Identity;
 using ReflectionIT.Mvc.Paging;
 using FoodService.Services.BlobService;
 using FoodService.Services.Profiles;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 using FoodService.Services.OrderService;
 
 namespace FoodService
@@ -74,6 +79,24 @@ namespace FoodService
                     options.ClientId = "574393877021-2qbplgcjcp3a1oqhfciildjfukkd4g4f.apps.googleusercontent.com";
                     options.ClientSecret = "yUxiH6_LNBFherfhtafkpYat";
                 });
+            services.AddLocalization(options => {
+                options.ResourcesPath = "Resources";
+            });
+            services.AddMvc()
+                .AddViewLocalization(
+                    options => { options.ResourcesPath = "Resources"; })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.Configure<RequestLocalizationOptions>(options => {
+                var supportedCultures = new List<CultureInfo> {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("hu-HU"),
+                  };
+                options.DefaultRequestCulture = new RequestCulture("en-US");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,6 +115,9 @@ namespace FoodService
                 app.UseDatabaseErrorPage();
             }
             app.UseStaticFiles();
+
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
         }

@@ -1,21 +1,23 @@
+@using Microsoft.AspNetCore.Mvc.Localization
 @model SearchRestaurantViewModel
-@addTagHelper *, ReflectionIT.Mvc.Paging
 @using ReflectionIT.Mvc.Paging
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Restaurants";
+    ViewData["Title"] = @Localizer["Restaurants"];
 }
 
-<h1>Available Restaurants</h1>
+<h1>@Localizer["Available Restaurants"]</h1>
+
 <form asp-controller="Home" asp-action="Index" method="get">
     <table width="100%">
         <tr>
-            <td><label asp-for="SearchRestaurantRequest.MealName">Search for food:</label></td>
+            <td><label asp-for="SearchRestaurantRequest.MealName">@Localizer["Search for food:"]</label></td>
             <td>
                 <input type="text" asp-for="SearchRestaurantRequest.MealName" class="form-control" />
             </td>
             <td>
                 <select asp-for="SearchRestaurantRequest.City">
-                    <option selected>Choose a city</option>
+                    <option selected>@Localizer["Choose a city"]</option>
                     @foreach (var city in Model.UniqueCities)
                     {
                         <option value="@city">@city</option>
@@ -23,9 +25,9 @@
                 </select>
             </td>
             <td>
-                <button type="submit" class="btn btn-success" ><i class="fas fa-search"></i> Search</button>
+                <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> @Localizer["Search"]</button>
             </td>
-            <td><a asp-action="Index">Clear filters</a></td>
+            <td><a asp-action="Index">@Localizer["Clear filters"]</a></td>
         </tr>
         <tr>
             <span asp-validation-for="SearchRestaurantRequest.MealName" class="text-primary"></span>
@@ -36,9 +38,9 @@
 <table class="table">
     <thead class="thead-light">
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Food Type</th>
-            <th scope="col">Price Range</th>
+            <th scope="col">@Localizer["Name"]</th>
+            <th scope="col">@Localizer["Food Type"]</th>
+            <th scope="col">@Localizer["Price Range"]</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -57,8 +59,8 @@
                 </td>
                 <td>
                     <form asp-controller="Restaurant" asp-action="Index" method="get" asp-route-Id="@restaurants.RestaurantId">
-                        <button type="submit" class="btn btn-success">Details</button>
-                    </form>
+                        <button type="submit" class="btn btn-success">@Localizer["Details"]</button>
+</form>
                 </td>
             </tr>
         }
@@ -73,8 +75,8 @@
     <li class="page-item">
         <a class="page-link" aria-label="Previous" role="button" asp-route-city="@Model.SearchRestaurantRequest.City" asp-route-page="@prev">
             <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Next</span>
-        </a>
+            <span class="sr-only">@Localizer["Next"]</span>
+</a>
     </li>
     @for (int i = 1; i <= Model.PagingList.PageCount; i++)
     {
@@ -87,7 +89,7 @@
     <li class="page-item">
         <a class="page-link" aria-label="Next" role="button" asp-route-city="@Model.SearchRestaurantRequest.City" asp-route-page="@next">
             <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
-        </a>
+            <span class="sr-only">@Localizer["Next"]</span>
+</a>
     </li>
 </ul>

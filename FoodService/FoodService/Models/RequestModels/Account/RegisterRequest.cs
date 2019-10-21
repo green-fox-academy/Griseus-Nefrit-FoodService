@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace FoodService.Models.RequestModels.Account
 {
@@ -11,7 +12,6 @@ namespace FoodService.Models.RequestModels.Account
         [Required]
         [EmailAddress]
         [Display(Name = "Email Address")]
-        [MinLength(5, ErrorMessage = "{0} must be at least {1} characters long.")]
         public string Email { get; set; }
 
         [Required]
