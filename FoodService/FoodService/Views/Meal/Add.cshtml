@@ -1,6 +1,8 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @model AddMealRequest
 @{
-    ViewData["Title"] = "Add Meal";
+    ViewData["Title"] = @Localizer["Add Meal"];
     ViewData["Action"] = "Add";
     await Html.RenderPartialAsync("_MealPartial");
 }

@@ -1,0 +1,11 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model SearchRestaurantViewModel
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@using ReflectionIT.Mvc.Paging
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["User settings"];
+    <h2>@Localizer["User settings"]</h2>
+    @await Html.PartialAsync("_SelectLanguagePartial")
+}

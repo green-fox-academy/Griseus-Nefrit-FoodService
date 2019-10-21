@@ -1,5 +1,7 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Restaurant details";
+    ViewData["Title"] = @Localizer["Restaurant details"];
 }
 @model SingleRestaurantViewModel
 
@@ -12,53 +14,52 @@ else
 {
     <h3 class="redinfo"></h3>
 }
-
-<h2>Restaurant details</h2>
+<h2>@Localizer["Restaurant details"]</h2>
 <br />
 
 @if ((User.IsInRole("Manager") && User.Identity.Name == Model.Restaurant.Manager.UserName) || User.IsInRole("Admin"))
 {
-    <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Restaurant.RestaurantId" class="btn btn-success" role="button">Edit restaurant</a>
+    <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Restaurant.RestaurantId" class="btn btn-success" role="button">@Localizer["Edit restaurant"]</a>
 
     <form asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Restaurant.RestaurantId" method="post" onclick="return GetConfirmation();">
-        <button type="submit" class="btn btn-danger">Delete restaurant</button>
+        <button type="submit" class="btn btn-danger">@Localizer["Delete restaurant"]</button>
     </form>
 }
 
 <br />
 <table class="table">
     <tr>
-        <th>NAME</th>
+        <th>@Localizer["NAME"]</th>
         <td>@Model.Restaurant.Name</td>
     </tr>
     <tr>
-        <th>DESCRIPTION</th>
+        <th>@Localizer["DESCRIPTION"]</th>
         <td>@Model.Restaurant.Description</td>
     </tr>
     <tr>
-        <th>CITY</th>
+        <th>@Localizer["CITY"]</th>
         <td>@Model.Restaurant.City</td>
     </tr>
     <tr>
-        <th>FOODTYPE</th>
+        <th>@Localizer["FOODTYPE"]</th>
         <td>@Model.Restaurant.FoodType</td>
     </tr>
     <tr>
-        <th>PRICE CATEGORY</th>
+        <th>@Localizer["PRICE CATEGORY"]</th>
         <td>
             <input value="@((byte)Model.Restaurant.PriceCategory)" class="rating rating-loading green" data-theme="krajee-fa" data-display-only="true" data-size="1" data-stars="4" data-max="4" data-step="1" data-show-clear="false" data-show-caption="false" data-show-caption-as-title="false">
         </td>
     </tr>
 </table>
 <br />
-<h2>List of available meals</h2>
+<h2>@Localizer["List of available meals"]</h2>
 <table class="table">
     <thead class="thead-dark">
         <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>PRICE</th>
-            <th>PHOTO</th>
+            <th>@Localizer["NAME"]</th>
+            <th>@Localizer["DESCRIPTION"]</th>
+            <th>@Localizer["PRICE"]</th>
+            <th>@Localizer["PHOTO"]</th>
             <th></th>
         </tr>
     </thead>
@@ -79,7 +80,7 @@ else
 </table>
 
 <form asp-controller="Home" asp-action="Index" method="get">
-    <button type="button" class="btn btn-info" onclick="history.back()">Back to Available restaurants</button>
+    <button type="button" class="btn btn-info" onclick="history.back()">@Localizer["Back to Available restaurants"]</button>
 </form>
 <br />
 

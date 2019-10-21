@@ -1,10 +1,12 @@
-﻿@{ 
-    ViewData["Title"] = "Add Restaurant";
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = @Localizer["Add Restaurant"];
 }
 
-<h3>Add a new restaurant</h3>
+<h3>@Localizer["Add a new restaurant"]</h3>
 
-@{ 
+@{
     ViewData["Action"] = "Add";
     await Html.RenderPartialAsync("_RestaurantPartial");
 }

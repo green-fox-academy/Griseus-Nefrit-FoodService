@@ -51,12 +51,20 @@ body {
     display: contents;
 }
 
-.google-sign-in-img {
-    width: 200px;
-    box-shadow: 1px 1px #888888;
+<style type="text/css" >
+#google-sign-in-button {
+    display: inline-block;
+    background: white;
+    color: #444;
+    width: 190px;
+    border-radius: 5px;
+    border: thin solid #888;
+    box-shadow: 1px 1px 1px grey;
+    white-space: nowrap;
 }
 
-.google-sign-in-img:hover {
-    width: 200px;
-    box-shadow: 1px 1px #888888;
+#google-sign-in-button:hover {
+    cursor: pointer;
 }
+
+</style >
