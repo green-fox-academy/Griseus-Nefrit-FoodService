@@ -1,0 +1,12 @@
+﻿<div>
+  <form action="usersettings" method="post">
+    @Html.DropDownList("timezone",
+               ViewBag.TimeZones as List<SelectListItem>)
+
+    <input type="submit" value="SET" />
+  </form>
+</div>
+
+<div>
+  <h3>User's Timezone : @ViewBag.Userstimezone</h3>
+</div>

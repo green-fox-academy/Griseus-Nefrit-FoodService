@@ -23,5 +23,6 @@ namespace FoodService.Services.User
         Task<SignInResult> ExternalLoginSignInAsync(string loginProvider, string providerKey);
         Task<string> ExternalLoginCallbackAsync(string returnUrl, string remoteError);
         Task<SignInResult> RegisterExternalUserAsync(string emailAddr, ExternalLoginInfo userInfo);
+
     }
 }

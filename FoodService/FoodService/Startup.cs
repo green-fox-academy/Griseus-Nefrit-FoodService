@@ -18,6 +18,7 @@ using ReflectionIT.Mvc.Paging;
 using FoodService.Services.BlobService;
 using FoodService.Services.Profiles;
 using FoodService.Services.OrderService;
+using FoodService.Services.TimezoneService;
 
 namespace FoodService
 {
@@ -59,7 +60,7 @@ namespace FoodService
                     build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
                 });
             }
-
+            services.AddTransient<ITimezoneService, TimezoneService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IMealService, MealService>();

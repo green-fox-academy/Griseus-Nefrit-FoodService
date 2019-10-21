@@ -39,26 +39,30 @@
                         }
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li>
-                                <form method="post" asp-controller="Account" asp-action="Logout">
-                                    <button type="submit" style="width:auto"
-                                            class="nav-link btn btn-link py-0">
-                                        @User.Identity.Name, Logout
-                                    </button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a asp-controller="Account" asp-action="Register"><i class="fas fa-user-plus"></i> Sign Up</a>
-                            </li>
-                            <li>
-                                <a asp-controller="Account" asp-action="Login"><i class="fas fa-sign-in-alt"></i> Sign In</a>
-                            </li>
-                        }
+                      @if (User.Identity.IsAuthenticated)
+                      {
+                        <li>
+                          <a asp-controller="user" asp-action="usersettings"><i class="fas fa-users-cog"></i> Settings</a>
+                        </li>
+                        <li>
+                          <form method="post" asp-controller="Account" asp-action="Logout">
+                            <button type="submit" style="width:auto"
+                                    class="nav-link btn btn-link py-0">
+                              @User.Identity.Name, Logout
+                            </button>
+                          </form>
+                        </li>
+                      }
+                      else
+                      {
+                        <li>
+                          <a asp-controller="Account" asp-action="Register"><i class="fas fa-user-plus"></i> Sign Up</a>
+                        </li>
+                        <li>
+                          <a asp-controller="Account" asp-action="Login"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+                        </li>
+
+                      }
                     </ul>
                 </div>
             </div>
