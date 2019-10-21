@@ -35,12 +35,6 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li><a asp-area="" asp-controller="UserSettings" asp-action="UserSettings">@Localizer["User settings"]</a></li>
-                        }
-                    </ul>
-                    <ul class="nav navbar-nav">
                         @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
                         {
                             <li><a asp-area="" asp-controller="Restaurant" asp-action="Add">@Localizer["Add Restaurant"]</a></li>
@@ -49,13 +43,19 @@
                     <ul class="nav navbar-nav navbar-right">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li>
-                                <form method="post" asp-controller="Account" asp-action="Logout">
-                                    <button type="submit" style="width:auto"
-                                            class="nav-link btn btn-link nounderline">
-                                        @User.Identity.Name, @Localizer["Logout"]
-                                    </button>
-                                </form>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-cog"></i>&nbsp;@User.Identity.Name<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-area="" asp-controller="UserSettings" asp-action="UserSettings"><i class="fas fa-cog"></i> @Localizer["User settings"]</a></li>
+                                    <li style="margin-top: 2px; margin-bottom: 2px; border: 0; border-top: 1px solid rgba(0, 0, 0, 0.1);"> </li>
+                                    <li>
+                                        <form method="post" asp-controller="Account" asp-action="Logout">
+                                            <button type="submit" class="nav-link btn btn-link nounderline">
+                                                &nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i> @Localizer["Logout"]
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
                             </li>
                         }
                         else
