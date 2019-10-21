@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
+using FoodService.Services.OrderService;
 
 namespace FoodService
 {
@@ -68,7 +69,9 @@ namespace FoodService
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IMealService, MealService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
-            services.SetUpAutoMapper();        
+            services.AddTransient<IOrderService, OrderService>();
+            services.SetUpAutoMapper();
+            services.AddMvc();
             services.AddPaging();
             services.AddAuthentication()
                 .AddGoogle(options =>

@@ -1,0 +1,84 @@
+﻿@model ShoppingCartRequest
+
+<h3>Basket</h3>
+@{
+    ViewData["Title"] = "Submit";
+}
+
+<br />
+<h3>Content of your shopping cart</h3>
+<br />
+<br />
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>NAME</th>
+                <th>QUANTITY</th>
+                <th>PRICE</th>
+                <th>PHOTO</th>
+                <th></th>
+            </tr>
+        </thead>
+        @{
+            int totalPrice = 0;
+        }
+        @foreach (var cartItem in Model.CartItems)
+        {
+            <tr>
+                <td>@cartItem.Meal.Name</td>
+                <td>@cartItem.Quantity</td>
+                @{
+                    int sumPrice = cartItem.Meal.Price.Amount * cartItem.Quantity;
+                    totalPrice += sumPrice;
+                }
+                <td>@sumPrice @cartItem.Meal.Price.Currency</td>
+                <td><img src=@cartItem.Meal.ImageUri width="100" height="100"></td>
+                <td>
+                    <form asp-controller="Order" asp-action="Delete" method="post" asp-route-Id="@cartItem.CartItemId" onclick="return GetConfirmation();">
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        <tr class="bg-danger" style="font-weight: bold">
+            <td>TOTAL PRICE</td>
+            <td></td>
+            <td>@totalPrice Ft</td>
+            <td></td>
+            <td></td>
+        </tr>
+
+    </table>
+    <br />
+    <h1>Delivery Address:</h1><br />
+    <form asp-controller="Order" asp-action="Submit" method="post" asp-route-id="@Model.ShoppingCartId">
+        <div class="form-group">
+            <label asp-for="Address.Country">Country</label>
+            <input type="text" asp-for="Address.Country" class="form-control" />
+            <span asp-validation-for="Address.Country" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Address.City">City</label>
+            <input type="text" asp-for="Address.City" class="form-control" />
+            <span asp-validation-for="Address.City" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Address.ZipCode">Zip code</label>
+            <input type="text" asp-for="Address.ZipCode" class="form-control" />
+            <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Address.Street">Street address</label>
+            <input type="text" asp-for="Address.Street" class="form-control" />
+            <span asp-validation-for="Address.Street" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Order</button>
+        <button type="button" class="btn btn-info" onclick="history.back()">Cancel</button>
+    </form>
+
+    <script type="text/javascript">
+        function GetConfirmation() {
+            return confirm("Are you sure you want to delete the meal?");
+        }
+    </script>

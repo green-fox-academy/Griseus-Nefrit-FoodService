@@ -12,6 +12,7 @@ namespace FoodService.Services.User
     public interface IUserService
     {
         Task<IdentityResult> CreateAsync(AppUser user);
+        Task<LoginRequest> CreateLoginRequest(string returnUrl);
         Task<SignInResult> LoginAsync(LoginRequest loginRequest);
         Task Logout();
         Task<IdentityResult> RegisterAsync(RegisterRequest regRequest);
@@ -20,6 +21,7 @@ namespace FoodService.Services.User
         AuthenticationProperties ConfigureExternalAuthenticaticationProperties(string provider, string redirectUrl);
         Task<ExternalLoginInfo> GetExternalLoginInfoAsync();
         Task<SignInResult> ExternalLoginSignInAsync(string loginProvider, string providerKey);
+        Task<string> ExternalLoginCallbackAsync(string returnUrl, string remoteError);
         Task<SignInResult> RegisterExternalUserAsync(string emailAddr, ExternalLoginInfo userInfo);
     }
 }
