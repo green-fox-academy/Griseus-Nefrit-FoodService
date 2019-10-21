@@ -11,7 +11,6 @@ using FoodService.Models.ViewModels.RestaurantViewModels;
 using ReflectionIT.Mvc.Paging;
 using AutoMapper;
 using FoodService.Services.BlobService;
-using Microsoft.Extensions.Localization;
 
 namespace FoodService.Services.RestaurantService
 {
