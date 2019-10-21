@@ -152,6 +152,8 @@ namespace FoodService.Migrations
 
                     b.Property<long?>("RestaurantId");
 
+                    b.Property<DateTime>("StartTime");
+
                     b.Property<string>("UserId");
 
                     b.HasKey("OrderId");
@@ -234,22 +236,22 @@ namespace FoodService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "62e4f5e1-67c6-4904-999b-a592adc1b8ff",
-                            ConcurrencyStamp = "269dff9d-a676-408d-ae81-198b25978ef0",
+                            Id = "fc3414ef-558c-4c0a-a76c-c8df44367736",
+                            ConcurrencyStamp = "98e52b99-c8e7-4980-97da-85b5209b25c1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d8609b04-19de-42bb-9479-1fe9c6d8052b",
-                            ConcurrencyStamp = "a1d44fb0-4caf-4b8a-b2c5-9fe28b1c6e7c",
+                            Id = "d12fe12e-b724-4064-806d-76d07a51e517",
+                            ConcurrencyStamp = "10fcdb7d-91e5-4782-9086-5a8bf630c7fd",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "92aced76-c193-4172-aba9-5c8c34df0817",
-                            ConcurrencyStamp = "10dfd738-02e2-457f-b2d5-4ad3b58f12b7",
+                            Id = "62dd1b8c-a7a9-4123-b8ae-b4ced2e56ff5",
+                            ConcurrencyStamp = "9d55fb7d-5490-47ff-b9e3-eb0440b9c6e6",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

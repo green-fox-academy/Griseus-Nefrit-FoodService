@@ -8,9 +8,12 @@ using FoodService.Services.User;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace FoodService.Services.OrderService
 {
@@ -21,6 +24,7 @@ namespace FoodService.Services.OrderService
         private readonly IMealService mealService;
         private readonly IRestaurantService restaurantService;
         private readonly IMapper mapper;
+        private Timer Timer;
 
         public OrderService(ApplicationDbContext applicationDbContext, IUserService userService, IMealService mealService, IRestaurantService restaurantService, IMapper mapper)
         {

@@ -1,5 +1,7 @@
+@using System.Timers
+@using FoodService.Services
 @using Microsoft.EntityFrameworkCore.Internal
-@model CurrentOrderViewModel
+@model OrderViewModels.CurrentOrderViewModel
 
 <h1>Current Orders</h1><br />
 @if (!Model.RestaurantsOfManager.Any())
@@ -20,7 +22,7 @@
                 <th scope="col">Items</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Date and time of the order</th>
-                <th scope="col">Timer</th>
+                <th scope="col">Time span</th>
             </tr>
             </thead>
             <tbody>
@@ -39,13 +41,23 @@
                         </td>
                         <td>
                             @for (int i = 0; i < order.CartItems.Count; i++)
-                                {
-                                    @order.CartItems[i].Quantity
-                                    <br/>
-                                }
+                            {
+                                @order.CartItems[i].Quantity
+                                <br/>
+                            }
                         </td>
                         <td>@order.DateSubmitted</td>
-                        <td></td>
+                        @{
+                            TimeSpan span = DateTime.UtcNow - order.DateSubmitted;
+                            if (span.Minutes < 1)
+                            {
+                                <td>Ordered just now.</td>
+                            }
+                            else
+                            {
+                                <td>Ordered @span.Minutes minutes ago.</td>
+                            }
+                        }
                     </tr>
                 }
             }
