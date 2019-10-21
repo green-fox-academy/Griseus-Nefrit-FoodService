@@ -1,9 +1,12 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -33,11 +36,19 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
+                        @if (User.IsInRole("Customer") || User.IsInRole("Manager") || User.IsInRole("Admin"))
+                        {
+                            <li><a asp-area="" asp-controller="UserSettings" asp-action="UserSettings">@Localizer["User settings"]</a></li>
+                        }
+                    </ul>
+                    <ul class="nav navbar-nav">
                         @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
                         {
-                            <li><a asp-area="" asp-controller="Restaurant" asp-action="Add">Add Restaurant</a></li>
+
+                            <li><a asp-area="" asp-controller="Restaurant" asp-action="Add">@Localizer["Add Restaurant"]</a></li>
                             <ul class="nav navbar-nav">
-                                <li><a a asp-area="" asp-controller="Order" asp-action="CurrentOrder">Current Orders</a></li>
+                            <li>
+                            <a a asp-area="" asp-controller="Order" asp-action="CurrentOrder">@Localizer["Current Orders"]</a></li>
                             </ul>
                         }
                     </ul>
@@ -48,7 +59,7 @@
                                 <form method="post" asp-controller="Account" asp-action="Logout">
                                     <button type="submit" style="width:auto"
                                             class="nav-link btn btn-link py-0">
-                                        @User.Identity.Name, Logout
+                                        @User.Identity.Name, @Localizer["Logout"]
                                     </button>
                                 </form>
                             </li>
@@ -56,10 +67,10 @@
                         else
                         {
                             <li>
-                                <a asp-controller="Account" asp-action="Register"><i class="fas fa-user-plus"></i> Sign Up</a>
+                                <a asp-controller="Account" asp-action="Register"><i class="fas fa-user-plus"></i> @Localizer["Sign Up"]</a>
                             </li>
                             <li>
-                                <a asp-controller="Account" asp-action="Login"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+                                <a asp-controller="Account" asp-action="Login"><i class="fas fa-sign-in-alt"></i> @Localizer["Sign In"]</a>
                             </li>
                         }
                     </ul>

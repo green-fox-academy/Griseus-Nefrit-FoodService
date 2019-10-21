@@ -245,7 +245,6 @@ namespace FoodService.Migrations
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateSubmitted = table.Column<DateTime>(nullable: false),
                     DateProcessed = table.Column<DateTime>(nullable: false),
-                    StartTime = table.Column<DateTime>(nullable: false),
                     LastUpdate = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     OrderStatus = table.Column<int>(nullable: false),
@@ -305,17 +304,17 @@ namespace FoodService.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "fc3414ef-558c-4c0a-a76c-c8df44367736", "98e52b99-c8e7-4980-97da-85b5209b25c1", "Admin", "ADMIN" });
+                values: new object[] { "49859931-033f-4727-a740-6e988036785a", "37aabdba-592a-436c-976b-8dd9f7715ce6", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "d12fe12e-b724-4064-806d-76d07a51e517", "10fcdb7d-91e5-4782-9086-5a8bf630c7fd", "Manager", "MANAGER" });
+                values: new object[] { "3fb81213-77c5-4438-973d-8709f0050a20", "66f26953-27dd-45db-8d57-d4dcb8061693", "Manager", "MANAGER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "62dd1b8c-a7a9-4123-b8ae-b4ced2e56ff5", "9d55fb7d-5490-47ff-b9e3-eb0440b9c6e6", "Customer", "CUSTOMER" });
+                values: new object[] { "ed722467-d351-4306-8370-83ca61954275", "f8a6af37-16c5-40e2-97e7-5cc2583cc7e5", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

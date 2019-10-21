@@ -51,11 +51,11 @@
                             TimeSpan span = DateTime.UtcNow - order.DateSubmitted;
                             if (span.Minutes < 1)
                             {
-                                <td>Ordered just now.</td>
+                                <td>@Localizer["Ordered just now."]</td>
                             }
                             else
                             {
-                                <td>Ordered @span.Minutes minutes ago.</td>
+                                <td>@Localizer["Ordered"] @span.Minutes @Localizer["minutes ago."]</td>
                             }
                         }
                     </tr>

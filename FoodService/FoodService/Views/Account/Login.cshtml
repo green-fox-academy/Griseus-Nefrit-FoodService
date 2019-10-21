@@ -1,9 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = @Localizer["Login"];
 }
 @model LoginRequest
 
-<h1>Sign in</h1>
+<h1>@Localizer["Sign in"]</h1>
 
 <div class="row">
     <div class="col-md-12">
@@ -15,11 +15,11 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password"></label>
+                <label asp-for="Password">@Localizer["Password"]</label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Sign in</button>
+            <button type="submit" class="btn btn-primary">@Localizer["Sign in"]</button>
         </form>
     </div>
 
@@ -28,10 +28,18 @@
         <form asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             @foreach (var provider in Model.ExternalLogins)
             {
-                <button type="submit" name="provider" class="google-sign-in-button"
-                        value="@provider.Name" title="Log in using your @provider.DisplayName account">
-                    <img class="google-sign-in-img" src="~/img/google_signin_buttons/btn_google_signin_dark_normal_web_2x.png">
-                </button>
+            <button type="submit" name="provider" class="google-sign-in-button"
+                    value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                <img class="google-sign-in-img" src="~/img/google_signin_buttons/btn_google_dark_normal_ios.svg">
+                <div id="gSignInWrapper">
+                    <span class="label">Sign in with:</span>
+                    <div id="customBtn" class="customGPlusSignIn">
+                        <span class="icon"></span>
+                        <span class="buttonText">@Localizer["Sign in with Google"]</span>
+                    </div>
+                </div>
+                <div id="name"></div>
+            </button>
             }
         </form>
     </div>

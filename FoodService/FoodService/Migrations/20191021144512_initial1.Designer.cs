@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191014174827_initial1")]
+    [Migration("20191021144512_initial1")]
     partial class initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -154,8 +154,6 @@ namespace FoodService.Migrations
 
                     b.Property<long?>("RestaurantId");
 
-                    b.Property<DateTime>("StartTime");
-
                     b.Property<string>("UserId");
 
                     b.HasKey("OrderId");
@@ -238,22 +236,22 @@ namespace FoodService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fc3414ef-558c-4c0a-a76c-c8df44367736",
-                            ConcurrencyStamp = "98e52b99-c8e7-4980-97da-85b5209b25c1",
+                            Id = "49859931-033f-4727-a740-6e988036785a",
+                            ConcurrencyStamp = "37aabdba-592a-436c-976b-8dd9f7715ce6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d12fe12e-b724-4064-806d-76d07a51e517",
-                            ConcurrencyStamp = "10fcdb7d-91e5-4782-9086-5a8bf630c7fd",
+                            Id = "3fb81213-77c5-4438-973d-8709f0050a20",
+                            ConcurrencyStamp = "66f26953-27dd-45db-8d57-d4dcb8061693",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "62dd1b8c-a7a9-4123-b8ae-b4ced2e56ff5",
-                            ConcurrencyStamp = "9d55fb7d-5490-47ff-b9e3-eb0440b9c6e6",
+                            Id = "ed722467-d351-4306-8370-83ca61954275",
+                            ConcurrencyStamp = "f8a6af37-16c5-40e2-97e7-5cc2583cc7e5",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

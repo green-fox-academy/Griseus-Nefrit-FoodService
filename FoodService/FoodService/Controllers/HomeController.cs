@@ -8,6 +8,7 @@ using FoodService.Models.ViewModels.RestaurantViewModels;
 using FoodService.Services;
 using FoodService.Services.RestaurantService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using ReflectionIT.Mvc.Paging;
 
 namespace FoodService.Controllers
