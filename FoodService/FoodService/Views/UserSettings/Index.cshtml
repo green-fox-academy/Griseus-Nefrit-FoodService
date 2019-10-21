@@ -1,12 +1,18 @@
-﻿<div>
-  <form action="usersettings" method="post">
-    @Html.DropDownList("timezone",
-               ViewBag.TimeZones as List<SelectListItem>)
-
-    <input type="submit" value="SET" />
-  </form>
-</div>
+﻿@using FoodService.Services.TimezoneService
+@inject ITimezoneService timeZoneService
 
 <div>
   <h3>User's Timezone : @ViewBag.Userstimezone</h3>
 </div>
+
+<h5>Change Timezone</h5>
+<form asp-controller="User" asp-action="Usersettings" method="post">
+  <div class="form-group">
+    <select name="timeZoneId" class="form-control" onchange="this.form.submit();">
+      @foreach (var timezone in timeZoneService.GetTimezones())
+      {
+        <option value="@timezone.Id">@timezone.DisplayName</option>
+      }
+    </select>
+  </div>
+</form>

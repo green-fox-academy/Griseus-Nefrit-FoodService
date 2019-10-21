@@ -85,7 +85,6 @@ namespace FoodService.Controllers
             if (ModelState.IsValid)
             {
                 var result = await userService.RegisterAsync(regRequest);
-
                 if (result.Succeeded)
                 {
                     return RedirectToAction(nameof(HomeController.Index), "Home");

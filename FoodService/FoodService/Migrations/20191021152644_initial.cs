@@ -56,7 +56,8 @@ namespace FoodService.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    TimezoneId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -302,17 +303,17 @@ namespace FoodService.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c6185c20-c284-48fa-bc99-8dd223721504", "8c19d4bd-3fdc-4ab5-9049-4af5761c4a61", "Admin", "ADMIN" });
+                values: new object[] { "c37aa4b6-0973-48da-b924-c54936b4bd8e", "2828d5ba-2750-45d0-94fc-d32b6af7ce13", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "5b962968-6d19-4a83-92bf-6d2bc688e44c", "0c49f363-5174-419b-8353-62edfb7cd309", "Manager", "MANAGER" });
+                values: new object[] { "5a348c18-30c0-4bb6-8f70-8fe23a834723", "e075fa00-0c1a-4c09-8893-f56bac1591d8", "Manager", "MANAGER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "5b35a1bc-394d-4e4d-a243-0a31baf7162d", "7f881a53-cca8-48a8-a04f-4a7178801b26", "Customer", "CUSTOMER" });
+                values: new object[] { "c7097d7d-37b6-4d77-98e5-955b34ff5618", "e72ac197-5af6-4602-b2d7-75e341a6f52a", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

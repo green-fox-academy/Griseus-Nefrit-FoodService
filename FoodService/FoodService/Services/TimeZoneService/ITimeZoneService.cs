@@ -9,8 +9,8 @@ namespace FoodService.Services.TimezoneService
 {
     public interface ITimezoneService
     {
-        List<SelectListItem> GetTimezones();
-        string getTimezone(string username);
-        void setUsersTimezone(string username, string timezone);
+        IEnumerable<TimeZoneInfo> GetTimezones();
+        Task <string> GetTimezoneAsync(string username);
+        Task SetUsersTimezone(string username, string timezone);
     }
 }

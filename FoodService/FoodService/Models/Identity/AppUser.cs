@@ -10,7 +10,6 @@ namespace FoodService.Models.Identity
     {
         public List<Restaurant> OwnedRestaurants { get; set; }
         public List<Order> ShoppingCarts { get; set; }
-        public string Timezone { get; set; } = "Central Europe Standard Time";
-
+        public string TimezoneId { get; set; }
     }
 }

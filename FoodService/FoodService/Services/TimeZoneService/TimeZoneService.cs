@@ -19,27 +19,21 @@ namespace FoodService.Services.TimezoneService
             this.applicationDbContext = applicationDbContext;
         }
 
-        public List<SelectListItem> GetTimezones()
+        public IEnumerable<TimeZoneInfo> GetTimezones()
         {
-            var timeZones = TimeZoneInfo.GetSystemTimeZones();
-            List<SelectListItem> items = new List<SelectListItem>();
-            foreach (var timeZone in timeZones)
-            {
-                items.Add(new SelectListItem() { Text = timeZone.Id });
-            }
-            return items;
+            return TimeZoneInfo.GetSystemTimeZones();
         }
-        public void setUsersTimezone(string username, string timezone)
+        public async Task SetUsersTimezone(string username, string timezone)
         {
-            var user = userService.FindUserByNameOrEmailAsync(username).Result;
-            user.Timezone = timezone;
-            applicationDbContext.SaveChanges();
+            var user = await userService.FindUserByNameOrEmailAsync(username);
+            user.TimezoneId = timezone;
+            await applicationDbContext.SaveChangesAsync();
         }
 
-        public string getTimezone(string username)
+        public async Task<string> GetTimezoneAsync(string username)
         {
-            var user = userService.FindUserByNameOrEmailAsync(username).Result;
-            return user.Timezone;
+            var user = await userService.FindUserByNameOrEmailAsync(username);
+            return user.TimezoneId;
         }
     }
 }
