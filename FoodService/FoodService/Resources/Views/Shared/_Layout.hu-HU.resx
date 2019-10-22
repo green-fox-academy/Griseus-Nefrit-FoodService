@@ -132,4 +132,7 @@
   <data name="User settings" xml:space="preserve">
     <value>Felhasználói beállítások</value>
   </data>
+  <data name="Current Orders" xml:space="preserve">
+    <value>Aktuális rendelések</value>
+  </data>
 </root>
