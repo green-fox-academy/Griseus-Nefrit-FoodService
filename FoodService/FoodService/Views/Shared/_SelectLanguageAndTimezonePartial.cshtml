@@ -23,7 +23,7 @@
                                     asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems"></select>
     <div class="form-group">
       <div>
-        <h3>User's Timezone : @ViewBag.Userstimezone</h3>
+        <h3>@Localizer["User's Timezone :"] @ViewBag.Userstimezone</h3>
       </div>
       <select name="timeZoneId" class="form-control">
         @foreach (var timezone in timeZoneService.GetTimezones())
