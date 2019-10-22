@@ -17,7 +17,7 @@
             </td>
             <td>
                 <select asp-for="SearchRestaurantRequest.City">
-                    <option selected>@Localizer["Choose a city"]</option>
+                    <option selected disabled>@Localizer["Choose a city"]</option>
                     @foreach (var city in Model.UniqueCities)
                     {
                         <option value="@city">@city</option>

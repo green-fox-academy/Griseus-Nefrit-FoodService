@@ -16,14 +16,14 @@ namespace FoodService.Services.User
         private readonly UserManager<AppUser> userMgr;
         private readonly SignInManager<AppUser> signInMgr;
         private readonly IMapper mapper;
-
-        public UserService(UserManager<AppUser> userMgr, SignInManager<AppUser> signInMgr, IMapper mapper)
+        private readonly ApplicationDbContext applicationDbContext;
+        public UserService(UserManager<AppUser> userMgr, SignInManager<AppUser> signInMgr, IMapper mapper, ApplicationDbContext applicationDbContext)
         {
             this.userMgr = userMgr;
             this.signInMgr = signInMgr;
             this.mapper = mapper;
+            this.applicationDbContext = applicationDbContext;
         }
-
         public async Task<AppUser> FindUserByNameOrEmailAsync(string nameOrEmailAddr)
         {
             return await userMgr.FindByEmailAsync(nameOrEmailAddr);
@@ -78,9 +78,10 @@ namespace FoodService.Services.User
             if (result.Succeeded)
             {
                 await userMgr.AddToRoleAsync(user, regRequest.Manager ? "Manager" : "Customer");
+                user.TimezoneId = TimeZoneInfo.Local.DisplayName;
+                await applicationDbContext.SaveChangesAsync();
                 await signInMgr.SignInAsync(user, isPersistent: false);
             }
-
             return result;
         }
 
@@ -93,7 +94,8 @@ namespace FoodService.Services.User
                 user = new AppUser
                 {
                     UserName = emailAddr,
-                    Email = emailAddr
+                    Email = emailAddr,
+                    TimezoneId = TimeZoneInfo.Local.DisplayName
                 };
                 await CreateAsync(user);
             }
