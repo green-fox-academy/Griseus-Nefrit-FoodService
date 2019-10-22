@@ -44,7 +44,6 @@
                     <ul class="nav navbar-nav">
                         @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
                         {
-
                             <li><a asp-area="" asp-controller="Restaurant" asp-action="Add">@Localizer["Add Restaurant"]</a></li>
                             <ul class="nav navbar-nav">
                             <li>

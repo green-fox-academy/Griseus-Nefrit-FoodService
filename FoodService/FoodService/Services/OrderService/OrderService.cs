@@ -176,7 +176,7 @@ namespace FoodService.Services.OrderService
             }
         }
         
-        public async Task<List<Order>> GetOrdersByManagerAsync(ClaimsPrincipal user)
+        public async Task<List<Order>> GetOrderedOrdersByManagerAsync(ClaimsPrincipal user)
         {
             var currentOrders = await applicationDbContext.Orders.Where(or => or.OrderStatus == OrderStatus.Ordered).Where(or => or.Restaurant.Manager.Email == user.Identity.Name).Include(o => o.CartItems).ThenInclude(o => o.Meal).ThenInclude(o => o.Restaurant).ToListAsync();
             return currentOrders;

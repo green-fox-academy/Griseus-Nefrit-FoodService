@@ -82,11 +82,10 @@ namespace FoodService.Controllers
         [HttpGet]
         public async Task<IActionResult> CurrentOrder()
         {
-            var user = User;
-            var orderList = await orderService.GetOrdersByManagerAsync(user);
+            var orderList = await orderService.GetOrderedOrdersByManagerAsync(User);
             return View(new CurrentOrderViewModel
             {
-                RestaurantsOfManager = await restaurantService.GetRestaurantsByManagerAsync(user),
+                RestaurantsOfManager = await restaurantService.GetRestaurantsByManagerAsync(User),
                 Orders = orderList
             });
         }
