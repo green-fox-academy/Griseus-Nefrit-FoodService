@@ -1,0 +1,67 @@
+@using System.Timers
+@using FoodService.Services
+@using Microsoft.EntityFrameworkCore.Internal
+@model OrderViewModels.CurrentOrderViewModel
+
+<h1>Current Orders</h1><br />
+@if (!Model.RestaurantsOfManager.Any())
+{
+    <h4>You don't have any restaurant added to your account.</h4>
+}
+@foreach (var restaurant in Model.RestaurantsOfManager)
+{
+    if (Model.Orders.Where(o => o.Restaurant.RestaurantId == restaurant.RestaurantId).ToList().Count != 0)
+    {
+        <div class="p-3 mb-2 bg-success text-white">
+            <h4>@restaurant.Name</h4>
+        </div>
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Items</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Date and time of the order</th>
+                <th scope="col">Time span</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                if (restaurant.RestaurantId == order.Restaurant.RestaurantId)
+                {
+                    <tr>
+                        <td>@order.OrderId</td>
+                        <td>
+                        @for (int i = 0; i < order.CartItems.Count; i++)
+                                {
+                                    @order.CartItems[i].Meal.Name
+                                    <br/>
+                                }
+                        </td>
+                        <td>
+                            @for (int i = 0; i < order.CartItems.Count; i++)
+                            {
+                                @order.CartItems[i].Quantity
+                                <br/>
+                            }
+                        </td>
+                        <td>@order.DateSubmitted</td>
+                        @{
+                            TimeSpan span = DateTime.UtcNow - order.DateSubmitted;
+                            if (span.Minutes < 1)
+                            {
+                                <td>@Localizer["Ordered just now."]</td>
+                            }
+                            else
+                            {
+                                <td>@Localizer["Ordered"] @span.Minutes @Localizer["minutes ago."]</td>
+                            }
+                        }
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    }
+}

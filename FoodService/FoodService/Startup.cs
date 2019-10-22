@@ -23,6 +23,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using FoodService.Services.OrderService;
+using FoodService.Services.TimezoneService;
 
 namespace FoodService
 {
@@ -64,7 +65,7 @@ namespace FoodService
                     build.UseMySql(configuration.GetConnectionString("DefaultConnection"));
                 });
             }
-
+            services.AddTransient<ITimezoneService, TimezoneService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IMealService, MealService>();

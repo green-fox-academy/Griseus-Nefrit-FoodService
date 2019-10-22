@@ -117,22 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add Restaurant" xml:space="preserve">
-    <value>Étterem hozzáadása</value>
+  <data name="Are you sure you want to delete the meal?" xml:space="preserve">
+    <value>Biztos benne, hogy törli a tételt?</value>
   </data>
-  <data name="Logout" xml:space="preserve">
-    <value>Kijelentkezés</value>
+  <data name="Basket" xml:space="preserve">
+    <value>Kosár</value>
   </data>
-  <data name="Sign In" xml:space="preserve">
-    <value>Bejelentkezés</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Mégse</value>
   </data>
-  <data name="Sign Up" xml:space="preserve">
-    <value>Regisztráció</value>
+  <data name="City" xml:space="preserve">
+    <value>Város</value>
   </data>
-  <data name="User settings" xml:space="preserve">
-    <value>Felhasználói beállítások</value>
+  <data name="Contents of your shopping cart" xml:space="preserve">
+    <value>Kosár tartalma</value>
   </data>
-  <data name="Current Orders" xml:space="preserve">
-    <value>Aktuális rendelések</value>
+  <data name="Country" xml:space="preserve">
+    <value>Ország</value>
+  </data>
+  <data name="Delivery Address" xml:space="preserve">
+    <value>Szállítási cím</value>
+  </data>
+  <data name="NAME" xml:space="preserve">
+    <value>NÉV</value>
+  </data>
+  <data name="PHOTO" xml:space="preserve">
+    <value>KÉP</value>
+  </data>
+  <data name="PRICE" xml:space="preserve">
+    <value>ÁR</value>
+  </data>
+  <data name="QUANTITY" xml:space="preserve">
+    <value>MENNYISÉG</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
+  <data name="Street address" xml:space="preserve">
+    <value>Utca, házszám</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Megerősítés</value>
+  </data>
+  <data name="Submit Order" xml:space="preserve">
+    <value>Megrendelés véglegesítése</value>
+  </data>
+  <data name="TOTAL PRICE" xml:space="preserve">
+    <value>VÉGÖSSZEG</value>
+  </data>
+  <data name="Zip code" xml:space="preserve">
+    <value>Irányítószám</value>
   </data>
 </root>

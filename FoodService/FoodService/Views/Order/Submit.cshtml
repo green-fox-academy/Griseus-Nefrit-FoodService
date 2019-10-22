@@ -4,7 +4,9 @@
 }
 
 <br />
-<h1>Contents of your shopping cart</h1>
+<h1>
+    @Localizer["Contents of your shopping cart"]
+</h1>
 <br />
 
 <table class="table table-striped">
@@ -33,48 +35,48 @@
             <td><img src=@cartItem.Meal.ImageUri width="100" height="100"></td>
             <td>
                 <form asp-controller="Order" asp-action="Delete" method="post" asp-route-Id="@cartItem.CartItemId" onclick="return GetConfirmation();">
-                    <button type="submit" class="btn btn-danger">Remove</button>
+                    <button type="submit" class="btn btn-danger">@Localizer["Remove"]</button>
                 </form>
             </td>
         </tr>
     }
     <tr class="bg-danger" style="font-weight: bold">
-        <td>TOTAL PRICE</td>
+        <td>@Localizer["TOTAL PRICE"]</td>
         <td></td>
         <td>@totalPrice Ft</td>
         <td></td>
         <td></td>
     </tr>
-
 </table>
 <br />
-<h1>Delivery Address</h1>
+<h1>
+    @Localizer["Delivery Address"]
+</h1>
 <br />
 <form asp-controller="Order" asp-action="Submit" method="post" asp-route-id="@Model.ShoppingCartId">
     <div class="form-group">
-        <label asp-for="Address.Country">Country</label>
+        <label asp-for="Address.Country">@Localizer["Country"]</label>
         <input type="text" asp-for="Address.Country" class="form-control" />
         <span asp-validation-for="Address.Country" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Address.City">City</label>
+        <label asp-for="Address.City">@Localizer["City"]</label>
         <input type="text" asp-for="Address.City" class="form-control" />
         <span asp-validation-for="Address.City" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Address.ZipCode">Zip code</label>
+        <label asp-for="Address.ZipCode">@Localizer["Zip code"]</label>
         <input type="text" asp-for="Address.ZipCode" class="form-control" />
         <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Address.Street">Street address</label>
+        <label asp-for="Address.Street">@Localizer["Street address"]</label>
         <input type="text" asp-for="Address.Street" class="form-control" />
         <span asp-validation-for="Address.Street" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Submit Order</button>
-    <button type="button" class="btn btn-info" onclick="history.back()">Cancel</button>
+    <button type="submit" class="btn btn-primary">@Localizer["Submit Order"]</button>
+    <button type="button" class="btn btn-info" onclick="history.back()">@Localizer["Cancel"]</button>
 </form>
-
 <script type="text/javascript">
     function GetConfirmation() {
         return confirm("Are you sure you want to delete the meal?");

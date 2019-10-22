@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models;
 using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.OrderRequestModels;
+using FoodService.Models.ViewModels;
 using FoodService.Services.MealService;
 using FoodService.Services.OrderService;
 using FoodService.Services.RestaurantService;
 using FoodService.Services.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OrderViewModels;
 
 namespace FoodService.Controllers
 {
@@ -19,16 +22,13 @@ namespace FoodService.Controllers
     {
         private readonly IOrderService orderService;
         private readonly IMealService mealService;
+        private readonly IRestaurantService restaurantService;
 
-        public OrderController(IOrderService orderService, IMealService mealService)
+        public OrderController(IOrderService orderService, IMealService mealService, IRestaurantService restaurantService)
         {
             this.orderService = orderService;
             this.mealService = mealService;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
+            this.restaurantService = restaurantService;
         }
 
         [HttpPost]
@@ -76,6 +76,18 @@ namespace FoodService.Controllers
         public IActionResult ThankYou()
         {
             return View();
+        }
+        
+        [Authorize(Roles = "Manager, Admin")]
+        [HttpGet]
+        public async Task<IActionResult> CurrentOrder()
+        {
+            var orderList = await orderService.GetOrderedOrdersByManagerAsync(User);
+            return View(new CurrentOrderViewModel
+            {
+                RestaurantsOfManager = await restaurantService.GetRestaurantsByManagerAsync(User),
+                Orders = orderList
+            });
         }
     }
 }

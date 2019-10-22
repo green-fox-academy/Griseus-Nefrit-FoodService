@@ -117,22 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add Restaurant" xml:space="preserve">
-    <value>Étterem hozzáadása</value>
+  <data name="Back to Restaurants" xml:space="preserve">
+    <value>Vissza az éttermekhez</value>
   </data>
-  <data name="Logout" xml:space="preserve">
-    <value>Kijelentkezés</value>
+  <data name="Thank you for your order!" xml:space="preserve">
+    <value>Köszönjük a megrendelését!</value>
   </data>
-  <data name="Sign In" xml:space="preserve">
-    <value>Bejelentkezés</value>
+  <data name="ThankYou" xml:space="preserve">
+    <value>Köszönjük</value>
   </data>
-  <data name="Sign Up" xml:space="preserve">
-    <value>Regisztráció</value>
-  </data>
-  <data name="User settings" xml:space="preserve">
-    <value>Felhasználói beállítások</value>
-  </data>
-  <data name="Current Orders" xml:space="preserve">
-    <value>Aktuális rendelések</value>
+  <data name="You can go back to the restaurants page, if you need to order anything else." xml:space="preserve">
+    <value>Amennyiben még rendelnli szeretne valamit, visszamehet az éttermekhez.</value>
   </data>
 </root>
