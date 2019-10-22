@@ -117,49 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add To Cart" xml:space="preserve">
-    <value>Hozzáadás a kosárhoz</value>
-  </data>
-  <data name="Back to Available restaurants" xml:space="preserve">
-    <value>Vissza az éttermek listájához</value>
+  <data name="Are you sure you want to delete the meal?" xml:space="preserve">
+    <value>Biztos benne, hogy törli a tételt?</value>
   </data>
   <data name="Basket" xml:space="preserve">
     <value>Kosár</value>
   </data>
-  <data name="CITY" xml:space="preserve">
-    <value>VÁROS</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Mégse</value>
   </data>
-  <data name="Delete restaurant" xml:space="preserve">
-    <value>Étterem törlése</value>
+  <data name="City" xml:space="preserve">
+    <value>Város</value>
   </data>
-  <data name="DESCRIPTION" xml:space="preserve">
-    <value>LEÍRÁS</value>
+  <data name="Content of your shopping cart" xml:space="preserve">
+    <value>Kosár tartalma</value>
   </data>
-  <data name="Edit restaurant" xml:space="preserve">
-    <value>Étterem módosítása</value>
+  <data name="Country" xml:space="preserve">
+    <value>Ország</value>
   </data>
-  <data name="FOODTYPE" xml:space="preserve">
-    <value>ÉTEL FAJTÁJA</value>
-  </data>
-  <data name="List of available meals" xml:space="preserve">
-    <value>Rendelhető ételek</value>
-  </data>
-  <data name="Meal item(s) in your Basket:" xml:space="preserve">
-    <value>Ételfajták a kosarában:</value>
+  <data name="Delivery Address:" xml:space="preserve">
+    <value>Szállítási cím</value>
   </data>
   <data name="NAME" xml:space="preserve">
     <value>NÉV</value>
   </data>
   <data name="PHOTO" xml:space="preserve">
-    <value>FÉNYKÉP</value>
+    <value>KÉP</value>
   </data>
   <data name="PRICE" xml:space="preserve">
     <value>ÁR</value>
   </data>
-  <data name="PRICE CATEGORY" xml:space="preserve">
-    <value>ÁRSZÍNVONAL</value>
+  <data name="QUANTITY" xml:space="preserve">
+    <value>MENNYISÉG</value>
   </data>
-  <data name="Restaurant details" xml:space="preserve">
-    <value>Étterem részletei</value>
+  <data name="Remove" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
+  <data name="Street address" xml:space="preserve">
+    <value>Utca, házszám</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Megerősítés</value>
+  </data>
+  <data name="Submit Order" xml:space="preserve">
+    <value>Megrendelés véglegesítése</value>
+  </data>
+  <data name="TOTAL PRICE" xml:space="preserve">
+    <value>VÉGÖSSZEG</value>
+  </data>
+  <data name="Zip code" xml:space="preserve">
+    <value>Irányítószám</value>
   </data>
 </root>
