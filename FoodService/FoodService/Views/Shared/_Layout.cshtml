@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewBag.Title</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" />
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -22,7 +23,7 @@
 </head>
 <body>
     <div class="container">
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-dark" style="background-color: orange">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -31,9 +32,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">.Net Pincér</a>
+                    <a asp-controller="Home" asp-action="Index" class="navbar-brand dancing-font" style="font-size:30px">.Net Pincér</a>
                 </div>
-                <div class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse" id="navbar">
                     <ul class="nav navbar-nav">
                         @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
                         {
@@ -46,15 +47,9 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-cog"></i>&nbsp;@User.Identity.Name<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a asp-area="" asp-controller="UserSettings" asp-action="UserSettings"><i class="fas fa-cog"></i> @Localizer["User settings"]</a></li>
+                                    <li><a asp-controller="UserSettings" asp-action="UserSettings"><i class="fas fa-cog"></i> @Localizer["User settings"]</a></li>
                                     <li style="margin-top: 2px; margin-bottom: 2px; border: 0; border-top: 1px solid rgba(0, 0, 0, 0.1);"> </li>
-                                    <li>
-                                        <form method="post" asp-controller="Account" asp-action="Logout">
-                                            <button type="submit" class="nav-link btn btn-link nounderline">
-                                                &nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i> @Localizer["Logout"]
-                                            </button>
-                                        </form>
-                                    </li>
+                                    <li><a asp-controller="Account" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> @Localizer["Logout"]</a></li>
                                 </ul>
                             </li>
                         }
