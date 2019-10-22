@@ -117,34 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Available Restaurants" xml:space="preserve">
-    <value>Étterem keresése</value>
+  <data name="Back to Restaurants" xml:space="preserve">
+    <value>Vissza az éttermekhez</value>
   </data>
-  <data name="Choose a city" xml:space="preserve">
-    <value>Válasszon egy várost</value>
+  <data name="Thank you for your order!" xml:space="preserve">
+    <value>Köszönjük a megrendelését!</value>
   </data>
-  <data name="Clear filters" xml:space="preserve">
-    <value>Törlés</value>
+  <data name="ThankYou" xml:space="preserve">
+    <value>Köszönjük</value>
   </data>
-  <data name="Details" xml:space="preserve">
-    <value>Részletek</value>
-  </data>
-  <data name="Food Type" xml:space="preserve">
-    <value>Ételfajták</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Név</value>
-  </data>
-  <data name="Price Range" xml:space="preserve">
-    <value>Árszínvonal</value>
-  </data>
-  <data name="Restaurants" xml:space="preserve">
-    <value>Éttermek</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Keresés</value>
-  </data>
-  <data name="Search for food:" xml:space="preserve">
-    <value>Étel keresése</value>
+  <data name="You can go back to the restaurants page, if you need to order anything else." xml:space="preserve">
+    <value>Amennyiben még rendelnli szeretne valamit, visszamehet az éttermekhez.</value>
   </data>
 </root>

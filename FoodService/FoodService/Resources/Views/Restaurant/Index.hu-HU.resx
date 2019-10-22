@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add To Cart" xml:space="preserve">
+    <value>Hozzáadás a kosárhoz</value>
+  </data>
   <data name="Back to Available restaurants" xml:space="preserve">
     <value>Vissza az éttermek listájához</value>
+  </data>
+  <data name="Basket" xml:space="preserve">
+    <value>Kosár</value>
   </data>
   <data name="CITY" xml:space="preserve">
     <value>VÁROS</value>
@@ -137,6 +143,9 @@
   </data>
   <data name="List of available meals" xml:space="preserve">
     <value>Rendelhető ételek</value>
+  </data>
+  <data name="Meal item(s) in your Basket:" xml:space="preserve">
+    <value>Ételfajták a kosarában:</value>
   </data>
   <data name="NAME" xml:space="preserve">
     <value>NÉV</value>
