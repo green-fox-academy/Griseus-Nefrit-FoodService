@@ -21,7 +21,7 @@ namespace FoodService.Services.TimezoneService
         {
             return TimeZoneInfo.GetSystemTimeZones();
         }
-        public async Task SetUsersTimezone(string username, string timezone)
+        public async Task SetUsersTimezoneAsync(string username, string timezone)
         {
             var user = await userService.FindUserByNameOrEmailAsync(username);
             user.TimezoneId = timezone;

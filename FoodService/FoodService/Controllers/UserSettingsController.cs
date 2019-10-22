@@ -43,7 +43,7 @@ namespace FoodService.Controllers
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
             );
             string username = User.Identity.Name;
-            await timezoneService.SetUsersTimezone(username, timeZoneId);
+            await timezoneService.SetUsersTimezoneAsync(username, timeZoneId);
             return LocalRedirect(returnUrl);
         }
     }

@@ -11,6 +11,6 @@ namespace FoodService.Services.TimezoneService
     {
         IEnumerable<TimeZoneInfo> GetTimezones();
         Task <string> GetTimezoneAsync(string username);
-        Task SetUsersTimezone(string username, string timezone);
+        Task SetUsersTimezoneAsync(string username, string timezone);
     }
 }
