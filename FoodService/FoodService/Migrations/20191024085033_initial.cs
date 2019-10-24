@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoodService.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -305,17 +305,17 @@ namespace FoodService.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e1c302c2-75dd-4f14-86ef-04835de66371", "9009718e-bf89-4ed7-a1d6-d9304cbfbee1", "Admin", "ADMIN" });
+                values: new object[] { "6037deae-3df7-4507-a197-918f8ec663d1", "8d6e52bc-f856-4535-b268-f991e6665d69", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "698fd4b4-3700-44db-b481-2e3c9d164a69", "0a208cbb-2e80-4df1-bfd0-399a176da8be", "Manager", "MANAGER" });
+                values: new object[] { "3e82ae3f-e99f-4e15-a1cf-ffbbf8ca73f9", "aff1e529-7a28-48bd-b99a-403e4830c699", "Manager", "MANAGER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "7fda9646-081f-4068-93d2-1ede63d8a4d8", "bffd976c-1b16-4028-ab69-23ed23bbccf1", "Customer", "CUSTOMER" });
+                values: new object[] { "4a4f9c8a-76c2-4ebf-a633-9a2876b15974", "a7d8f0e1-bf92-4a3e-9ada-582c6ef1909d", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
