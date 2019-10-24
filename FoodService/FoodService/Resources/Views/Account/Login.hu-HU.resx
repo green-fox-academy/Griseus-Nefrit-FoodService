@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="account" xml:space="preserve">
+    <value>fiókoddal</value>
+  </data>
+  <data name="Log in using your" xml:space="preserve">
+    <value>Belépés a</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Bejelentkezés</value>
   </data>
@@ -127,6 +133,6 @@
     <value>Bejelentkezés</value>
   </data>
   <data name="Sign in with Google" xml:space="preserve">
-    <value>Bejelentkezés Google-lel</value>
+    <value>Belépés Google fiókkal</value>
   </data>
 </root>
