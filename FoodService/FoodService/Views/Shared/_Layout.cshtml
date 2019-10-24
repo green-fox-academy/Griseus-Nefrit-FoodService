@@ -38,11 +38,20 @@
                     <ul class="nav navbar-nav">
                         @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
                         {
-                            <li><a asp-area="" asp-controller="Restaurant" asp-action="Add">@Localizer["Add Restaurant"]</a></li>
-                            <ul class="nav navbar-nav">
-                            <li>
-                            <a a asp-area="" asp-controller="Order" asp-action="CurrentOrder">@Localizer["Current Orders"]</a></li>
-                            </ul>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Restaurants<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-area="" asp-controller="Restaurant" asp-action="#">@Localizer["My Restaurants"]</a></li>
+                                    <li><a asp-area="" asp-controller="Restaurant" asp-action="Add">@Localizer["Add new Restaurant"]</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a a asp-area="" asp-controller="Order" asp-action="CurrentOrder">@Localizer["Current Orders"]</a></li>
+                                    <li><a a asp-area="" asp-controller="Order" asp-action="History">@Localizer["History"]</a></li>
+                                </ul>
+                            </li>
                         }
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

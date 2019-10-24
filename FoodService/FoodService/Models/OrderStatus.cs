@@ -9,8 +9,6 @@ namespace FoodService.Models
     {
         Draft = 1,
         Ordered,
-        Prepared,
-        Delivered,
-        Closed
+        Completed
     }
 }

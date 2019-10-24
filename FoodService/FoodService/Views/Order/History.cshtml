@@ -1,9 +1,9 @@
-@using System.Timers
-@using FoodService.Services
-@using Microsoft.EntityFrameworkCore.Internal
+﻿@{
+    ViewData["Title"] = @Localizer["Order History"];
+}
 @model OrderViewModels.OrderViewModel
 
-<h1>@Localizer["Current Orders"]</h1>
+<h1>@Localizer["Order History"]</h1>
 <br />
 @if (!Model.RestaurantsOfManager.Any())
 {
@@ -23,7 +23,6 @@
                     <th scope="col">@Localizer["Items"]</th>
                     <th scope="col">@Localizer["Quantity"]</th>
                     <th scope="col">@Localizer["Date and time of the order"]</th>
-                    <th scope="col">@Localizer["Time span"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,17 +47,6 @@
                                 }
                             </td>
                             <td>@order.DateSubmitted</td>
-                            @{
-                                TimeSpan span = DateTime.UtcNow - order.DateSubmitted;
-                                if (span.Minutes < 1)
-                                {
-                                    <td>@Localizer["Ordered just now."]</td>
-                                }
-                                else
-                                {
-                                    <td>@Localizer["Ordered"] @Math.Truncate(@span.TotalMinutes) @Localizer["minutes ago."]</td>
-                                }
-                            }
                         </tr>
                     }
                 }

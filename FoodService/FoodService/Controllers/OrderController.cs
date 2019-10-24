@@ -69,7 +69,7 @@ namespace FoodService.Controllers
             var cartItem = await orderService.GetCartItemByIdAsync(id);
             await orderService.DeleteCartItemAsync(id);
 
-            return RedirectToAction(nameof(OrderController.Submit), "Order", new { id = cartItem.Order.Restaurant.RestaurantId});
+            return RedirectToAction(nameof(OrderController.Submit), "Order", new { id = cartItem.Order.Restaurant.RestaurantId });
         }
 
         [HttpGet]
@@ -77,13 +77,25 @@ namespace FoodService.Controllers
         {
             return View();
         }
-        
+
         [Authorize(Roles = "Manager, Admin")]
         [HttpGet]
         public async Task<IActionResult> CurrentOrder()
         {
             var orderList = await orderService.GetOrderedOrdersByManagerAsync(User);
-            return View(new CurrentOrderViewModel
+            return View(new OrderViewModel
+            {
+                RestaurantsOfManager = await restaurantService.GetRestaurantsByManagerAsync(User),
+                Orders = orderList
+            });
+        }
+
+        [Authorize(Roles = "Manager, Admin")]
+        [HttpGet]
+        public async Task<IActionResult> History()
+        {
+            var orderList = await orderService.GetOrderHistoryByManagerAsync(User);
+            return View(new OrderViewModel
             {
                 RestaurantsOfManager = await restaurantService.GetRestaurantsByManagerAsync(User),
                 Orders = orderList
