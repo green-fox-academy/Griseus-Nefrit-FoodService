@@ -21,25 +21,20 @@
             </div>
             <button type="submit" class="btn btn-primary">@Localizer["Sign in"]</button>
         </form>
+        <hr />
     </div>
 
     <div class="col-md-6">
-        <hr />
         <form asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             @foreach (var provider in Model.ExternalLogins)
             {
-            <button type="submit" name="provider" class="google-sign-in-button"
-                    value="@provider.Name" title="Log in using your @provider.DisplayName account">
-                <img class="google-sign-in-img" src="~/img/google_signin_buttons/btn_google_dark_normal_ios.svg">
-                <div id="gSignInWrapper">
-                    <span class="label">Sign in with:</span>
-                    <div id="customBtn" class="customGPlusSignIn">
-                        <span class="icon"></span>
-                        <span class="buttonText">@Localizer["Sign in with Google"]</span>
+                <button type="submit" name="provider" class="google-sign-in-button"
+                        value="@provider.Name" title="@Localizer["Log in using your"] @provider.DisplayName @Localizer["account"]">
+                    <div id="google-customBtn">
+                        <span class="google-icon"></span>
+                        <span class="google-buttonText">@Localizer["Sign in with Google"]</span>
                     </div>
-                </div>
-                <div id="name"></div>
-            </button>
+                </button>
             }
         </form>
     </div>

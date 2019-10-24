@@ -2,7 +2,7 @@
 @inject IViewLocalizer Localizer
 @model EditRestaurantViewModel
 
-    <h3>@Localizer["Edit the restaurant"]</h3>
+<h2>@Localizer["Edit the restaurant"]</h2>
 @{
     ViewData["Title"] = @Localizer["Edit Restaurant"];
     ViewData["Action"] = "Edit";
@@ -10,8 +10,7 @@
 }
 
 <br />
-<h3>@Localizer["List of your current meals"]</h3>
-<br />
+<h2>@Localizer["List of your current meals"]</h2>
 <form asp-controller="Meal" asp-action="Add" method="get" asp-route-Id="@Model.RestaurantId">
     <button type="submit" class="btn btn-success">@Localizer["Add a new meal"]</button>
 </form>
@@ -37,7 +36,7 @@
             <td>@meal.Price.Amount @meal.Price.Currency</td>
             <td>
                 <form asp-controller="Meal" asp-action="Edit" method="get" asp-route-Id="@meal.MealId">
-                    <button type="submit" class="btn btn-success">@Localizer["Edit"]</button>
+                    <button type="submit" class="btn btn-warning">@Localizer["Edit"]</button>
                 </form>
             </td>
             <td>
@@ -51,8 +50,7 @@
 </table>
 
 <script type="text/javascript">
-    function GetConfirmation()
-    {
+    function GetConfirmation() {
         return confirm("Are you sure you want to delete the restaurant?");
     }
 </script>

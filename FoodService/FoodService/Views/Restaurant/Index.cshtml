@@ -8,24 +8,13 @@
 @if (Model.NumberOfCartItems != 0)
 {
     <h3 class="redinfo">@Localizer["Meal item(s) in your Basket:"] @Model.NumberOfCartItems</h3>
-    <h3 class="redinfo"><a asp-area="" asp-controller="Order" asp-action="Submit" asp-route-id="@Model.Restaurant.RestaurantId"><i class="fas fa-shopping-cart"></i>  @Localizer["Basket"]</a></h3>
+    <h3 class="redinfo nounderline"><a asp-area="" asp-controller="Order" asp-action="Submit" asp-route-id="@Model.Restaurant.RestaurantId"><i class="fas fa-shopping-cart"></i>  @Localizer["Basket"]</a></h3>
 }
 else
 {
     <h3 class="redinfo"></h3>
 }
-<h2>@Localizer["Restaurant details"]</h2>
-<br />
-
-@if ((User.IsInRole("Manager") && User.Identity.Name == Model.Restaurant.Manager.UserName) || User.IsInRole("Admin"))
-{
-    <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Restaurant.RestaurantId" class="btn btn-success" role="button">@Localizer["Edit restaurant"]</a>
-
-    <form asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Restaurant.RestaurantId" method="post" onclick="return GetConfirmation();">
-        <button type="submit" class="btn btn-danger">@Localizer["Delete restaurant"]</button>
-    </form>
-}
-
+<h1>@Localizer["Restaurant details"]</h1>
 <br />
 <table class="table">
     <tr>
@@ -51,6 +40,14 @@ else
         </td>
     </tr>
 </table>
+@if ((User.IsInRole("Manager") && User.Identity.Name == Model.Restaurant.Manager.UserName) || User.IsInRole("Admin"))
+{
+    <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Restaurant.RestaurantId" class="btn btn-warning" role="button">@Localizer["Edit restaurant"]</a>
+    <form asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Restaurant.RestaurantId" method="post" onclick="return GetConfirmation();" class="inline">
+        <button type="submit" class="btn btn-danger">@Localizer["Delete restaurant"]</button>
+    </form>
+}
+<br />
 <br />
 <h2>@Localizer["List of available meals"]</h2>
 <table class="table">
