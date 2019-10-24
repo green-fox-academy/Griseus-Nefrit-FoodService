@@ -1,6 +1,6 @@
 ﻿@model ShoppingCartRequest
 @{
-    ViewData["Title"] = "Shopping Cart";
+    ViewData["Title"] = @Localizer["Shopping Cart"];
 }
 
 <br />
@@ -12,10 +12,10 @@
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
-            <th>NAME</th>
-            <th>QUANTITY</th>
-            <th>PRICE</th>
-            <th>PHOTO</th>
+            <th>@Localizer["NAME"]</th>
+            <th>@Localizer["QUANTITY"]</th>
+            <th>@Localizer["PRICE"]</th>
+            <th>@Localizer["PHOTO"]</th>
             <th></th>
         </tr>
     </thead>

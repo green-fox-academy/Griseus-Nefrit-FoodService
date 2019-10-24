@@ -153,6 +153,9 @@
   <data name="Remove" xml:space="preserve">
     <value>Törlés</value>
   </data>
+  <data name="Shopping Cart" xml:space="preserve">
+    <value>Bevásárló kosár</value>
+  </data>
   <data name="Street address" xml:space="preserve">
     <value>Utca, házszám</value>
   </data>
