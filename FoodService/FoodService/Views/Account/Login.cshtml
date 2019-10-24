@@ -29,7 +29,7 @@
             @foreach (var provider in Model.ExternalLogins)
             {
                 <button type="submit" name="provider" class="google-sign-in-button"
-                        value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                        value="@provider.Name" title="@Localizer["Log in using your"] @provider.DisplayName @Localizer["account"]">
                     <div id="google-customBtn">
                         <span class="google-icon"></span>
                         <span class="google-buttonText">@Localizer["Sign in with Google"]</span>

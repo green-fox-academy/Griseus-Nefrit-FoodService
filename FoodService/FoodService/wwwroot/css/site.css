@@ -27,11 +27,6 @@ h1, h2, h3 {
     width: 100%;
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
-}
-
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
@@ -93,11 +88,43 @@ span.google-buttonText {
     font-family: 'Roboto', sans-serif;
 }
 
+/* Cards */
+.card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+}
+
+.card {
+    border-radius: 5px;
+    border: thin solid #888;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 3px 0px;
+}
+
+.col-md-6 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.card:hover {
+    box-shadow: rgba(0, 0, 0, 0.2) 1px 4px 8px 0px;
+}
+
+.card-body {
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+.menu-button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 /* Upper Menu */
 .nounderline {
     text-decoration: none !important
 }
 
+/* Other */
 .dancing-font {
     font-family: 'Dancing Script', cursive;
 }

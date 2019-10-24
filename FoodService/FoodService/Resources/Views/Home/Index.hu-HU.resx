@@ -126,11 +126,11 @@
   <data name="Clear filters" xml:space="preserve">
     <value>Törlés</value>
   </data>
-  <data name="Details" xml:space="preserve">
-    <value>Részletek</value>
-  </data>
   <data name="Food Type" xml:space="preserve">
     <value>Ételfajták</value>
+  </data>
+  <data name="MENU" xml:space="preserve">
+    <value>ÉTLAP</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Név</value>
