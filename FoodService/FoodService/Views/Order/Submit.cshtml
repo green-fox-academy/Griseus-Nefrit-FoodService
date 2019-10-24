@@ -1,14 +1,14 @@
 ﻿@model ShoppingCartRequest
-
-<h3>@Localizer["Basket"]</h3>
 @{
-    ViewData["Title"] = @Localizer["Submit"];
+    ViewData["Title"] = @Localizer["Shopping Cart"];
 }
 
 <br />
-<h3>@Localizer["Content of your shopping cart"]</h3>
+<h1>
+    @Localizer["Contents of your shopping cart"]
+</h1>
 <br />
-<br />
+
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
@@ -50,7 +50,9 @@
 </table>
 <br />
 <h1>
-    @Localizer["Delivery Address:"]</h1><br />
+    @Localizer["Delivery Address"]
+</h1>
+<br />
 <form asp-controller="Order" asp-action="Submit" method="post" asp-route-id="@Model.ShoppingCartId">
     <div class="form-group">
         <label asp-for="Address.Country">@Localizer["Country"]</label>

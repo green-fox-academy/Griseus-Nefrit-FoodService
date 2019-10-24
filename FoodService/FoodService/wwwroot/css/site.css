@@ -12,6 +12,10 @@ body {
     padding-right: 15px;
 }
 
+h1, h2, h3 {
+    font-family: 'Dancing Script', cursive !important;
+}
+
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;
@@ -46,25 +50,58 @@ body {
     text-align: right;
 }
 
-/* Google sign-in button - Gabor*/
+/* Google sign-in button*/
 .google-sign-in-button {
     display: contents;
 }
 
-<style type="text/css" >
-#google-sign-in-button {
+#google-customBtn {
     display: inline-block;
-    background: white;
-    color: #444;
-    width: 190px;
+    background: #4285F4;
+    color: white;
+    width: 210px;
     border-radius: 5px;
     border: thin solid #888;
     box-shadow: 1px 1px 1px grey;
     white-space: nowrap;
 }
 
-#google-sign-in-button:hover {
-    cursor: pointer;
+    #google-customBtn:hover {
+        cursor: pointer;
+    }
+
+span.google-label {
+    font-family: serif;
+    font-weight: normal;
 }
 
-</style >
+span.google-icon {
+    background: url('/img/google_signin_buttons/btn_google_dark_normal_ios.svg') transparent 5px 50% no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    width: 48px;
+    height: 42px;
+}
+
+span.google-buttonText {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    /* Use the Roboto font that is loaded in the <head> */
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Upper Menu */
+.nounderline {
+    text-decoration: none !important
+}
+
+.dancing-font {
+    font-family: 'Dancing Script', cursive;
+}
+
+.inline {
+    display: inline;
+}

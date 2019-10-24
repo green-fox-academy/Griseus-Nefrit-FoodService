@@ -129,13 +129,13 @@
   <data name="City" xml:space="preserve">
     <value>Város</value>
   </data>
-  <data name="Content of your shopping cart" xml:space="preserve">
+  <data name="Contents of your shopping cart" xml:space="preserve">
     <value>Kosár tartalma</value>
   </data>
   <data name="Country" xml:space="preserve">
     <value>Ország</value>
   </data>
-  <data name="Delivery Address:" xml:space="preserve">
+  <data name="Delivery Address" xml:space="preserve">
     <value>Szállítási cím</value>
   </data>
   <data name="NAME" xml:space="preserve">
@@ -152,6 +152,9 @@
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Törlés</value>
+  </data>
+  <data name="Shopping Cart" xml:space="preserve">
+    <value>Bevásárló kosár</value>
   </data>
   <data name="Street address" xml:space="preserve">
     <value>Utca, házszám</value>
