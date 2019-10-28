@@ -1,5 +1,6 @@
 ﻿using FoodService;
 using FoodService.Models;
+using FoodService.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -31,9 +32,40 @@ namespace FoodServiceTest.TestUtils
 
         private void SeedRestaurants(ApplicationDbContext context)
         {
+            AppUser manager = new AppUser
+            {
+                UserName = "TestName"
+            };
+            Restaurant restaurant = new Restaurant
+            {
+                Name = "Test1",
+                Manager = manager
+            };
+            Restaurant restaurant2 = new Restaurant
+            {
+                Name = "Test2",
+                Manager = manager
+            };
+
             context.Restaurants.AddRange(new List<Restaurant>
             {
-                new Restaurant { Name = "Test" },
+                restaurant, restaurant2
+            });
+
+            context.Meals.AddRange(new List<Meal>
+            {
+                new Meal {
+                    Name = "TestMeal",
+                    Restaurant = restaurant
+                },
+                new Meal {
+                    Name = "TestMeal2",
+                    Restaurant = restaurant
+                },
+                new Meal {
+                    Name = "TestMeal3",
+                    Restaurant = restaurant2
+                }
             });
         }
     }
