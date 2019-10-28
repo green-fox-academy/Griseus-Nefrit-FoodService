@@ -2,6 +2,7 @@
 using FoodService.Models;
 using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.OrderRequestModels;
+using FoodService.Services.EmailService;
 using FoodService.Services.MealService;
 using FoodService.Services.RestaurantService;
 using FoodService.Services.User;
@@ -23,6 +24,7 @@ namespace FoodService.Services.OrderService
         private readonly IUserService userService;
         private readonly IMealService mealService;
         private readonly IRestaurantService restaurantService;
+        private readonly IEmailService emailService;
         private readonly IMapper mapper;
 
         public OrderService(ApplicationDbContext applicationDbContext, IUserService userService, IMealService mealService, IRestaurantService restaurantService, IMapper mapper)
@@ -156,6 +158,7 @@ namespace FoodService.Services.OrderService
                 order.DateSubmitted = DateTime.UtcNow;
             }
             await applicationDbContext.SaveChangesAsync();
+            await emailService.SendMail();
         }
 
         public async Task<Order> GetOrderById(long orderId)
