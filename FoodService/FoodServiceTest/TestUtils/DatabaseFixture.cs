@@ -15,7 +15,7 @@ namespace FoodServiceTest.TestUtils
             options = TestDbOptions.Get();
             using (var context = new ApplicationDbContext(options))
             {
-                SeedPosts(context);
+                SeedRestaurants(context);
                 context.SaveChanges();
             }
         }
@@ -29,7 +29,7 @@ namespace FoodServiceTest.TestUtils
             }
         }
 
-        private void SeedPosts(ApplicationDbContext context)
+        private void SeedRestaurants(ApplicationDbContext context)
         {
             context.Restaurants.AddRange(new List<Restaurant>
             {
