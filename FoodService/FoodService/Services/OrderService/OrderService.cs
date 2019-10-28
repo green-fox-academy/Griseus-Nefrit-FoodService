@@ -27,12 +27,13 @@ namespace FoodService.Services.OrderService
         private readonly IEmailService emailService;
         private readonly IMapper mapper;
 
-        public OrderService(ApplicationDbContext applicationDbContext, IUserService userService, IMealService mealService, IRestaurantService restaurantService, IMapper mapper)
+        public OrderService(ApplicationDbContext applicationDbContext, IUserService userService, IMealService mealService, IRestaurantService restaurantService, IEmailService emailService, IMapper mapper)
         {
             this.applicationDbContext = applicationDbContext;
             this.userService = userService;
             this.mealService = mealService;
             this.restaurantService = restaurantService;
+            this.emailService = emailService;
             this.mapper = mapper;
         }
 
