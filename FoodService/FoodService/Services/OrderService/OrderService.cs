@@ -160,7 +160,7 @@ namespace FoodService.Services.OrderService
                 order.DateSubmitted = DateTime.UtcNow;
             }
             await applicationDbContext.SaveChangesAsync();
-            await emailService.SendMail(order);
+            await emailService.SendMailAfterOrderSubmit(order);
         }
 
         public async Task<Order> GetOrderById(long orderId)
