@@ -195,7 +195,7 @@ namespace FoodService.Services.OrderService
             return currentOrders;
         }
 
-        public async Task CompleteOrder(long id)
+        public async Task CompleteOrderAsync(long id)
         {
             var order = await GetOrderById(id);
             if (order != null)

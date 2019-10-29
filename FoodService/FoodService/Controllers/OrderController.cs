@@ -106,7 +106,7 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> OrderCompleted(long id)
         {
-            await orderService.CompleteOrder(id);
+            await orderService.CompleteOrderAsync(id);
             return RedirectToAction(nameof(OrderController.CurrentOrder), "Order");
         }
     }
