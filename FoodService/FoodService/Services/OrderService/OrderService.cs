@@ -2,6 +2,7 @@
 using FoodService.Models;
 using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.OrderRequestModels;
+using FoodService.Services.EmailService;
 using FoodService.Services.MealService;
 using FoodService.Services.RestaurantService;
 using FoodService.Services.User;
@@ -23,15 +24,17 @@ namespace FoodService.Services.OrderService
         private readonly IUserService userService;
         private readonly IMealService mealService;
         private readonly IRestaurantService restaurantService;
+        private readonly IEmailService emailService;
         private readonly IMapper mapper;
 
-        public OrderService(ApplicationDbContext applicationDbContext, IUserService userService,
-            IMealService mealService, IRestaurantService restaurantService, IMapper mapper)
+        public OrderService(ApplicationDbContext applicationDbContext, IUserService userService, IMealService mealService, IRestaurantService restaurantService, IEmailService emailService, IMapper mapper)
+
         {
             this.applicationDbContext = applicationDbContext;
             this.userService = userService;
             this.mealService = mealService;
             this.restaurantService = restaurantService;
+            this.emailService = emailService;
             this.mapper = mapper;
         }
 
@@ -162,11 +165,13 @@ namespace FoodService.Services.OrderService
                 order.DateSubmitted = DateTime.UtcNow;
             }
             await applicationDbContext.SaveChangesAsync();
+            await emailService.SendMailAfterOrderSubmit(order);
         }
 
         public async Task<Order> GetOrderById(long orderId)
         {
-            return await applicationDbContext.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+            return await applicationDbContext.Orders.Include(o => o.User).Include(o => o.CartItems).ThenInclude(c => c.Meal).Include(o => o.Restaurant).ThenInclude(r => r.Manager)
+                .Where(o => o.OrderId == orderId).FirstOrDefaultAsync();
         }
 
         public async Task<int> GetNumberOfItemsInBasket(string userName, long restaurantId)
@@ -190,7 +195,7 @@ namespace FoodService.Services.OrderService
             return currentOrders;
         }
 
-        public async Task CompleteOrder(long id)
+        public async Task CompleteOrderAsync(long id)
         {
             var order = await GetOrderById(id);
             if (order != null)

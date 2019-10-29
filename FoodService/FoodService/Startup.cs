@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using FoodService.Services.OrderService;
 using FoodService.Services.TimezoneService;
+using FoodService.Services.EmailService;
 
 namespace FoodService
 {
@@ -71,6 +72,7 @@ namespace FoodService
             services.AddTransient<IMealService, MealService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IEmailService, EmailService>();
             services.SetUpAutoMapper();
             services.AddMvc();
             services.AddPaging();
