@@ -9,48 +9,56 @@
 {
     <h4>@Localizer["You don't have any restaurant added to your account."]</h4>
 }
-@foreach (var restaurant in Model.RestaurantsOfManager)
-{
-    if (Model.Orders.Where(o => o.Restaurant.RestaurantId == restaurant.RestaurantId).ToList().Count != 0)
-    {
-        <div class="p-3 mb-2 bg-success text-white">
-            <h4>@restaurant.Name</h4>
-        </div>
-        <table class="table">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">@Localizer["Order ID"]</th>
-                    <th scope="col">@Localizer["Items"]</th>
-                    <th scope="col">@Localizer["Quantity"]</th>
-                    <th scope="col">@Localizer["Date and time of the order"]</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var order in Model.Orders)
-                {
-                    if (restaurant.RestaurantId == order.Restaurant.RestaurantId)
-                    {
-                        <tr>
-                            <td>@order.OrderId</td>
-                            <td>
-                                @for (int i = 0; i < order.CartItems.Count; i++)
-                                {
-                                    @order.CartItems[i].Meal.Name
-                                    <br />
-                                }
-                            </td>
-                            <td>
-                                @for (int i = 0; i < order.CartItems.Count; i++)
-                                {
-                                    @order.CartItems[i].Quantity
-                                    <br />
-                                }
-                            </td>
-                            <td>@order.DateSubmitted</td>
-                        </tr>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">@Localizer["Order ID"]</th>
+            <th scope="col">@Localizer["Restaurant Name"]</th>
+            <th scope="col">@Localizer["Total Price"]</th>
+            <th scope="col">@Localizer["Ordered"]</th>
+            <th scope="col">@Localizer["Completed"]</th>
+            <th scope="col">@Localizer["Delivery time"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders.Where(or => Model.RestaurantsOfManager.Contains(or.Restaurant)))
+        {
+            bool completed = true;
+            string bgClass = "bg-success";
+            TimeSpan span = DateTime.UtcNow - order.DateSubmitted;
+            double processingTime = Math.Truncate(@span.TotalMinutes);
+
+            @if (@order.DateProcessed <= @order.DateSubmitted)
+            {
+                completed = false;
+                bgClass = (processingTime > 60) ? "bg-danger" : "bg-warning";
+            }
+            <tr class=@bgClass>
+                <td>@order.OrderId</td>
+                <td>@order.Restaurant.Name</td>
+                <td>
+                    @{
+                        int totalPrice = 0;
+                        foreach (var cartItem in order.CartItems)
+                        {
+                            int sumPrice = cartItem.Meal.Price.Amount * cartItem.Quantity;
+                            totalPrice += sumPrice;
+                        }
                     }
+                    @totalPrice @order.CartItems[0].Meal.Price.Currency
+                </td>
+                <td>@order.DateSubmitted</td>
+
+                @if (completed)
+                {
+                    <td>@order.DateProcessed</td>
                 }
-            </tbody>
-        </table>
-    }
-}
+                else
+                {
+                    <td>under delivery...</td>
+                }
+                <td>@processingTime min.</td>
+            </tr>
+        }
+    </tbody>
+</table>
