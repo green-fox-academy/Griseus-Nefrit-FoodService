@@ -181,5 +181,15 @@ namespace FoodService.Services.OrderService
             var currentOrders = await applicationDbContext.Orders.Where(or => or.OrderStatus == OrderStatus.Ordered).Where(or => or.Restaurant.Manager.Email == user.Identity.Name).Include(o => o.CartItems).ThenInclude(o => o.Meal).ThenInclude(o => o.Restaurant).ToListAsync();
             return currentOrders;
         }
+
+        public async Task CompleteOrder(long id)
+        {
+            var order = await GetOrderById(id);
+            if(order != null)
+            {
+                order.OrderStatus = OrderStatus.Prepared;
+            }
+            await applicationDbContext.SaveChangesAsync();
+        }
     }
 }

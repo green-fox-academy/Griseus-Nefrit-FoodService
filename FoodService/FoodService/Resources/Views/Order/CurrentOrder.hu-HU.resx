@@ -147,4 +147,7 @@
   <data name="minutes ago." xml:space="preserve">
     <value> perce rendelve.</value>
   </data>
+  <data name="Complete order" xml:space="preserve">
+    <value>Rendelés teljesítése</value>
+  </data>
 </root>

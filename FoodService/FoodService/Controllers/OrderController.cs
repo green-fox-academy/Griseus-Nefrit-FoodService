@@ -89,5 +89,13 @@ namespace FoodService.Controllers
                 Orders = orderList
             });
         }
+
+        [Authorize(Roles = "Manager, Admin")]
+        [HttpPost]
+        public async Task<IActionResult> OrderCompleted(long id)
+        {
+            await orderService.CompleteOrder(id);
+            return RedirectToAction(nameof(OrderController.CurrentOrder), "Order");
+        }
     }
 }
