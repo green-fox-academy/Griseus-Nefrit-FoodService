@@ -18,50 +18,56 @@
         </div>
         <table class="table">
             <thead class="thead-light">
-                <tr>
-                    <th scope="col">@Localizer["Order ID"]</th>
-                    <th scope="col">@Localizer["Items"]</th>
-                    <th scope="col">@Localizer["Quantity"]</th>
-                    <th scope="col">@Localizer["Date and time of the order"]</th>
-                    <th scope="col">@Localizer["Time span"]</th>
-                </tr>
+            <tr>
+                <th scope="col">@Localizer["Order ID"]</th>
+                <th scope="col">@Localizer["Items"]</th>
+                <th scope="col">@Localizer["Quantity"]</th>
+                <th scope="col">@Localizer["Date and time of the order"]</th>
+                <th scope="col">@Localizer["Time span"]</th>
+                <th scope="col">@Localizer["Complete order"]</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var order in Model.Orders)
+            @foreach (var order in Model.Orders)
+            {
+                if (restaurant.RestaurantId == order.Restaurant.RestaurantId)
                 {
-                    if (restaurant.RestaurantId == order.Restaurant.RestaurantId)
-                    {
-                        <tr>
-                            <td>@order.OrderId</td>
-                            <td>
-                                @for (int i = 0; i < order.CartItems.Count; i++)
-                                {
-                                    @order.CartItems[i].Meal.Name
-                                    <br />
-                                }
-                            </td>
-                            <td>
-                                @for (int i = 0; i < order.CartItems.Count; i++)
-                                {
-                                    @order.CartItems[i].Quantity
-                                    <br />
-                                }
-                            </td>
-                            <td>@order.DateSubmitted</td>
-                            @{
-                                TimeSpan span = DateTime.UtcNow - order.DateSubmitted;
-                                if (span.Minutes < 1)
-                                {
-                                    <td>@Localizer["Ordered just now."]</td>
-                                }
-                                else
-                                {
-                                    <td>@Localizer["Ordered"] @Math.Truncate(@span.TotalMinutes) @Localizer["minutes ago."]</td>
-                                }
+                    <tr>
+                        <td>@order.OrderId</td>
+                        <td>
+                            @for (int i = 0; i < order.CartItems.Count; i++)
+                            {
+                                @order.CartItems[i].Meal.Name
+                                <br/>
                             }
-                        </tr>
-                    }
+                        </td>
+                        <td>
+                            @for (int i = 0; i < order.CartItems.Count; i++)
+                            {
+                                @order.CartItems[i].Quantity
+                                <br/>
+                            }
+                        </td>
+                        <td>@order.DateSubmitted</td>
+                        @{
+                            TimeSpan span = DateTime.UtcNow - order.DateSubmitted;
+                            if (span.Minutes < 1)
+                            {
+                                <td>@Localizer["Ordered just now."]</td>
+                            }
+                            else
+                            {
+                                <td>@Localizer["Ordered"] @Math.Truncate(@span.TotalMinutes) @Localizer["minutes ago."]</td>
+                            }
+                        }
+                        <td>
+                            <form asp-controller="Order" method="post" asp-action="OrderCompleted" asp-route-Id="@order.OrderId">
+                                <button type="submit">Complete order</button>
+                            </form>
+                        </td>
+                    </tr>
                 }
+            }
             </tbody>
         </table>
     }

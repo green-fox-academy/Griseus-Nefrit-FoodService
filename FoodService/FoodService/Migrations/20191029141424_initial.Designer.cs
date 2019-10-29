@@ -3,14 +3,16 @@ using System;
 using FoodService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191029141424_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,24 +240,22 @@ namespace FoodService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "491dff28-372f-4951-a2f2-a53178c6b31c",
-                            ConcurrencyStamp = "f7c1e22b-e698-4ca3-a4e9-85ec253fdebf",
+                            Id = "43fb0f77-cfcb-47a8-9240-b4cc7d6551a7",
+                            ConcurrencyStamp = "174ba690-ff8f-480a-b71c-dc43d8338e06",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-
-                            Id = "9b376630-9e33-4dcb-98b4-091a47bb5dc5",
-                            ConcurrencyStamp = "40651ff2-0ed7-4afc-a72a-b950e76a3a2b",
+                            Id = "07ea64ff-7aa1-41b1-8f5e-84a14f86be2c",
+                            ConcurrencyStamp = "f0f43bff-f236-4b1b-847c-4e4ba1ebd076",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-
-                            Id = "9924cc08-4b9f-464c-8b93-a7a04b26cd12",
-                            ConcurrencyStamp = "f4871a5d-5ff1-4c62-8704-b1e5f2cfae5d",
+                            Id = "c9d0dce8-3297-4047-b282-73cda172dbfb",
+                            ConcurrencyStamp = "2eeb14f1-bf17-4c11-9094-434a1672d090",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
