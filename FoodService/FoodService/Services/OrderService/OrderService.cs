@@ -159,12 +159,13 @@ namespace FoodService.Services.OrderService
                 order.DateSubmitted = DateTime.UtcNow;
             }
             await applicationDbContext.SaveChangesAsync();
-            await emailService.SendMail();
+            await emailService.SendMail(order);
         }
 
         public async Task<Order> GetOrderById(long orderId)
         {
-            return await applicationDbContext.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+            return await applicationDbContext.Orders.Include(o => o.User).Include(o => o.CartItems).ThenInclude(c => c.Meal).Include(o => o.Restaurant).ThenInclude(r => r.Manager)
+                .Where(o => o.OrderId == orderId).FirstOrDefaultAsync();
         }
 
         public async Task<int> GetNumberOfItemsInBasket(string userName, long restaurantId)
