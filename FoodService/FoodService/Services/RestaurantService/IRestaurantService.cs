@@ -25,5 +25,6 @@ namespace FoodService.Services.RestaurantService
         Task<PagingList<Restaurant>> GetRestaurantsByRequestAsync(int page, ClaimsPrincipal user, SearchRestaurantRequest searchRestaurantRequest);
         Task DeleteRestaurantAsync(long id);
         Task<List<Restaurant>> GetRestaurantsByManagerAsync(ClaimsPrincipal user);
+        Task AddImageUriToRestaurantAsync(long RestaurantId, Microsoft.Azure.Storage.Blob.CloudBlockBlob blob);
     }
 }

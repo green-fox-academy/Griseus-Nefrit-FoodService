@@ -35,7 +35,6 @@
     </table>
 </form>
 <br />
-
 <div class="row">
     @foreach (var restaurants in Model.PagingList)
     {
@@ -43,7 +42,7 @@
             <div class="card">
                 <div class="card-horizontal">
                     <div class="img-square-wrapper">
-                        <img class="" src="http://via.placeholder.com/200x150" alt="Card image cap">
+                        <img src=@Html.DisplayFor(modelRestaurant => restaurants.ImageUri) width="300" height="150" alt="Card image cap">
                     </div>
                     <div class="card-body">
                         <h4 class="card-title">@Html.DisplayFor(modelRestaurant => restaurants.Name)</h4>
