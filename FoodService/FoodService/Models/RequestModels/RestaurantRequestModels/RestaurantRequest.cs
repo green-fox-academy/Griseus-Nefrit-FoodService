@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace FoodService.Models.RequestModels.RestaurantRequestModels
 {
@@ -28,5 +29,6 @@ namespace FoodService.Models.RequestModels.RestaurantRequestModels
         [Display(Name = "Price range:")]
         [EnumDataType(typeof(PriceCategory), ErrorMessage = "Value should be between 1 and 4.")]
         public PriceCategory PriceCategory { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

@@ -3,10 +3,10 @@
 @using Microsoft.EntityFrameworkCore.Internal
 @model OrderViewModels.CurrentOrderViewModel
 
-<h1>Current Orders</h1><br />
+<h1>@Localizer["Current Orders"]</h1><br />
 @if (!Model.RestaurantsOfManager.Any())
 {
-    <h4>You don't have any restaurant added to your account.</h4>
+    <h4>@Localizer["You don't have any restaurant added to your account."]</h4>
 }
 @foreach (var restaurant in Model.RestaurantsOfManager)
 {
@@ -18,11 +18,11 @@
         <table class="table">
             <thead class="thead-light">
             <tr>
-                <th scope="col">Order ID</th>
-                <th scope="col">Items</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Date and time of the order</th>
-                <th scope="col">Time span</th>
+                <th scope="col">@Localizer["Order ID"]</th>
+                <th scope="col">@Localizer["Items"]</th>
+                <th scope="col">@Localizer["Quantity"]</th>
+                <th scope="col">@Localizer["Date and time of the order"]</th>
+                <th scope="col">@Localizer["Time span"]</th>
             </tr>
             </thead>
             <tbody>
