@@ -18,7 +18,6 @@
 <table class="table">
     <thead class="thead-dark">
         <tr>
-            <th>ID</th>
             <th>@Localizer["NAME"]</th>
             <th>@Localizer["DESCRIPTION"]</th>
             <th>@Localizer["PRICE"]</th>
@@ -30,7 +29,6 @@
     @foreach (var meal in Model.Meals)
     {
         <tr>
-            <td>@meal.MealId</td>
             <td>@meal.Name</td>
             <td>@meal.Description</td>
             <td>@meal.Price.Amount @meal.Price.Currency</td>

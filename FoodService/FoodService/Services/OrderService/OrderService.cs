@@ -28,6 +28,7 @@ namespace FoodService.Services.OrderService
         private readonly IMapper mapper;
 
         public OrderService(ApplicationDbContext applicationDbContext, IUserService userService, IMealService mealService, IRestaurantService restaurantService, IEmailService emailService, IMapper mapper)
+
         {
             this.applicationDbContext = applicationDbContext;
             this.userService = userService;
@@ -75,7 +76,9 @@ namespace FoodService.Services.OrderService
             {
                 var shoppingCartDraft = await applicationDbContext.Orders.Include(o => o.CartItems)
                     .ThenInclude(ci => ci.Meal).ThenInclude(m => m.Price)
-                    .FirstOrDefaultAsync(s => (s.User.UserName == userName && s.Restaurant == restaurant && s.OrderStatus == OrderStatus.Draft));
+                    .FirstOrDefaultAsync(s =>
+                        (s.User.UserName == userName && s.Restaurant == restaurant &&
+                         s.OrderStatus == OrderStatus.Draft));
                 if (shoppingCartDraft == null)
                 {
                     shoppingCartDraft = new Order()
@@ -94,7 +97,8 @@ namespace FoodService.Services.OrderService
             return null;
         }
 
-        public async Task<ShoppingCartRequest> CreateShoppingCartRequestByUserAndRestaurantAsync(string userName, Address address, long restaurantId)
+        public async Task<ShoppingCartRequest> CreateShoppingCartRequestByUserAndRestaurantAsync(string userName,
+            Address address, long restaurantId)
         {
             var order = await GetShoppingCartByUserAndRestaurantAsync(userName, restaurantId);
             if (order != null)
@@ -136,7 +140,8 @@ namespace FoodService.Services.OrderService
 
         public async Task<CartItem> GetCartItemByIdAsync(long cartItemId)
         {
-            return await applicationDbContext.CartItems.Include(ci => ci.Order).ThenInclude(o => o.User).Include(ci => ci.Order).ThenInclude(o => o.Restaurant)
+            return await applicationDbContext.CartItems.Include(ci => ci.Order).ThenInclude(o => o.User)
+                .Include(ci => ci.Order).ThenInclude(o => o.Restaurant)
                 .FirstOrDefaultAsync(ci => (ci.CartItemId == cartItemId));
         }
 
@@ -184,14 +189,31 @@ namespace FoodService.Services.OrderService
 
         public async Task<List<Order>> GetOrderedOrdersByManagerAsync(ClaimsPrincipal user)
         {
-            var currentOrders = await applicationDbContext.Orders.Where(or => or.OrderStatus == OrderStatus.Ordered).Where(or => or.Restaurant.Manager.Email == user.Identity.Name).Include(o => o.CartItems).ThenInclude(o => o.Meal).ThenInclude(o => o.Restaurant).ToListAsync();
+            var currentOrders = await applicationDbContext.Orders.Where(or => or.OrderStatus == OrderStatus.Ordered)
+                .Where(or => or.Restaurant.Manager.Email == user.Identity.Name).Include(o => o.CartItems)
+                .ThenInclude(o => o.Meal).ThenInclude(o => o.Restaurant).ToListAsync();
             return currentOrders;
         }
 
-        public async Task<List<Order>> GetOrderHistoryByManagerAsync(ClaimsPrincipal user)
+        public async Task CompleteOrder(long id)
         {
-            var orders = await applicationDbContext.Orders.Where(or => or.OrderStatus != OrderStatus.Draft).Where(or => or.Restaurant.Manager.Email == user.Identity.Name).Include(or => or.Restaurant).Include(or => or.User).Include(or => or.CartItems).ThenInclude(c => c.Meal).ThenInclude(m => m.Price).ToListAsync();
+            var order = await GetOrderById(id);
+            if (order != null)
+            {
+                order.OrderStatus = OrderStatus.Completed;
+                order.DateProcessed = DateTime.UtcNow;
+            }
+            await applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Order>> GetOrderHistoryByManagerAsync(ClaimsPrincipal user)
+        { 
+            var orders = await applicationDbContext.Orders.Where(or => or.OrderStatus != OrderStatus.Draft)
+                    .Where(or => or.Restaurant.Manager.Email == user.Identity.Name).Include(or => or.Restaurant)
+                    .Include(or => or.User).Include(or => or.CartItems).ThenInclude(c => c.Meal)
+                    .ThenInclude(m => m.Price).ToListAsync();
             return orders;
         }
     }
 }
+
