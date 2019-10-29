@@ -196,6 +196,8 @@ namespace FoodService.Migrations
                     b.Property<string>("FoodType")
                         .IsRequired();
 
+                    b.Property<string>("ImageUri");
+
                     b.Property<string>("ManagerId")
                         .IsRequired();
 
@@ -236,22 +238,22 @@ namespace FoodService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e1c302c2-75dd-4f14-86ef-04835de66371",
-                            ConcurrencyStamp = "9009718e-bf89-4ed7-a1d6-d9304cbfbee1",
+                            Id = "65fffb1f-b69b-4552-93f2-0de7800dfa15",
+                            ConcurrencyStamp = "d52ff1c8-f90e-4355-a259-0e73e59ca27b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "698fd4b4-3700-44db-b481-2e3c9d164a69",
-                            ConcurrencyStamp = "0a208cbb-2e80-4df1-bfd0-399a176da8be",
+                            Id = "cab8f5f8-cda5-4135-9d18-e99f49be7d46",
+                            ConcurrencyStamp = "2d4e0e8e-cb8f-4da9-955d-45b38d78abf6",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "7fda9646-081f-4068-93d2-1ede63d8a4d8",
-                            ConcurrencyStamp = "bffd976c-1b16-4028-ab69-23ed23bbccf1",
+                            Id = "5a15f103-b4fe-4c2d-8acc-c9ce63f13a4e",
+                            ConcurrencyStamp = "3c4a4716-8e1d-49b4-8d76-39d1af3e1182",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

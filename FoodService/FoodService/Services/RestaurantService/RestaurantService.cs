@@ -11,6 +11,7 @@ using FoodService.Models.ViewModels.RestaurantViewModels;
 using ReflectionIT.Mvc.Paging;
 using AutoMapper;
 using FoodService.Services.BlobService;
+using Microsoft.Azure.Storage.Blob;
 
 namespace FoodService.Services.RestaurantService
 {
@@ -44,6 +45,16 @@ namespace FoodService.Services.RestaurantService
             var restaurant = mapper.Map<RestaurantRequest, Restaurant>(restaurantReq);
             restaurant.Manager = manager;
             await applicationDbContext.Restaurants.AddAsync(restaurant);
+            await applicationDbContext.SaveChangesAsync();
+            if (restaurantReq.Image == null)
+            {
+                restaurant.ImageUri = "https://dotnetpincerstorage.blob.core.windows.net/mealimages/default/default.png";
+            }
+            else
+            {
+                CloudBlockBlob blob = await blobStorageService.MakeBlobFolderAndSaveImageAsync(restaurant.RestaurantId + 10000, restaurantReq.Image);
+                await AddImageUriToRestaurantAsync(restaurant.RestaurantId, blob);
+            }
             await applicationDbContext.SaveChangesAsync();
             return restaurant;
         }
@@ -163,19 +174,28 @@ namespace FoodService.Services.RestaurantService
         public async Task DeleteRestaurantAsync(long id)
         {
             var restaurant = await FindByIdAsync(id);
+            blobStorageService.DeleteBlobFolder(id + 10000);
             for (int i = 0; i < restaurant.Meals.Count; i++)
             {
                 blobStorageService.DeleteBlobFolder(restaurant.Meals[i].MealId);
                 applicationDbContext.Meals.Remove(restaurant.Meals[i]);
             }
+            foreach (var o in applicationDbContext.Orders.Where(f => f.Restaurant.RestaurantId == restaurant.RestaurantId))
+            {
+                applicationDbContext.Orders.Remove(o);
+            }
             applicationDbContext.Restaurants.Remove(restaurant);
             await applicationDbContext.SaveChangesAsync();
         }
-        
         public async Task<List<Restaurant>> GetRestaurantsByManagerAsync(ClaimsPrincipal user)
         {
             var restaurantsOfManager = await applicationDbContext.Restaurants.Where(r => r.Manager.UserName == user.Identity.Name).ToListAsync();
             return restaurantsOfManager;
+        }
+        public async Task AddImageUriToRestaurantAsync(long RestaurantId, CloudBlockBlob blob)
+        {
+            var restaurant = await GetRestaurantByIdAsync(RestaurantId);
+            restaurant.ImageUri = blob.SnapshotQualifiedStorageUri.PrimaryUri.ToString();
         }
     }
 }

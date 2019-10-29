@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoodService.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -195,7 +195,8 @@ namespace FoodService.Migrations
                     City = table.Column<string>(nullable: false),
                     FoodType = table.Column<string>(nullable: false),
                     PriceCategory = table.Column<int>(nullable: false),
-                    ManagerId = table.Column<string>(nullable: false)
+                    ManagerId = table.Column<string>(nullable: false),
+                    ImageUri = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -305,17 +306,17 @@ namespace FoodService.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e1c302c2-75dd-4f14-86ef-04835de66371", "9009718e-bf89-4ed7-a1d6-d9304cbfbee1", "Admin", "ADMIN" });
+                values: new object[] { "65fffb1f-b69b-4552-93f2-0de7800dfa15", "d52ff1c8-f90e-4355-a259-0e73e59ca27b", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "698fd4b4-3700-44db-b481-2e3c9d164a69", "0a208cbb-2e80-4df1-bfd0-399a176da8be", "Manager", "MANAGER" });
+                values: new object[] { "cab8f5f8-cda5-4135-9d18-e99f49be7d46", "2d4e0e8e-cb8f-4da9-955d-45b38d78abf6", "Manager", "MANAGER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "7fda9646-081f-4068-93d2-1ede63d8a4d8", "bffd976c-1b16-4028-ab69-23ed23bbccf1", "Customer", "CUSTOMER" });
+                values: new object[] { "5a15f103-b4fe-4c2d-8acc-c9ce63f13a4e", "3c4a4716-8e1d-49b4-8d76-39d1af3e1182", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
