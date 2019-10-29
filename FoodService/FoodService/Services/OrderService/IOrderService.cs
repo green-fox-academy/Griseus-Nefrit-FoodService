@@ -22,5 +22,6 @@ namespace FoodService.Services.OrderService
         Task<int> GetNumberOfItemsInBasket(string userName, long restaurantId);
         Task<bool> ValidateAccessAsync(long cartItemId, string userName);
         Task<List<Order>> GetOrderedOrdersByManagerAsync(ClaimsPrincipal user);
+        Task<List<Order>> GetOrderHistoryByManagerAsync(ClaimsPrincipal user);
     }
 }

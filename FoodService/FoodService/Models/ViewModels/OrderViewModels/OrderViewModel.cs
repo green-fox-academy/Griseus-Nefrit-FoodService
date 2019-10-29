@@ -6,7 +6,7 @@ using FoodService.Models.ViewModels;
 
 namespace OrderViewModels
 {
-    public class CurrentOrderViewModel
+    public class OrderViewModel
     {
         public List<Restaurant> RestaurantsOfManager { get; set; }
         public List<Order> Orders { get; set; }
