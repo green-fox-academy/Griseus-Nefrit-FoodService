@@ -13,7 +13,8 @@
     <thead class="thead-light">
         <tr>
             <th scope="col">@Localizer["Order ID"]</th>
-            <th scope="col">@Localizer["Restaurant Name"]</th>
+            <th scope="col">@Localizer["Restaurant"]</th>
+            <th scope="col">@Localizer["Client"]</th>
             <th scope="col">@Localizer["Total Price"]</th>
             <th scope="col">@Localizer["Ordered"]</th>
             <th scope="col">@Localizer["Completed"]</th>
@@ -21,7 +22,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var order in Model.Orders.Where(or => Model.RestaurantsOfManager.Contains(or.Restaurant)))
+        @foreach (var order in Model.Orders)
         {
             bool completed = true;
             string bgClass = "bg-success";
@@ -36,6 +37,7 @@
             <tr class=@bgClass>
                 <td>@order.OrderId</td>
                 <td>@order.Restaurant.Name</td>
+                <td>@order.User.UserName</td>
                 <td>
                     @{
                         int totalPrice = 0;
@@ -48,7 +50,6 @@
                     @totalPrice @order.CartItems[0].Meal.Price.Currency
                 </td>
                 <td>@order.DateSubmitted</td>
-
                 @if (completed)
                 {
                     <td>@order.DateProcessed</td>

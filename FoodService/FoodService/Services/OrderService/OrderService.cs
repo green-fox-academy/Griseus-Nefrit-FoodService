@@ -185,7 +185,7 @@ namespace FoodService.Services.OrderService
 
         public async Task<List<Order>> GetOrderHistoryByManagerAsync(ClaimsPrincipal user)
         {
-            var orders = await applicationDbContext.Orders.Where(or => or.OrderStatus != OrderStatus.Draft).Where(or => or.Restaurant.Manager.Email == user.Identity.Name).Include(or => or.Restaurant).Include(or => or.CartItems).ThenInclude(c => c.Meal).ThenInclude(m => m.Price).ToListAsync();
+            var orders = await applicationDbContext.Orders.Where(or => or.OrderStatus != OrderStatus.Draft).Where(or => or.Restaurant.Manager.Email == user.Identity.Name).Include(or => or.Restaurant).Include(or => or.User).Include(or => or.CartItems).ThenInclude(c => c.Meal).ThenInclude(m => m.Price).ToListAsync();
             return orders;
         }
     }
