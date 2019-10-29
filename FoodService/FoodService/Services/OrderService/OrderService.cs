@@ -59,11 +59,9 @@ namespace FoodService.Services.OrderService
                     {
                         cartItem.Quantity++;
                     }
-
                     await applicationDbContext.SaveChangesAsync();
                 }
             }
-
             return shoppingCart;
         }
 
@@ -91,10 +89,8 @@ namespace FoodService.Services.OrderService
                     await applicationDbContext.Orders.AddAsync(shoppingCartDraft);
                     await applicationDbContext.SaveChangesAsync();
                 }
-
                 return shoppingCartDraft;
             }
-
             return null;
         }
 
@@ -109,10 +105,8 @@ namespace FoodService.Services.OrderService
                 {
                     shoppingCartRequest.Address = address;
                 }
-
                 return shoppingCartRequest;
             }
-
             return null;
         }
 
@@ -126,10 +120,8 @@ namespace FoodService.Services.OrderService
                 {
                     shoppingCartRequest.Address = address;
                 }
-
                 return shoppingCartRequest;
             }
-
             return null;
         }
 
@@ -140,7 +132,6 @@ namespace FoodService.Services.OrderService
             {
                 return cartItem.Order.User.UserName == userName;
             }
-
             return false;
         }
 
@@ -170,7 +161,6 @@ namespace FoodService.Services.OrderService
                 order.OrderStatus = OrderStatus.Ordered;
                 order.DateSubmitted = DateTime.UtcNow;
             }
-
             await applicationDbContext.SaveChangesAsync();
         }
 
