@@ -26,13 +26,15 @@
         {
             bool completed = true;
             string bgClass = "bg-success";
-            TimeSpan span = DateTime.UtcNow - order.DateSubmitted;
+            TimeSpan span = order.DateProcessed - order.DateSubmitted;
             double processingTime = Math.Truncate(@span.TotalMinutes);
 
             @if (@order.DateProcessed <= @order.DateSubmitted)
             {
                 completed = false;
                 bgClass = (processingTime > 60) ? "bg-danger" : "bg-warning";
+                span = DateTime.UtcNow - order.DateSubmitted;
+                processingTime = Math.Truncate(@span.TotalMinutes);
             }
             <tr class=@bgClass>
                 <td>@order.OrderId</td>
