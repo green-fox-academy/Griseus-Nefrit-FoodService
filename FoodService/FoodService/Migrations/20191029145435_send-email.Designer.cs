@@ -3,14 +3,16 @@ using System;
 using FoodService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191029145435_send-email")]
+    partial class sendemail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -245,7 +247,6 @@ namespace FoodService.Migrations
                         },
                         new
                         {
-
                             Id = "9b376630-9e33-4dcb-98b4-091a47bb5dc5",
                             ConcurrencyStamp = "40651ff2-0ed7-4afc-a72a-b950e76a3a2b",
                             Name = "Manager",
@@ -253,7 +254,6 @@ namespace FoodService.Migrations
                         },
                         new
                         {
-
                             Id = "9924cc08-4b9f-464c-8b93-a7a04b26cd12",
                             ConcurrencyStamp = "f4871a5d-5ff1-4c62-8704-b1e5f2cfae5d",
                             Name = "Customer",
