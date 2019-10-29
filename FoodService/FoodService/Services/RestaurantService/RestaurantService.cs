@@ -74,6 +74,11 @@ namespace FoodService.Services.RestaurantService
         {
             var editedRestaurant = await GetRestaurantByIdAsync(id);
             editedRestaurant = mapper.Map<RestaurantRequest, Restaurant>(restaurantRequest, editedRestaurant);
+            if (restaurantRequest.Image != null)
+            {
+                CloudBlockBlob blob = await blobStorageService.MakeBlobFolderAndSaveImageAsync(int.MaxValue - editedRestaurant.RestaurantId, restaurantRequest.Image);
+                await AddImageUriToRestaurantAsync(id, blob);
+            }
             await applicationDbContext.SaveChangesAsync();
             return editedRestaurant;
         }
