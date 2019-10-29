@@ -15,7 +15,6 @@ namespace FoodService.Services.EmailService
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
             var client = new SendGridClient(apiKey);
             var msg = MessageAfterOrderSubmitted(submittedOrder);
-           
             var response = await client.SendEmailAsync(msg);
         }
 
