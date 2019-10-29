@@ -117,31 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add new Restaurant" xml:space="preserve">
-    <value>Új étterem hozzáadása</value>
-  </data>
-  <data name="Logout" xml:space="preserve">
-    <value>Kijelentkezés</value>
-  </data>
-  <data name="Sign In" xml:space="preserve">
-    <value>Bejelentkezés</value>
-  </data>
-  <data name="Sign Up" xml:space="preserve">
-    <value>Regisztráció</value>
-  </data>
-  <data name="User settings" xml:space="preserve">
-    <value>Felhasználói beállítások</value>
-  </data>
   <data name="Current Orders" xml:space="preserve">
     <value>Aktuális rendelések</value>
   </data>
-  <data name="History" xml:space="preserve">
+  <data name="You don't have any restaurant added to your account." xml:space="preserve">
+    <value>Nincs felvett étterme.</value>
+  </data>
+  <data name="Order ID" xml:space="preserve">
+    <value>Rend. ID</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Ételek</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Mennyiség</value>
+  </data>
+  <data name="Date and time of the order" xml:space="preserve">
+    <value>Rendelés ideje</value>
+  </data>
+  <data name="Time span" xml:space="preserve">
+    <value>Eltelt idő</value>
+  </data>
+  <data name="Ordered just now." xml:space="preserve">
+    <value>Most rendelt.</value>
+  </data>
+  <data name="Ordered" xml:space="preserve">
+    <value>Rendelés időpont</value>
+  </data>
+  <data name="minutes ago." xml:space="preserve">
+    <value> perce rendelve.</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Megrendelő</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Átvétel</value>
+  </data>
+  <data name="Delivery time" xml:space="preserve">
+    <value>Szállítási idő</value>
+  </data>
+  <data name="min." xml:space="preserve">
+    <value>perc</value>
+  </data>
+  <data name="Order History" xml:space="preserve">
     <value>Rendeléstörténet</value>
   </data>
-  <data name="Orders" xml:space="preserve">
-    <value>Rendelések</value>
+  <data name="Restaurant" xml:space="preserve">
+    <value>Étterem</value>
   </data>
-  <data name="Restaurants" xml:space="preserve">
-    <value>Éttermek</value>
+  <data name="Total Price" xml:space="preserve">
+    <value>Végösszeg</value>
+  </data>
+  <data name="under delivery..." xml:space="preserve">
+    <value>szállítás alatt...</value>
   </data>
 </root>

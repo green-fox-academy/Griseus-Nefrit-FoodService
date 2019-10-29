@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = @Localizer["Order History"];
+}
+@model OrderViewModels.OrderViewModel
+
+<h1>@Localizer["Order History"]</h1>
+<br />
+@if (!Model.RestaurantsOfManager.Any())
+{
+    <h4>@Localizer["You don't have any restaurant added to your account."]</h4>
+}
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">@Localizer["Order ID"]</th>
+            <th scope="col">@Localizer["Restaurant"]</th>
+            <th scope="col">@Localizer["Client"]</th>
+            <th scope="col">@Localizer["Total Price"]</th>
+            <th scope="col">@Localizer["Ordered"]</th>
+            <th scope="col">@Localizer["Completed"]</th>
+            <th scope="col">@Localizer["Delivery time"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            bool completed = true;
+            string bgClass = "bg-success";
+            TimeSpan span = DateTime.UtcNow - order.DateSubmitted;
+            double processingTime = Math.Truncate(@span.TotalMinutes);
+
+            @if (@order.DateProcessed <= @order.DateSubmitted)
+            {
+                completed = false;
+                bgClass = (processingTime > 60) ? "bg-danger" : "bg-warning";
+            }
+            <tr class=@bgClass>
+                <td>@order.OrderId</td>
+                <td>@order.Restaurant.Name</td>
+                <td>@order.User.UserName</td>
+                <td>
+                    @{
+                        int totalPrice = 0;
+                        foreach (var cartItem in order.CartItems)
+                        {
+                            int sumPrice = cartItem.Meal.Price.Amount * cartItem.Quantity;
+                            totalPrice += sumPrice;
+                        }
+                    }
+                    @totalPrice @order.CartItems[0].Meal.Price.Currency
+                </td>
+                <td>@order.DateSubmitted</td>
+                @if (completed)
+                {
+                    <td>@order.DateProcessed</td>
+                }
+                else
+                {
+                    <td>@Localizer["under delivery..."]</td>
+                }
+                <td>@processingTime @Localizer["min."]</td>
+            </tr>
+        }
+    </tbody>
+</table>

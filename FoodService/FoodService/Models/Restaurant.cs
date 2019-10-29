@@ -32,5 +32,6 @@ namespace FoodService.Models
 
         [Required]
         public AppUser Manager { get; set; }
+        public string ImageUri { get; set; }
     }
 }
