@@ -2,34 +2,38 @@
 @inject IViewLocalizer Localizer
 @model EditRestaurantViewModel
 
-<form asp-controller="Restaurant" asp-action="@ViewData["Action"]" method="post">
-    <div class="form-group">
-        <label asp-for="RestaurantRequest.Name">@Localizer["Name of the restaurant"]</label>
-        <input type="text" asp-for="RestaurantRequest.Name" class="form-control" />
-        <span asp-validation-for="RestaurantRequest.Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="RestaurantRequest.Description">@Localizer["Description of the restaurant"]</label>
-        <input type="text" asp-for="RestaurantRequest.Description" class="form-control" />
-        <span asp-validation-for="RestaurantRequest.Description" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="RestaurantRequest.City">@Localizer["City"]</label>
-        <input type="text" asp-for="RestaurantRequest.City" class="form-control" />
-        <span asp-validation-for="RestaurantRequest.City" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="RestaurantRequest.FoodType">@Localizer["Food type"]</label>
-        <input type="text" asp-for="RestaurantRequest.FoodType" class="form-control" />
-        <span asp-validation-for="RestaurantRequest.FoodType" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="RestaurantRequest.PriceCategory" class="control-label">@Localizer["Price range"]</label>
-        <input asp-for="RestaurantRequest.PriceCategory" value="@if (Model != null) { @((byte)Model.RestaurantRequest.PriceCategory) } " class="rating green rating-loading form-control" data-theme="krajee-fa" data-stars="4" data-min="0" data-max="4" data-step="1" data-show-clear="false" data-show-caption="false" data-show-caption-as-title="false">
-        <span asp-validation-for="RestaurantRequest.PriceCategory" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">@Localizer["Submit"]</button>
-    <form>
-        <button type="button" class="btn btn-info" onclick="history.back()">@Localizer["Cancel"]</button>
-    </form>
+<form asp-controller="Restaurant" asp-action="@ViewData["Action"]" method="post" enctype="multipart/form-data">
+  <div class="form-group">
+    <label asp-for="RestaurantRequest.Name">@Localizer["Name of the restaurant"]</label>
+    <input type="text" asp-for="RestaurantRequest.Name" class="form-control" />
+    <span asp-validation-for="RestaurantRequest.Name" class="text-danger"></span>
+  </div>
+  <div class="form-group">
+    <label asp-for="RestaurantRequest.Description">@Localizer["Description of the restaurant"]</label>
+    <input type="text" asp-for="RestaurantRequest.Description" class="form-control" />
+    <span asp-validation-for="RestaurantRequest.Description" class="text-danger"></span>
+  </div>
+  <div class="form-group">
+    <label asp-for="RestaurantRequest.City">@Localizer["City"]</label>
+    <input type="text" asp-for="RestaurantRequest.City" class="form-control" />
+    <span asp-validation-for="RestaurantRequest.City" class="text-danger"></span>
+  </div>
+  <div class="form-group">
+    <label asp-for="RestaurantRequest.FoodType">@Localizer["Food type"]</label>
+    <input type="text" asp-for="RestaurantRequest.FoodType" class="form-control" />
+    <span asp-validation-for="RestaurantRequest.FoodType" class="text-danger"></span>
+  </div>
+  <div class="form-group">
+    <label asp-for="RestaurantRequest.PriceCategory" class="control-label">@Localizer["Price range"]</label>
+    <input asp-for="RestaurantRequest.PriceCategory" value="@if (Model != null) { @((byte)Model.RestaurantRequest.PriceCategory) } " class="rating green rating-loading form-control" data-theme="krajee-fa" data-stars="4" data-min="0" data-max="4" data-step="1" data-show-clear="false" data-show-caption="false" data-show-caption-as-title="false">
+    <span asp-validation-for="RestaurantRequest.PriceCategory" class="text-danger"></span>
+  </div>
+  <div class="form-group">
+    <label asp-for="RestaurantRequest.Image" class="font-weight-bold">@Localizer["Select image to upload:"]</label><br />
+    <input type="file" asp-for="RestaurantRequest.Image" lang="en" accept=".jpg, .png, .jpeg|image/*">
+  </div>
+  <button type="submit" class="btn btn-primary">@Localizer["Submit"]</button>
+  <form>
+    <button type="button" class="btn btn-info" onclick="history.back()">@Localizer["Cancel"]</button>
+  </form>
 </form>
