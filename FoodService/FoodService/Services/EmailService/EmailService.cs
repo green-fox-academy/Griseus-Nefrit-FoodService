@@ -10,14 +10,7 @@ namespace FoodService.Services.EmailService
 {
     public class EmailService : IEmailService
     {
-        private readonly ApplicationDbContext applicationDbContext;
-
-        public EmailService(ApplicationDbContext applicationDbContext)
-        {
-            this.applicationDbContext = applicationDbContext;
-        }
-
-        public async Task SendMail(Order submittedOrder)
+        public async Task SendMailAfterOrderSubmit(Order submittedOrder)
         {
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
             var client = new SendGridClient(apiKey);

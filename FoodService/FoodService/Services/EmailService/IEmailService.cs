@@ -9,7 +9,7 @@ namespace FoodService.Services.EmailService
 {
     public interface IEmailService
     {
-        Task SendMail(Order submittedOrder);
+        Task SendMailAfterOrderSubmit(Order submittedOrder);
         SendGridMessage MessageAfterOrderSubmitted(Order submittedOrder);
         string CreateEmailBodyHtmlFromOrder(Order submittedOrder);
     }
