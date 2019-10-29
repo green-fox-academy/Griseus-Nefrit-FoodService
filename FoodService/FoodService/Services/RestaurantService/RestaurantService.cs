@@ -52,7 +52,7 @@ namespace FoodService.Services.RestaurantService
             }
             else
             {
-                CloudBlockBlob blob = await blobStorageService.MakeBlobFolderAndSaveImageAsync(restaurant.RestaurantId + 10000, restaurantReq.Image);
+                CloudBlockBlob blob = await blobStorageService.MakeBlobFolderAndSaveImageAsync(int.MaxValue - restaurant.RestaurantId, restaurantReq.Image);
                 await AddImageUriToRestaurantAsync(restaurant.RestaurantId, blob);
             }
             await applicationDbContext.SaveChangesAsync();
@@ -174,7 +174,7 @@ namespace FoodService.Services.RestaurantService
         public async Task DeleteRestaurantAsync(long id)
         {
             var restaurant = await FindByIdAsync(id);
-            blobStorageService.DeleteBlobFolder(id + 10000);
+            blobStorageService.DeleteBlobFolder(int.MaxValue - id);
             for (int i = 0; i < restaurant.Meals.Count; i++)
             {
                 blobStorageService.DeleteBlobFolder(restaurant.Meals[i].MealId);
