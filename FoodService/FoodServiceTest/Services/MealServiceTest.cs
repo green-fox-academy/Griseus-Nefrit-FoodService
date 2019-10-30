@@ -43,14 +43,36 @@ namespace FoodServiceTest.Services
                 mockMapper.Setup(x => x.Map<AddMealRequest, Meal>(It.IsAny<AddMealRequest>()))
                     .Returns(new Meal()
                     {
-                        Name = mealRequest.Name,
-                        
+                        Name = mealRequest.Name,                       
                     });
 
                 var mealService = new MealService(context, mockMapper.Object, mockBlobStorageService.Object, mockRestaurantService.Object);
                 var length = await context.Meals.CountAsync();
                 await mealService.SaveMealAsync(mealRequest);
                 Assert.Equal(length + 1, await context.Meals.CountAsync());
+            }
+        }
+        
+        [Fact]
+        public async Task Meal_is_deleted()
+        {
+            using (var context = new ApplicationDbContext(options))
+            {
+                var mealRequest = new AddMealRequest()
+                {
+                    Name = "TestMeal3"
+                };
+
+                mockMapper.Setup(x => x.Map<AddMealRequest, Meal>(It.IsAny<AddMealRequest>()))
+                    .Returns(new Meal()
+                    {
+                        Name = mealRequest.Name,
+                    });
+
+                var mealService = new MealService(context, mockMapper.Object, mockBlobStorageService.Object, mockRestaurantService.Object);
+                var length = await context.Meals.CountAsync();
+                await mealService.DeleteMealAsync(3);
+                Assert.Equal(length - 1, await context.Meals.CountAsync());
             }
         }
     }

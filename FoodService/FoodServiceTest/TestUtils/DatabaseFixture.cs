@@ -39,14 +39,12 @@ namespace FoodServiceTest.TestUtils
             Restaurant restaurant = new Restaurant
             {
                 Name = "Test1",
-                Manager = manager,
-                
+                Manager = manager,               
             };
             Restaurant restaurant2 = new Restaurant
             {
                 Name = "Test2",
-                Manager = manager,
-                
+                Manager = manager,              
             };
 
             context.Restaurants.AddRange(new List<Restaurant>
@@ -58,19 +56,15 @@ namespace FoodServiceTest.TestUtils
             {
                 new Meal {
                     Name = "TestMeal",
-                    Restaurant = restaurant,
-                    
-                    
+                    Restaurant = restaurant,                                     
                 },
                 new Meal {
                     Name = "TestMeal2",
-                    Restaurant = restaurant,
-                    
+                    Restaurant = restaurant,             
                 },
                 new Meal {
                     Name = "TestMeal3",
-                    Restaurant = restaurant2,
-                    
+                    Restaurant = restaurant2,                  
                 }
             });
         }
