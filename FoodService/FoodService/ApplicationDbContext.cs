@@ -19,6 +19,7 @@ namespace FoodService
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<RestaurantRating> RestaurantRatings { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
