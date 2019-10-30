@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add Restaurant" xml:space="preserve">
-    <value>Étterem hozzáadása</value>
+  <data name="Add new Restaurant" xml:space="preserve">
+    <value>Új étterem hozzáadása</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Kijelentkezés</value>
@@ -134,5 +134,14 @@
   </data>
   <data name="Current Orders" xml:space="preserve">
     <value>Aktuális rendelések</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>Rendeléstörténet</value>
+  </data>
+  <data name="Orders" xml:space="preserve">
+    <value>Rendelések</value>
+  </data>
+  <data name="Restaurants" xml:space="preserve">
+    <value>Éttermek</value>
   </data>
 </root>

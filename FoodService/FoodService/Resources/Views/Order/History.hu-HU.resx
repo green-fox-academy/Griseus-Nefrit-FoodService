@@ -124,7 +124,7 @@
     <value>Nincs felvett étterme.</value>
   </data>
   <data name="Order ID" xml:space="preserve">
-    <value>Rendelés azonosító</value>
+    <value>Rend. ID</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>Ételek</value>
@@ -142,12 +142,33 @@
     <value>Most rendelt.</value>
   </data>
   <data name="Ordered" xml:space="preserve">
-    <value></value>
+    <value>Rendelés időpont</value>
   </data>
   <data name="minutes ago." xml:space="preserve">
     <value> perce rendelve.</value>
   </data>
-  <data name="Complete order" xml:space="preserve">
-    <value>Rendelés teljesítése</value>
+  <data name="Client" xml:space="preserve">
+    <value>Megrendelő</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Átvétel</value>
+  </data>
+  <data name="Delivery time" xml:space="preserve">
+    <value>Szállítási idő</value>
+  </data>
+  <data name="min." xml:space="preserve">
+    <value>perc</value>
+  </data>
+  <data name="Order History" xml:space="preserve">
+    <value>Rendeléstörténet</value>
+  </data>
+  <data name="Restaurant" xml:space="preserve">
+    <value>Étterem</value>
+  </data>
+  <data name="Total Price" xml:space="preserve">
+    <value>Végösszeg</value>
+  </data>
+  <data name="under delivery..." xml:space="preserve">
+    <value>szállítás alatt...</value>
   </data>
 </root>

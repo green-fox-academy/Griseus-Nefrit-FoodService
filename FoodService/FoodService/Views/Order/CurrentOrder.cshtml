@@ -1,9 +1,10 @@
 @using System.Timers
 @using FoodService.Services
 @using Microsoft.EntityFrameworkCore.Internal
-@model OrderViewModels.CurrentOrderViewModel
+@model OrderViewModels.OrderViewModel
 
-<h1>@Localizer["Current Orders"]</h1><br />
+<h1>@Localizer["Current Orders"]</h1>
+<br />
 @if (!Model.RestaurantsOfManager.Any())
 {
     <h4>@Localizer["You don't have any restaurant added to your account."]</h4>
@@ -23,6 +24,7 @@
                 <th scope="col">@Localizer["Quantity"]</th>
                 <th scope="col">@Localizer["Date and time of the order"]</th>
                 <th scope="col">@Localizer["Time span"]</th>
+                <th scope="col">@Localizer["Complete order"]</th>
             </tr>
             </thead>
             <tbody>
@@ -33,11 +35,11 @@
                     <tr>
                         <td>@order.OrderId</td>
                         <td>
-                        @for (int i = 0; i < order.CartItems.Count; i++)
-                                {
-                                    @order.CartItems[i].Meal.Name
-                                    <br/>
-                                }
+                            @for (int i = 0; i < order.CartItems.Count; i++)
+                            {
+                                @order.CartItems[i].Meal.Name
+                                <br/>
+                            }
                         </td>
                         <td>
                             @for (int i = 0; i < order.CartItems.Count; i++)
@@ -55,9 +57,14 @@
                             }
                             else
                             {
-                                <td>@Localizer["Ordered"] @span.Minutes @Localizer["minutes ago."]</td>
+                                <td>@Localizer["Ordered"] @Math.Truncate(@span.TotalMinutes) @Localizer["minutes ago."]</td>
                             }
                         }
+                        <td>
+                            <form asp-controller="Order" method="post" asp-action="OrderCompleted" asp-route-Id="@order.OrderId">
+                                <button type="submit">Complete order</button>
+                            </form>
+                        </td>
                     </tr>
                 }
             }

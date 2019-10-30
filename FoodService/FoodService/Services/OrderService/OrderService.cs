@@ -2,6 +2,7 @@
 using FoodService.Models;
 using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.OrderRequestModels;
+using FoodService.Services.EmailService;
 using FoodService.Services.MealService;
 using FoodService.Services.RestaurantService;
 using FoodService.Services.User;
@@ -23,14 +24,17 @@ namespace FoodService.Services.OrderService
         private readonly IUserService userService;
         private readonly IMealService mealService;
         private readonly IRestaurantService restaurantService;
+        private readonly IEmailService emailService;
         private readonly IMapper mapper;
 
-        public OrderService(ApplicationDbContext applicationDbContext, IUserService userService, IMealService mealService, IRestaurantService restaurantService, IMapper mapper)
+        public OrderService(ApplicationDbContext applicationDbContext, IUserService userService, IMealService mealService, IRestaurantService restaurantService, IEmailService emailService, IMapper mapper)
+
         {
             this.applicationDbContext = applicationDbContext;
             this.userService = userService;
             this.mealService = mealService;
             this.restaurantService = restaurantService;
+            this.emailService = emailService;
             this.mapper = mapper;
         }
 
@@ -38,13 +42,13 @@ namespace FoodService.Services.OrderService
         {
             var meal = await mealService.GetMealByIdAsync(mealId);
             var shoppingCart = await GetShoppingCartByUserAndRestaurantAsync(userName, meal.Restaurant.RestaurantId);
-            if(shoppingCart != null)
+            if (shoppingCart != null)
             {
-                if(meal != null)
+                if (meal != null)
                 {
                     var cartItem = await applicationDbContext.CartItems
                         .FirstOrDefaultAsync(c => c.Meal == meal && c.Order == shoppingCart);
-                    if(cartItem == null)
+                    if (cartItem == null)
                     {
                         var newCartItem = new CartItem()
                         {
@@ -53,7 +57,8 @@ namespace FoodService.Services.OrderService
                             Order = shoppingCart
                         };
                         await applicationDbContext.CartItems.AddAsync(newCartItem);
-                    } else
+                    }
+                    else
                     {
                         cartItem.Quantity++;
                     }
@@ -71,7 +76,9 @@ namespace FoodService.Services.OrderService
             {
                 var shoppingCartDraft = await applicationDbContext.Orders.Include(o => o.CartItems)
                     .ThenInclude(ci => ci.Meal).ThenInclude(m => m.Price)
-                    .FirstOrDefaultAsync(s => (s.User.UserName == userName && s.Restaurant == restaurant && s.OrderStatus == OrderStatus.Draft));
+                    .FirstOrDefaultAsync(s =>
+                        (s.User.UserName == userName && s.Restaurant == restaurant &&
+                         s.OrderStatus == OrderStatus.Draft));
                 if (shoppingCartDraft == null)
                 {
                     shoppingCartDraft = new Order()
@@ -90,13 +97,14 @@ namespace FoodService.Services.OrderService
             return null;
         }
 
-        public async Task<ShoppingCartRequest> CreateShoppingCartRequestByUserAndRestaurantAsync(string userName, Address address, long restaurantId)
+        public async Task<ShoppingCartRequest> CreateShoppingCartRequestByUserAndRestaurantAsync(string userName,
+            Address address, long restaurantId)
         {
             var order = await GetShoppingCartByUserAndRestaurantAsync(userName, restaurantId);
             if (order != null)
             {
                 var shoppingCartRequest = mapper.Map<Order, ShoppingCartRequest>(order);
-                if(address != null)
+                if (address != null)
                 {
                     shoppingCartRequest.Address = address;
                 }
@@ -123,7 +131,7 @@ namespace FoodService.Services.OrderService
         public async Task<bool> ValidateAccessAsync(long cartItemId, string userName)
         {
             var cartItem = await GetCartItemByIdAsync(cartItemId);
-            if(cartItem != null)
+            if (cartItem != null)
             {
                 return cartItem.Order.User.UserName == userName;
             }
@@ -132,7 +140,8 @@ namespace FoodService.Services.OrderService
 
         public async Task<CartItem> GetCartItemByIdAsync(long cartItemId)
         {
-            return await applicationDbContext.CartItems.Include(ci => ci.Order).ThenInclude(o => o.User).Include(ci => ci.Order).ThenInclude(o => o.Restaurant)
+            return await applicationDbContext.CartItems.Include(ci => ci.Order).ThenInclude(o => o.User)
+                .Include(ci => ci.Order).ThenInclude(o => o.Restaurant)
                 .FirstOrDefaultAsync(ci => (ci.CartItemId == cartItemId));
         }
 
@@ -149,18 +158,20 @@ namespace FoodService.Services.OrderService
         public async Task SaveOrderAsync(long orderId, Address address)
         {
             var order = await GetOrderById(orderId);
-            if(order != null)
+            if (order != null)
             {
                 order.Address = address;
                 order.OrderStatus = OrderStatus.Ordered;
                 order.DateSubmitted = DateTime.UtcNow;
             }
             await applicationDbContext.SaveChangesAsync();
+            await emailService.SendMailAfterOrderSubmit(order);
         }
 
         public async Task<Order> GetOrderById(long orderId)
         {
-            return await applicationDbContext.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+            return await applicationDbContext.Orders.Include(o => o.User).Include(o => o.CartItems).ThenInclude(c => c.Meal).Include(o => o.Restaurant).ThenInclude(r => r.Manager)
+                .Where(o => o.OrderId == orderId).FirstOrDefaultAsync();
         }
 
         public async Task<int> GetNumberOfItemsInBasket(string userName, long restaurantId)
@@ -170,16 +181,39 @@ namespace FoodService.Services.OrderService
             {
                 return shoppingCart.CartItems.Count;
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException)
             {
                 return 0;
             }
         }
-        
+
         public async Task<List<Order>> GetOrderedOrdersByManagerAsync(ClaimsPrincipal user)
         {
-            var currentOrders = await applicationDbContext.Orders.Where(or => or.OrderStatus == OrderStatus.Ordered).Where(or => or.Restaurant.Manager.Email == user.Identity.Name).Include(o => o.CartItems).ThenInclude(o => o.Meal).ThenInclude(o => o.Restaurant).ToListAsync();
+            var currentOrders = await applicationDbContext.Orders.Where(or => or.OrderStatus == OrderStatus.Ordered)
+                .Where(or => or.Restaurant.Manager.Email == user.Identity.Name).Include(o => o.CartItems)
+                .ThenInclude(o => o.Meal).ThenInclude(o => o.Restaurant).ToListAsync();
             return currentOrders;
+        }
+
+        public async Task CompleteOrder(long id)
+        {
+            var order = await GetOrderById(id);
+            if (order != null)
+            {
+                order.OrderStatus = OrderStatus.Completed;
+                order.DateProcessed = DateTime.UtcNow;
+            }
+            await applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Order>> GetOrderHistoryByManagerAsync(ClaimsPrincipal user)
+        { 
+            var orders = await applicationDbContext.Orders.Where(or => or.OrderStatus != OrderStatus.Draft)
+                    .Where(or => or.Restaurant.Manager.Email == user.Identity.Name).Include(or => or.Restaurant)
+                    .Include(or => or.User).Include(or => or.CartItems).ThenInclude(c => c.Meal)
+                    .ThenInclude(m => m.Price).ToListAsync();
+            return orders;
         }
     }
 }
+
