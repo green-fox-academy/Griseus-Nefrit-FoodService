@@ -7,6 +7,8 @@ using FoodService.Services.BlobService;
 using FoodService.Models.ViewModels;
 using FoodService.Models.ViewModels.RestaurantViewModels;
 using FoodService.Services.OrderService;
+using FoodService.Services.User;
+using FoodService.Models;
 
 namespace FoodService.Controllers
 {
@@ -15,18 +17,20 @@ namespace FoodService.Controllers
     {
         private readonly IRestaurantService restaurantService;
         private readonly IOrderService orderService;
+        private readonly IUserService userService;
 
-        public RestaurantController(IRestaurantService restaurantService, IOrderService orderService)
+        public RestaurantController(IRestaurantService restaurantService, IOrderService orderService, IUserService userService)
         {
             this.restaurantService = restaurantService;
             this.orderService = orderService;
+            this.userService = userService;
         }
 
         [Authorize(Roles = "Manager, Admin")]
         [HttpPost]
         public async Task<IActionResult> Add(RestaurantRequest restaurantRequest)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 await restaurantService.SaveRestaurantAsync(restaurantRequest, User.Identity.Name);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
@@ -79,7 +83,7 @@ namespace FoodService.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> Index(long id)
+        public async Task<IActionResult> Index([FromRoute] long id)
         {
             var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
             int numberOfCartItems = 0;
@@ -106,6 +110,16 @@ namespace FoodService.Controllers
             }
             await restaurantService.DeleteRestaurantAsync(id);
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Rate(int stars, string oppinion, long id)
+        {
+            var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
+            string username = User.Identity.Name;
+            var user = await userService.FindUserByNameOrEmailAsync(username);
+            restaurantService.SaveUserRating(user, stars, restaurant, oppinion);
+            string message = stars.ToString();
+            return RedirectToAction(nameof(RestaurantController.Index), "Restaurant", new { id = id });
         }
     }
 }

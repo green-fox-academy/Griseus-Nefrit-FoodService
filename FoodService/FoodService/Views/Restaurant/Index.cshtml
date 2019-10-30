@@ -40,6 +40,31 @@ else
     </td>
   </tr>
 </table>
+
+  <form asp-controller="Restaurant" asp-action="Rate" method="post" asp-route-id="@Model.Restaurant.RestaurantId">
+  <table>
+    <tr>
+      <td></td>
+      <td>
+        <input type="button" class="btn btn-secondary" onclick="document.getElementById('updateForm').style.display='block'" value="Rate this Restaurant" />
+      </td>
+    </tr>
+  </table>
+  <div id="updateForm" style="display:none">
+    <form action="" method="post" id="form" name="form">
+      <select name="stars">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      oppinion: <input type="text" name="oppinion">
+      <button type="submit" class="btn btn-success">submit your rating</button>
+    </form>
+  </div>
+</form>
+<br />
 @if ((User.IsInRole("Manager") && User.Identity.Name == Model.Restaurant.Manager.UserName) || User.IsInRole("Admin"))
 {
   <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Restaurant.RestaurantId" class="btn btn-warning" role="button">@Localizer["Edit restaurant"]</a>

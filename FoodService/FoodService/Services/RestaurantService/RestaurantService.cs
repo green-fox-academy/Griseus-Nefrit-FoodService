@@ -12,6 +12,7 @@ using ReflectionIT.Mvc.Paging;
 using AutoMapper;
 using FoodService.Services.BlobService;
 using Microsoft.Azure.Storage.Blob;
+using FoodService.Models.Identity;
 
 namespace FoodService.Services.RestaurantService
 {
@@ -201,6 +202,19 @@ namespace FoodService.Services.RestaurantService
         {
             var restaurant = await GetRestaurantByIdAsync(RestaurantId);
             restaurant.ImageUri = blob.SnapshotQualifiedStorageUri.PrimaryUri.ToString();
+        }
+
+        public void SaveUserRating(AppUser appUser, int Stars, Restaurant restaurant, string Oppinion)
+        {
+            RestaurantRating restaurantRating = new RestaurantRating
+            {
+                Restaurant = restaurant,
+                Rating = Stars,
+                AppUser = appUser,
+                Oppinion = Oppinion
+            };
+            applicationDbContext.RestaurantRatings.Add(restaurantRating);
+            applicationDbContext.SaveChanges();
         }
     }
 }
