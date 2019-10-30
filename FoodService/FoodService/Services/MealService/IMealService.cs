@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using FoodService.Models.RequestModels.RestaurantRequestModels;
 using FoodService.Models;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using FoodService.Models.Api;
 
 namespace FoodService.Services.MealService
 {
@@ -15,5 +17,6 @@ namespace FoodService.Services.MealService
         Task<AddMealRequest> CreateMealRequestAsync(long id);
         Task<bool> ValidateAccessAsync(long mealId, ClaimsPrincipal user);
         Task AddImageUriToMealAsync(long mealID, Microsoft.Azure.Storage.Blob.CloudBlockBlob blob);
+        Task<List<Meal>> GetMealByRestaurantIdAsync(long restaurantId);
     }
 }
