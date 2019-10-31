@@ -114,11 +114,8 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Rate(int stars, string oppinion, long id)
         {
-            var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
             string username = User.Identity.Name;
-            var user = await userService.FindUserByNameOrEmailAsync(username);
-            restaurantService.SaveUserRating(user, stars, restaurant, oppinion);
-            string message = stars.ToString();
+            await restaurantService.SaveUserRatingAsync(username, stars, id, oppinion);
             return RedirectToAction(nameof(RestaurantController.Index), "Restaurant", new { id = id });
         }
     }

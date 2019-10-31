@@ -204,8 +204,10 @@ namespace FoodService.Services.RestaurantService
             restaurant.ImageUri = blob.SnapshotQualifiedStorageUri.PrimaryUri.ToString();
         }
 
-        public void SaveUserRating(AppUser appUser, int Stars, Restaurant restaurant, string Oppinion)
+        public async Task SaveUserRatingAsync(string username, int Stars, long restaurantId, string Oppinion)
         {
+            Restaurant restaurant = await GetRestaurantByIdAsync(restaurantId);
+            var appUser = await userService.FindUserByNameOrEmailAsync(username);
             RestaurantRating restaurantRating = new RestaurantRating
             {
                 Restaurant = restaurant,
