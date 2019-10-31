@@ -12,6 +12,7 @@ namespace FoodService.Models
         public AppUser AppUser { get; set; }
         public Restaurant Restaurant { get; set; }
         public int Rating { get; set; }
-        public string Opinion { set; get; }
+        public string Opinion { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }
