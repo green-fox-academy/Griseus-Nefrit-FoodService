@@ -33,6 +33,6 @@ namespace FoodService.Models
         [Required]
         public AppUser Manager { get; set; }
         public string ImageUri { get; set; }
-        public List<RestaurantRating> restaurantRatings { get; set; }
+        public List<RestaurantRating> RestaurantRatings { get; set; }
     }
 }
