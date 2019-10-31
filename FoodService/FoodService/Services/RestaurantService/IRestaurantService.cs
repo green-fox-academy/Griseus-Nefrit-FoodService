@@ -27,5 +27,6 @@ namespace FoodService.Services.RestaurantService
         Task<List<Restaurant>> GetRestaurantsByManagerAsync(ClaimsPrincipal user);
         Task AddImageUriToRestaurantAsync(long RestaurantId, Microsoft.Azure.Storage.Blob.CloudBlockBlob blob);
         Task SaveUserRatingAsync(string username, int Stars, long restaurantId, string Oppinion);
+        Task <bool>UserAlreadyRatedThisRestaurantAsync(string username, long id);
     }
 }

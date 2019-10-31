@@ -114,8 +114,17 @@ namespace FoodService.Controllers
         [HttpPost]
         public async Task<IActionResult> Rate(int stars, string oppinion, long id)
         {
+            string errormessage = "";
             string username = User.Identity.Name;
-            await restaurantService.SaveUserRatingAsync(username, stars, id, oppinion);
+            if (await restaurantService.UserAlreadyRatedThisRestaurantAsync(username, id))
+            {
+                errormessage = "You already voted!";
+            }
+            else
+            {
+                await restaurantService.SaveUserRatingAsync(username, stars, id, oppinion);
+            }
+
             return RedirectToAction(nameof(RestaurantController.Index), "Restaurant", new { id = id });
         }
     }

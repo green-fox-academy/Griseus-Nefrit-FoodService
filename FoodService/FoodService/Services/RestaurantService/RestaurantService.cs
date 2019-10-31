@@ -218,5 +218,17 @@ namespace FoodService.Services.RestaurantService
             applicationDbContext.RestaurantRatings.Add(restaurantRating);
             applicationDbContext.SaveChanges();
         }
+
+        public async Task<bool> UserAlreadyRatedThisRestaurantAsync(string username, long id)
+        {
+            Restaurant restaurant = await GetRestaurantByIdAsync(id);
+            var appUser = await userService.FindUserByNameOrEmailAsync(username);
+            var restaurantrating = applicationDbContext.RestaurantRatings.Where(r => r.Restaurant == restaurant && r.AppUser == appUser);
+            if (restaurantrating.FirstOrDefault() != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
