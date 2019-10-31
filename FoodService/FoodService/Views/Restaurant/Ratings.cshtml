@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model RestaurantRatingViewModel
+
+<h2>@Localizer["Ratings of the restaurant"]</h2>
+
+@ViewData["Title"] = @Localizer["Rating of the restaurant"];
+
+<br />
+<h2>@Localizer["List of your current meals"]</h2>
+<br />
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>@Localizer["NAME"]</th>
+            <th>@Localizer["RATING"]</th>
+            <th>@Localizer["OPINION"]</th>
+            <th>@Localizer["DATE AND TIME OF THE FEEDBACK"]</th>
+        </tr>
+    </thead>
+    @foreach (var rating in Model.Ratings)
+    {
+        <tr>
+            <td>@rating.AppUser.Email</td>
+            <td>@rating.Rating</td>
+            <td>@rating.Opinion</td>
+            <td>@rating.DateTime</td>
+        </tr>
+    }
+</table>
