@@ -7,6 +7,7 @@ using FoodService.Services.BlobService;
 using FoodService.Models.ViewModels;
 using FoodService.Models.ViewModels.RestaurantViewModels;
 using FoodService.Services.OrderService;
+using FoodService.Models;
 
 namespace FoodService.Controllers
 {
@@ -106,6 +107,19 @@ namespace FoodService.Controllers
             }
             await restaurantService.DeleteRestaurantAsync(id);
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Ratings([FromRoute] long id)
+        {
+            var restaurant = await restaurantService.GetRestaurantByIdAsync(id);
+
+            RestaurantRating restaurantRating = new RestaurantRating()
+            {
+                Restaurant = restaurant,
+            };
+            return View();
         }
     }
 }
