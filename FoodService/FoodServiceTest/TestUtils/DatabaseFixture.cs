@@ -51,6 +51,14 @@ namespace FoodServiceTest.TestUtils
             {
                 restaurant, restaurant2
             });
+            
+            context.CartItems.AddRange(new List<CartItem>
+            {
+                new CartItem()
+                {
+                    CartItemId = 1
+                }
+            });
 
             context.Meals.AddRange(new List<Meal>
             {
