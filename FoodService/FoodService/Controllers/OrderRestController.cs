@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using FoodService.Models.Api;
 using FoodService.Services.OrderService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodService.Controllers
 {
+    [Authorize]
     [Route("api/orders")]
     [ApiController]
     public class OrderRestController : ControllerBase

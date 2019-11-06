@@ -6,11 +6,13 @@ using FoodService.Models;
 using FoodService.Models.Api;
 using FoodService.Services.MealService;
 using FoodService.Services.RestaurantService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodService.Controllers
 {
+    [Authorize]
     [Route("api/restaurants")]
     [ApiController]
     public class RestaurantRestController : ControllerBase

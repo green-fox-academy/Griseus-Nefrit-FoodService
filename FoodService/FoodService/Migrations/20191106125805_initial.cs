@@ -306,29 +306,17 @@ namespace FoodService.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-<<<<<<< HEAD:FoodService/FoodService/Migrations/20191106125805_initial.cs
-                values: new object[] { "2fb071cd-3604-4569-b55e-881db19854a6", "a850a64f-b81c-43e5-a6a9-3a9f5f1a83b9", "Admin", "ADMIN" });
-=======
                 values: new object[] { "7883cb24-0af3-4f38-905b-b768e6d4ddf2", "f63e2441-9936-45d1-aab0-ee640cc912ec", "Admin", "ADMIN" });
->>>>>>> 99e1bc4480d383f31470f1fbe64908be38d2d0f6:FoodService/FoodService/Migrations/20191106113725_init.cs
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-<<<<<<< HEAD:FoodService/FoodService/Migrations/20191106125805_initial.cs
-                values: new object[] { "bf6d1e3c-934e-43ab-8136-baf2b63ed58c", "c8df4ee6-2340-4660-ad1c-fdce4486d0b2", "Manager", "MANAGER" });
-=======
                 values: new object[] { "fa2f058f-aa9a-4ee8-a0ed-5fe594c16609", "0ef08ab1-773a-4257-9049-85efe6704515", "Manager", "MANAGER" });
->>>>>>> 99e1bc4480d383f31470f1fbe64908be38d2d0f6:FoodService/FoodService/Migrations/20191106113725_init.cs
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-<<<<<<< HEAD:FoodService/FoodService/Migrations/20191106125805_initial.cs
-                values: new object[] { "347495d7-ebc4-4c0d-b028-eb70e072cedd", "5aa76bf6-a10c-4739-8af6-9513e42f894f", "Customer", "CUSTOMER" });
-=======
                 values: new object[] { "f4f1d040-e565-46ff-9a2a-6ce642f90880", "bd430fac-38a9-402b-88ec-cb7c8962a46b", "Customer", "CUSTOMER" });
->>>>>>> 99e1bc4480d383f31470f1fbe64908be38d2d0f6:FoodService/FoodService/Migrations/20191106113725_init.cs
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
