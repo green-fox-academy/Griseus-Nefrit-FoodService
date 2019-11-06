@@ -36,14 +36,14 @@ namespace FoodService.Controllers
             {
                 return await restaurantService.FindAllAsync();
             }
-            
         }
 
         // GET: api/restaurants/5
         [HttpGet("{id}")]
         public async Task<Restaurant> Get(long id)
         {
-            return await restaurantService.FindByIdAsync(id);
+            var restaurant = await restaurantService.FindByIdOnlyRestaurantAsync(id);
+            return restaurant;
         }
 
         // GET: api/restaurants/5/meals

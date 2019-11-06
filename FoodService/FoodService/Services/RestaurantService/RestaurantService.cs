@@ -95,6 +95,11 @@ namespace FoodService.Services.RestaurantService
             return await applicationDbContext.Restaurants.Include(r => r.Meals).FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
         }
 
+        public async Task<Restaurant> FindByIdOnlyRestaurantAsync(long restaurantId)
+        {
+            return await applicationDbContext.Restaurants.FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
+        }
+
         public async Task<bool> ValidateAccessAsync(long restaurantId, ClaimsPrincipal user)
         {
             if (user.IsInRole("Admin"))

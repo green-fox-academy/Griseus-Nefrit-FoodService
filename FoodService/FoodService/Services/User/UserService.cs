@@ -29,6 +29,11 @@ namespace FoodService.Services.User
             return await userMgr.FindByEmailAsync(nameOrEmailAddr);
         }
 
+        public async Task<AppUser> FindUserById(string userId)
+        {
+            return await userMgr.FindByIdAsync(userId);
+        }
+
         public async Task<SignInResult> LoginAsync(LoginRequest loginRequest)
         {
             var result = await signInMgr.PasswordSignInAsync(userName: loginRequest.Email, password: loginRequest.Password, isPersistent: false, lockoutOnFailure: false);

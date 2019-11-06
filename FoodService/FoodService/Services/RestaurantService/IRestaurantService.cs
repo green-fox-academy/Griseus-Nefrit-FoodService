@@ -17,6 +17,7 @@ namespace FoodService.Services.RestaurantService
         Task<List<Restaurant>> FindAllAsync();
         Task<List<Restaurant>> GetRestaurantsByCityName(string cityName);
         Task<Restaurant> FindByIdAsync(long postId);
+        Task<Restaurant> FindByIdOnlyRestaurantAsync(long postId);
         Task<Restaurant> EditRestaurantAsync(long id, RestaurantRequest restaurantRequest);
         Task<List<Restaurant>> FindRestaurantByManagerNameOrEmailAsync(string managerName);
         Task<bool> ValidateAccessAsync(long restaurantId, ClaimsPrincipal user);
