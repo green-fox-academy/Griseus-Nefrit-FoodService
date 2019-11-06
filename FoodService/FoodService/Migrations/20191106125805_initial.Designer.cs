@@ -9,8 +9,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
+<<<<<<< HEAD:FoodService/FoodService/Migrations/20191106125805_initial.Designer.cs
     [Migration("20191106125805_initial")]
     partial class initial
+=======
+    [Migration("20191106113725_init")]
+    partial class init
+>>>>>>> 99e1bc4480d383f31470f1fbe64908be38d2d0f6:FoodService/FoodService/Migrations/20191106113725_init.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -240,22 +245,37 @@ namespace FoodService.Migrations
                     b.HasData(
                         new
                         {
+<<<<<<< HEAD:FoodService/FoodService/Migrations/20191106125805_initial.Designer.cs
                             Id = "2fb071cd-3604-4569-b55e-881db19854a6",
                             ConcurrencyStamp = "a850a64f-b81c-43e5-a6a9-3a9f5f1a83b9",
+=======
+                            Id = "7883cb24-0af3-4f38-905b-b768e6d4ddf2",
+                            ConcurrencyStamp = "f63e2441-9936-45d1-aab0-ee640cc912ec",
+>>>>>>> 99e1bc4480d383f31470f1fbe64908be38d2d0f6:FoodService/FoodService/Migrations/20191106113725_init.Designer.cs
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
+<<<<<<< HEAD:FoodService/FoodService/Migrations/20191106125805_initial.Designer.cs
                             Id = "bf6d1e3c-934e-43ab-8136-baf2b63ed58c",
                             ConcurrencyStamp = "c8df4ee6-2340-4660-ad1c-fdce4486d0b2",
+=======
+                            Id = "fa2f058f-aa9a-4ee8-a0ed-5fe594c16609",
+                            ConcurrencyStamp = "0ef08ab1-773a-4257-9049-85efe6704515",
+>>>>>>> 99e1bc4480d383f31470f1fbe64908be38d2d0f6:FoodService/FoodService/Migrations/20191106113725_init.Designer.cs
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
+<<<<<<< HEAD:FoodService/FoodService/Migrations/20191106125805_initial.Designer.cs
                             Id = "347495d7-ebc4-4c0d-b028-eb70e072cedd",
                             ConcurrencyStamp = "5aa76bf6-a10c-4739-8af6-9513e42f894f",
+=======
+                            Id = "f4f1d040-e565-46ff-9a2a-6ce642f90880",
+                            ConcurrencyStamp = "bd430fac-38a9-402b-88ec-cb7c8962a46b",
+>>>>>>> 99e1bc4480d383f31470f1fbe64908be38d2d0f6:FoodService/FoodService/Migrations/20191106113725_init.Designer.cs
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
