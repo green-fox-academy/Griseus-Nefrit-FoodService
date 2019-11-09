@@ -34,8 +34,26 @@ namespace FoodServiceTest.TestUtils
         {
             AppUser manager = new AppUser
             {
-                UserName = "TestName"
+                UserName = "TestName",
+                Id = "123",
+                
             };
+
+            context.Users.Add(manager);
+            
+            context.Orders.AddRange(new List<Order>()
+            {
+                new Order()
+                {
+                    OrderId = 5,
+                    User = manager,
+                    Restaurant = new Restaurant()
+                    {
+                        RestaurantId = 5
+                    }
+                }
+            });
+            
             Restaurant restaurant = new Restaurant
             {
                 Name = "Test1",
@@ -49,14 +67,23 @@ namespace FoodServiceTest.TestUtils
 
             context.Restaurants.AddRange(new List<Restaurant>
             {
-                restaurant, restaurant2
+                restaurant, restaurant2,
             });
             
             context.CartItems.AddRange(new List<CartItem>
             {
                 new CartItem()
                 {
-                    CartItemId = 1
+                    CartItemId = 1,
+                    Order = new Order()
+                    {
+                        OrderId = 5
+                    },
+                    Meal = new Meal()
+                    {
+                        MealId = 5
+                    },
+                    Quantity = 2
                 }
             });
 

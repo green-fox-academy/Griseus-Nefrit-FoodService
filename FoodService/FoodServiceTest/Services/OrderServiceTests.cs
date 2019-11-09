@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FoodService;
 using FoodService.Models;
+using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.OrderRequestModels;
 using FoodService.Services.BlobService;
 using FoodService.Services.EmailService;
@@ -11,6 +13,7 @@ using FoodService.Services.OrderService;
 using FoodService.Services.RestaurantService;
 using FoodService.Services.User;
 using FoodServiceTest.TestUtils;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
@@ -38,11 +41,34 @@ namespace FoodServiceTest.Services
         }
 
         [Fact]
-        public async Task Meal_Is_Added_To_ShoppingCart()
+        public async Task CartItem_Is_Added_To_ShoppingCart()
         {
             using (var context = new ApplicationDbContext(options))
             {
+                var restaurant = new Restaurant()
+                {
+                    RestaurantId = 5
+                };
                 
+                var meal = new Meal()
+                {
+                    MealId = 5,
+                    Restaurant = restaurant
+                };
+                var user = new AppUser()
+                {
+                    UserName = "TestName3"
+                };
+
+                mockMealService.Setup(m => m.GetMealByIdAsync(meal.MealId)).Returns(Task.FromResult(meal));
+                mockUserService.Setup(m => m.FindUserByNameOrEmailAsync(user.UserName)).Returns(Task.FromResult(user));
+                mockRestaurantService.Setup(m => m.FindByIdAsync(meal.Restaurant.RestaurantId)).Returns(Task.FromResult(restaurant));
+                var orderService = new OrderService(context, mockUserService.Object, mockMealService.Object, mockRestaurantService.Object,mockEmailService.Object, mockMapper.Object);
+                var cartitem = await context.CartItems.FirstAsync(x => x.CartItemId == 1);
+                var length = cartitem.Quantity;
+                var shoppingCart = await orderService.AddMealToOrderAsync(5L, user.UserName);
+
+                Assert.Equal(length + 1, cartitem.Quantity);
             }
         }
 
