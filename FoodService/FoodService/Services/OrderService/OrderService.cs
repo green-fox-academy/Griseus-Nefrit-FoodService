@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FoodService.Models;
+using FoodService.Models.Api;
 using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.OrderRequestModels;
 using FoodService.Services.EmailService;
@@ -213,6 +214,39 @@ namespace FoodService.Services.OrderService
                     .Include(or => or.User).Include(or => or.CartItems).ThenInclude(c => c.Meal)
                     .ThenInclude(m => m.Price).ToListAsync();
             return orders;
+        }
+
+        public async Task SavePostedOrderApiAsync(OrderApi postedOrder)
+        {
+            List<CartItem> cartItems = new List<CartItem>();
+            foreach (CartItemBasicApi ci in postedOrder.Meals)
+            {
+                CartItem cartItem = new CartItem()
+                {
+                    Quantity = ci.Quantity,
+                    Meal = await mealService.GetMealByIdAsync(ci.MealId)
+                };
+                cartItems.Add(cartItem);
+            }
+            AppUser appUser = await userService.FindUserById(postedOrder.UserId);
+            var createNewOrder = new Order()
+            {
+                DateCreated = DateTime.UtcNow,
+                DateSubmitted = DateTime.UtcNow,
+                CartItems = cartItems,
+                User = appUser,
+                OrderStatus = OrderStatus.Ordered,
+                Address = new Address()
+                {
+                    City = postedOrder.AddressApi.City,
+                    Country = postedOrder.AddressApi.Country,
+                    Street = postedOrder.AddressApi.Street,
+                    ZipCode = postedOrder.AddressApi.ZipCode
+                },
+                Restaurant = await restaurantService.FindByIdAsync(postedOrder.RestaurantId)
+            };
+            await applicationDbContext.Orders.AddAsync(createNewOrder);
+            await applicationDbContext.SaveChangesAsync();
         }
     }
 }

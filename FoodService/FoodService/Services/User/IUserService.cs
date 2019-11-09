@@ -16,7 +16,8 @@ namespace FoodService.Services.User
         Task<SignInResult> LoginAsync(LoginRequest loginRequest);
         Task Logout();
         Task<IdentityResult> RegisterAsync(RegisterRequest regRequest);
-        Task<AppUser> FindUserByNameOrEmailAsync(string emailAddr);
+        Task<AppUser> FindUserByNameOrEmailAsync(string userId);
+        Task<AppUser> FindUserById(string emailAddr);
         Task<IList<AuthenticationScheme>> GetExternalAuthenticationSchemesAsync();
         AuthenticationProperties ConfigureExternalAuthenticaticationProperties(string provider, string redirectUrl);
         Task<ExternalLoginInfo> GetExternalLoginInfoAsync();
