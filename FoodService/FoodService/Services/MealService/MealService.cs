@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using FoodService.Models.RequestModels.RestaurantRequestModels;
 using FoodService.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using Microsoft.Azure.Storage.Blob;
 using AutoMapper;
 using FoodService.Services.RestaurantService;
@@ -10,6 +11,7 @@ using FoodService.Services.BlobService;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Security.Claims;
+using FoodService.Models.Api;
 
 namespace FoodService.Services.MealService
 {
@@ -109,6 +111,13 @@ namespace FoodService.Services.MealService
         {
             var meal = await GetMealByIdAsync(mealId);
             meal.ImageUri = blob.SnapshotQualifiedStorageUri.PrimaryUri.ToString();
+        }
+
+        public async Task<List<Meal>> GetMealByRestaurantIdAsync(long restaurantId) {
+            {
+                var meals = await applicationDbContext.Meals.Include(p => p.Price).Where(r => r.Restaurant.RestaurantId == restaurantId).ToListAsync();
+                return meals;
+            }
         }
     }
 }
