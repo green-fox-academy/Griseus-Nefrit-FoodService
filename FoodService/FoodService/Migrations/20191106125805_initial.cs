@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoodService.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -306,17 +306,29 @@ namespace FoodService.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+<<<<<<< HEAD:FoodService/FoodService/Migrations/20191111111454_initial.cs
                 values: new object[] { "430fd5bb-943c-48f4-a1c8-548a4239e8d4", "0f20bd80-167b-4827-b3e8-b4b7a4ec3bcd", "Admin", "ADMIN" });
+=======
+                values: new object[] { "7883cb24-0af3-4f38-905b-b768e6d4ddf2", "f63e2441-9936-45d1-aab0-ee640cc912ec", "Admin", "ADMIN" });
+>>>>>>> 4b08a24a0b98eb40f384385511e67bea33b85951:FoodService/FoodService/Migrations/20191106125805_initial.cs
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+<<<<<<< HEAD:FoodService/FoodService/Migrations/20191111111454_initial.cs
                 values: new object[] { "e9d51dfb-d48c-4a67-a1e3-053cda56f5f0", "80d98183-10c8-44e3-90e2-a9865a005d64", "Manager", "MANAGER" });
+=======
+                values: new object[] { "fa2f058f-aa9a-4ee8-a0ed-5fe594c16609", "0ef08ab1-773a-4257-9049-85efe6704515", "Manager", "MANAGER" });
+>>>>>>> 4b08a24a0b98eb40f384385511e67bea33b85951:FoodService/FoodService/Migrations/20191106125805_initial.cs
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+<<<<<<< HEAD:FoodService/FoodService/Migrations/20191111111454_initial.cs
                 values: new object[] { "1614d527-4269-4777-a3bf-d28573d0eb4b", "74adc4f8-1bb5-4ae9-a0b9-7046493653d4", "Customer", "CUSTOMER" });
+=======
+                values: new object[] { "f4f1d040-e565-46ff-9a2a-6ce642f90880", "bd430fac-38a9-402b-88ec-cb7c8962a46b", "Customer", "CUSTOMER" });
+>>>>>>> 4b08a24a0b98eb40f384385511e67bea33b85951:FoodService/FoodService/Migrations/20191106125805_initial.cs
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

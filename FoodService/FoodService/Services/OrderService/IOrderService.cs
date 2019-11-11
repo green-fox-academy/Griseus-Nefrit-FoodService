@@ -1,4 +1,5 @@
 ﻿using FoodService.Models;
+using FoodService.Models.Api;
 using FoodService.Models.Identity;
 using FoodService.Models.RequestModels.OrderRequestModels;
 using System;
@@ -24,5 +25,6 @@ namespace FoodService.Services.OrderService
         Task<List<Order>> GetOrderedOrdersByManagerAsync(ClaimsPrincipal user);
         Task CompleteOrderAsync(long id);
         Task<List<Order>> GetOrderHistoryByManagerAsync(ClaimsPrincipal user);
+        Task SavePostedOrderApiAsync(OrderApi postedOrder);
     }
 }

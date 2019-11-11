@@ -64,6 +64,13 @@ namespace FoodService.Services.RestaurantService
             List<Restaurant> restaurantList = await applicationDbContext.Restaurants.AsQueryable().OrderBy(r => r.Name).ToListAsync();
             return restaurantList;
         }
+
+        public async Task<List<Restaurant>> GetRestaurantsByCityName(string cityName)
+        {
+            List<Restaurant> restaurantList = await applicationDbContext.Restaurants.Where(r => r.City == cityName).OrderBy(r => r.Name).ToListAsync();
+            return restaurantList;
+        }
+
         public async Task<List<Restaurant>> FindRestaurantByManagerNameOrEmailAsync(string managerName)
         {
             var restaurantList = await applicationDbContext.Restaurants.Include(r => r.Meals).AsQueryable().Where(r => r.Manager.UserName == managerName).OrderBy(r => r.Name).ToListAsync();
@@ -86,6 +93,11 @@ namespace FoodService.Services.RestaurantService
         public async Task<Restaurant> FindByIdAsync(long restaurantId)
         {
             return await applicationDbContext.Restaurants.Include(r => r.Meals).FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
+        }
+
+        public async Task<Restaurant> FindByIdOnlyRestaurantAsync(long restaurantId)
+        {
+            return await applicationDbContext.Restaurants.FirstOrDefaultAsync(p => p.RestaurantId == restaurantId);
         }
 
         public async Task<bool> ValidateAccessAsync(long restaurantId, ClaimsPrincipal user)
