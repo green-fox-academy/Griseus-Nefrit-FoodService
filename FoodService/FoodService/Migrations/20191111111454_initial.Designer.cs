@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191029141424_initial")]
+    [Migration("20191111111454_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -240,22 +240,22 @@ namespace FoodService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "43fb0f77-cfcb-47a8-9240-b4cc7d6551a7",
-                            ConcurrencyStamp = "174ba690-ff8f-480a-b71c-dc43d8338e06",
+                            Id = "430fd5bb-943c-48f4-a1c8-548a4239e8d4",
+                            ConcurrencyStamp = "0f20bd80-167b-4827-b3e8-b4b7a4ec3bcd",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "07ea64ff-7aa1-41b1-8f5e-84a14f86be2c",
-                            ConcurrencyStamp = "f0f43bff-f236-4b1b-847c-4e4ba1ebd076",
+                            Id = "e9d51dfb-d48c-4a67-a1e3-053cda56f5f0",
+                            ConcurrencyStamp = "80d98183-10c8-44e3-90e2-a9865a005d64",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "c9d0dce8-3297-4047-b282-73cda172dbfb",
-                            ConcurrencyStamp = "2eeb14f1-bf17-4c11-9094-434a1672d090",
+                            Id = "1614d527-4269-4777-a3bf-d28573d0eb4b",
+                            ConcurrencyStamp = "74adc4f8-1bb5-4ae9-a0b9-7046493653d4",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
